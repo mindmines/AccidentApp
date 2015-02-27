@@ -11,6 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.accident.app.AppConstants;
 import com.accident.app.R;
 
 public class DBhelper extends SQLiteOpenHelper{
@@ -44,53 +45,55 @@ public class DBhelper extends SQLiteOpenHelper{
 
 		String CREATE_TABLE_THIRD_PARTY = "CREATE TABLE "+ TABLE_NAME_THIRD_PARTY +"( "+
                 "ids INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                resorce.getString(R.string.driver_name)+" TEXT not null, "+
+                resorce.getString(R.string.driver_name_dt)+" TEXT not null, "+
                 resorce.getString(R.string.id)+" TEXT not null, "+
                 resorce.getString(R.string.address)+" TEXT not null, "+
-                resorce.getString(R.string.phone_no)+" TEXT not null, "+
-                resorce.getString(R.string.license_number)+" TEXT not null)";
+                resorce.getString(R.string.phone_no_dt)+" TEXT not null, "+
+                resorce.getString(R.string.license_number_dt)+" TEXT not null, "+
+		 		resorce.getString(R.string.is_owner)+" INTEGER DEFAULT 0)";
 		
 		String CREATE_TABLE_VEHICLE = "CREATE TABLE "+ TABLE_NAME_VEHICLE +"( "+
                 "ids INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                resorce.getString(R.string.vehical_type)+" TEXT not null, "+
+                resorce.getString(R.string.vehical_type_dt)+" TEXT not null, "+
                 resorce.getString(R.string.manufacturer)+" TEXT not null, "+
                 resorce.getString(R.string.model)+" TEXT not null, "+
                 resorce.getString(R.string.color)+" TEXT not null, "+
                 resorce.getString(R.string.year)+" TEXT not null, "+
-                resorce.getString(R.string.license_plate)+" TEXT not null)";
+                resorce.getString(R.string.license_plate_dt)+" TEXT not null)";
 		
 		String CREATE_TABLE_INSURANCE = "CREATE TABLE "+ TABLE_NAME_INSURANCE +"( "+
                 "ids INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                resorce.getString(R.string.agency_name)+" TEXT not null, "+
-                resorce.getString(R.string.policy_number)+" TEXT not null, "+
-                resorce.getString(R.string.agent_name)+" TEXT not null, "+
-                resorce.getString(R.string.agent_number)+" TEXT not null)";
+                resorce.getString(R.string.agency_name_dt)+" TEXT not null, "+
+                resorce.getString(R.string.policy_number_dt)+" TEXT not null, "+
+                resorce.getString(R.string.agent_name_dt)+" TEXT not null, "+
+                resorce.getString(R.string.agent_number_dt)+" TEXT not null)";
 		
 		String CREATE_TABLE_POLICE = "CREATE TABLE "+ TABLE_NAME_POLICE +"( "+
                 "ids INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                resorce.getString(R.string.event_number)+" TEXT not null, "+
-                resorce.getString(R.string.case_number)+" TEXT not null, "+
-                resorce.getString(R.string.unit_name)+" TEXT not null, "+
-                resorce.getString(R.string.station_name)+" TEXT not null)";
+                resorce.getString(R.string.event_number_dt)+" TEXT not null, "+
+                resorce.getString(R.string.case_number_dt)+" TEXT not null, "+
+                resorce.getString(R.string.unit_name_dt)+" TEXT not null, "+
+                resorce.getString(R.string.station_name_dt)+" TEXT not null)";
 		
 		String CREATE_TABLE_DESCRIPTION = "CREATE TABLE "+ TABLE_NAME_DESCRIPTION +"( "+
                 "ids INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                resorce.getString(R.string.description)+" TEXT not null)";
+                resorce.getString(R.string.des)+" TEXT not null)";
 		
 		String CREATE_TABLE_CASUALTIES = "CREATE TABLE "+ TABLE_NAME_CASUALTIES +"( "+
                 "ids INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                resorce.getString(R.string.full_name)+" TEXT not null, "+
+                resorce.getString(R.string.full_name_dt)+" TEXT not null, "+
                 resorce.getString(R.string.id)+" TEXT not null, "+
                 resorce.getString(R.string.address)+" TEXT not null, "+
-                resorce.getString(R.string.phone_no)+" TEXT not null, "+
-                resorce.getString(R.string.age)+" TEXT not null)";
+                resorce.getString(R.string.phone_no_dt)+" TEXT not null, "+
+                resorce.getString(R.string.age)+" TEXT not null, "+
+		 		resorce.getString(R.string.is_hos)+" INTEGER DEFAULT 0)";
 		
 		String CREATE_TABLE_WITNESSES= "CREATE TABLE "+ TABLE_NAME_WITNESSES +"( "+
                 "ids INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                resorce.getString(R.string.full_name)+" TEXT not null, "+
+                resorce.getString(R.string.full_name_dt)+" TEXT not null, "+
                 resorce.getString(R.string.id)+" TEXT not null, "+
                 resorce.getString(R.string.address)+" TEXT not null, "+
-                resorce.getString(R.string.phone_no)+" TEXT not null, "+
+                resorce.getString(R.string.phone_no_dt)+" TEXT not null, "+
                 resorce.getString(R.string.age)+" TEXT not null)";
      
         db.execSQL(CREATE_TABLE_DATE_TIME);
@@ -117,134 +120,201 @@ public class DBhelper extends SQLiteOpenHelper{
 	      onCreate(db);
 	}
 
-    // CATEGORY
-	 public void insertData (String Date,String Time)
+    // DateTime
+	 public void insertDateTime (String Date,String Time,boolean isUpdate)
 	   {
-          
 	      SQLiteDatabase db1 = this.getWritableDatabase();
 	      ContentValues contentValues = new ContentValues();
 	      contentValues.put(resorce.getString(R.string.date), Date);
 	      contentValues.put(resorce.getString(R.string.time), Time);
+	      
+	      if(isUpdate)
+				db1.update(TABLE_NAME_DATE_TIME, contentValues, "ids=1", null);
+			else
 	      db1.insert(TABLE_NAME_DATE_TIME, null, contentValues);
 	      db1.close();
 	  }
-   /* // CATEGORY
-    public ArrayList<HashMap<String,String>> getData(){
-        ArrayList<HashMap<String,String>> contantList = new ArrayList<HashMap<String,String>>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME +" WHERE "+OpenSop.TAG_IS_BOOKMARK +"=1";
+	  // ThirdParty
+	public void insertThirdParty(String DriverName, String Id, String Address,
+			String PhoneNo, String LicenseNumber,boolean isOwner,boolean isUpdate) {
+		SQLiteDatabase db1 = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        HashMap<String,String> map;
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                map = new HashMap<String,String>();
-                map.put(OpenSop.TAG_ID,cursor.getString(1));
-                map.put(OpenSop.TAG_PARENT_ID,cursor.getString(2));
-                map.put(OpenSop.TAG_LEVEL,cursor.getString(3));
-                map.put(OpenSop.TAG_TITLE,cursor.getString(4));
-                map.put(OpenSop.TAG_CREATED_TIME,cursor.getString(5));
-                map.put(OpenSop.TAG_IS_BOOKMARK,cursor.getString(6));
-                // Adding contact to list
-                contantList.add(map);
-            } while (cursor.moveToNext());
-        }
+		contentValues.put(resorce.getString(R.string.driver_name_dt), DriverName);
+		contentValues.put(resorce.getString(R.string.id), Id);
+		contentValues.put(resorce.getString(R.string.address), Address);
+		contentValues.put(resorce.getString(R.string.phone_no_dt), PhoneNo);
+		contentValues.put(resorce.getString(R.string.license_number_dt),LicenseNumber);
+		contentValues.put(resorce.getString(R.string.is_owner),isOwner);
 
-        // return contact list
-        return contantList;
-    }
+		if(isUpdate)
+			db1.update(TABLE_NAME_THIRD_PARTY, contentValues, "ids=1", null);
+		else 
+		db1.insert(TABLE_NAME_THIRD_PARTY, null, contentValues);
+		db1.close();
+	}
+	
+	  // Vehical
+		public void insertVehical(String vehical_type, String manufacturer, String model,
+				String color, String year,String license_plate,boolean isUpdate) {
+			SQLiteDatabase db1 = this.getWritableDatabase();
+			ContentValues contentValues = new ContentValues();
 
-    public int getDataTitleSize(String id){
-        // Select All Query
-        int Size = 0;
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME +" WHERE "+OpenSop.TAG_PARENT_ID +"="+id;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                String newId = cursor.getString(1);
-                Log.e("NewId",newId);
-                String selectQuery2 = "SELECT * FROM " + TABLE_NAME_CONTENT +" WHERE "+OpenSop.TAG_CAT_ID +"="+newId+" " +
-                        "AND "+OpenSop.TAG_STATE+"=1";
-                SQLiteDatabase db2 = this.getWritableDatabase();
-                Cursor cursor2 = db2.rawQuery(selectQuery2, null);
-                // looping through all rows and adding to list
-                if (cursor2.moveToFirst()) {
-                    do {
-                        Size++;
-                    } while (cursor2.moveToNext());
-                }
-            } while (cursor.moveToNext());
-        }
-        // return contact list
-        return Size;
-    }
+			contentValues.put(resorce.getString(R.string.vehical_type_dt), vehical_type);
+			contentValues.put(resorce.getString(R.string.manufacturer), manufacturer);
+			contentValues.put(resorce.getString(R.string.model), model);
+			contentValues.put(resorce.getString(R.string.color), color);
+			contentValues.put(resorce.getString(R.string.year),year);
+			contentValues.put(resorce.getString(R.string.license_plate_dt),license_plate);
 
-    public ArrayList<HashMap<String,String>> getDataFav(String level,String title){
-        ArrayList<HashMap<String,String>> contantList = new ArrayList<HashMap<String,String>>();
-        // Select All Query
-        String selectQuery;
-        if(!level.equals("0")) {
-            selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE " + OpenSop.TAG_IS_BOOKMARK + "=1" +
-                    " AND " + OpenSop.TAG_LEVEL + "=" + level + " AND " + OpenSop.TAG_TITLE + " LIKE '%"+title+"%'";
-        }else {
-            selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE " + OpenSop.TAG_IS_BOOKMARK + "=1" +
-                    " AND " + OpenSop.TAG_TITLE + " LIKE '%"+title+"%'";
-        }
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        HashMap<String,String> map;
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                map = new HashMap<String,String>();
-                map.put(OpenSop.TAG_ID,cursor.getString(1));
-                map.put(OpenSop.TAG_PARENT_ID,cursor.getString(2));
-                map.put(OpenSop.TAG_LEVEL,cursor.getString(3));
-                map.put(OpenSop.TAG_TITLE,cursor.getString(4));
-                map.put(OpenSop.TAG_CREATED_TIME,cursor.getString(5));
-                map.put(OpenSop.TAG_IS_BOOKMARK,cursor.getString(6));
-                // Adding contact to list
-                contantList.add(map);
-            } while (cursor.moveToNext());
-        }
+			if(isUpdate)
+				db1.update(TABLE_NAME_VEHICLE, contentValues, "ids=1", null);
+			else 
+			db1.insert(TABLE_NAME_VEHICLE, null, contentValues);
+			db1.close();
+		}
+		
+		  // Insurance
+		public void insertInsurance(String agency_name, String policy_number,
+				String agent_name, String agent_number,boolean isUpdate) {
+			SQLiteDatabase db1 = this.getWritableDatabase();
+			ContentValues contentValues = new ContentValues();
 
-        // return contact list
-        return contantList;
-    }
+			contentValues.put(resorce.getString(R.string.agency_name_dt), agency_name);
+			contentValues.put(resorce.getString(R.string.policy_number_dt), policy_number);
+			contentValues.put(resorce.getString(R.string.agent_name_dt), agent_name);
+			contentValues.put(resorce.getString(R.string.agent_number_dt),agent_number);
+			
+			if(isUpdate)
+				db1.update(TABLE_NAME_INSURANCE, contentValues, "ids=1", null);
+			else 
+			db1.insert(TABLE_NAME_INSURANCE, null, contentValues);
+			db1.close();
+		}
+		
+		  // Police
+		public void insertPolice(String event_number, String case_number,
+				String unit_name, String station_name,boolean isUpdate) {
+			SQLiteDatabase db1 = this.getWritableDatabase();
+			ContentValues contentValues = new ContentValues();
 
-    public ArrayList<HashMap<String,String>> getDataNotFav(String level,String title){
-        ArrayList<HashMap<String,String>> contantList = new ArrayList<HashMap<String,String>>();
-        // Select All Query
-        String selectQuery;
-        if(!level.equals("0")) {
-            selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " +
-                    OpenSop.TAG_LEVEL + " = " + level + " AND " + OpenSop.TAG_TITLE + " LIKE '%"+title+"%'";
-        }else {
-            selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE "+OpenSop.TAG_TITLE + " LIKE '%"+title+"%'";
-        }
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        HashMap<String,String> map;
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                map = new HashMap<String,String>();
-                map.put(OpenSop.TAG_ID,cursor.getString(1));
-                map.put(OpenSop.TAG_PARENT_ID,cursor.getString(2));
-                map.put(OpenSop.TAG_LEVEL,cursor.getString(3));
-                map.put(OpenSop.TAG_TITLE,cursor.getString(4));
-                map.put(OpenSop.TAG_CREATED_TIME,cursor.getString(5));
-                map.put(OpenSop.TAG_IS_BOOKMARK,cursor.getString(6));
-                // Adding contact to list
-                contantList.add(map);
-            } while (cursor.moveToNext());
-        }
+			contentValues.put(resorce.getString(R.string.event_number_dt), event_number);
+			contentValues.put(resorce.getString(R.string.case_number_dt), case_number);
+			contentValues.put(resorce.getString(R.string.unit_name_dt), unit_name);
+			contentValues.put(resorce.getString(R.string.station_name_dt),station_name);
 
-        // return contact list
-        return contantList;
-    }*/
+			if(isUpdate)
+				db1.update(TABLE_NAME_POLICE, contentValues, "ids=1", null);
+			else 
+			db1.insert(TABLE_NAME_POLICE, null, contentValues);
+			db1.close();
+		}
+		
+		  // Description
+		public void insertDescription(String station_name,boolean isUpdate) {
+			SQLiteDatabase db1 = this.getWritableDatabase();
+			ContentValues contentValues = new ContentValues();
+
+			contentValues.put(resorce.getString(R.string.des), station_name);
+
+			if(isUpdate)
+				db1.update(TABLE_NAME_DESCRIPTION, contentValues, "ids=1", null);
+			else 
+				db1.insert(TABLE_NAME_DESCRIPTION, null, contentValues);
+			db1.close();
+		}
+		
+		// Casulty
+				public void insertCasulty (String full_name, String Id, String Address,
+						String PhoneNo, String age,boolean isHospitalized,boolean isUpdate) {
+					SQLiteDatabase db1 = this.getWritableDatabase();
+					ContentValues contentValues = new ContentValues();
+
+					contentValues.put(resorce.getString(R.string.full_name_dt), full_name);
+					contentValues.put(resorce.getString(R.string.id), Id);
+					contentValues.put(resorce.getString(R.string.address), Address);
+					contentValues.put(resorce.getString(R.string.phone_no_dt), PhoneNo);
+					contentValues.put(resorce.getString(R.string.age),age);
+					contentValues.put(resorce.getString(R.string.is_hos),isHospitalized);
+
+					if(isUpdate)
+							db1.update(TABLE_NAME_CASUALTIES, contentValues, "ids=1", null);
+					else
+						db1.insert(TABLE_NAME_CASUALTIES, null, contentValues);
+					
+					db1.close();
+				}
+		
+		  // Witness
+		public void insertWitness (String full_name, String Id, String Address,
+				String PhoneNo, String age,boolean isUpdate) {
+			SQLiteDatabase db1 = this.getWritableDatabase();
+			ContentValues contentValues = new ContentValues();
+
+			contentValues.put(resorce.getString(R.string.full_name_dt), full_name);
+			contentValues.put(resorce.getString(R.string.id), Id);
+			contentValues.put(resorce.getString(R.string.address), Address);
+			contentValues.put(resorce.getString(R.string.phone_no_dt), PhoneNo);
+			contentValues.put(resorce.getString(R.string.age),age);
+
+			if(isUpdate)
+					db1.update(TABLE_NAME_WITNESSES, contentValues, "ids=1", null);
+			else
+				db1.insert(TABLE_NAME_WITNESSES, null, contentValues);	
+			
+			db1.close();
+		}
+		
+		 public ArrayList<HashMap<String,Object>> getData(String TABLE_NAME) {
+		        ArrayList<HashMap<String,Object>> contantList = new ArrayList<HashMap<String,Object>>();
+		        // Select All Query
+		        String selectQuery = "SELECT  * FROM " + TABLE_NAME +" WHERE "+"ids=1";
+
+		        SQLiteDatabase db = this.getWritableDatabase();
+		        Cursor cursor = db.rawQuery(selectQuery, null);
+		        HashMap<String,Object> map;
+		        // looping through all rows and adding to list
+		        if (cursor.moveToFirst()) {
+		            do {
+		                map = new HashMap<String,Object>();
+		             if(TABLE_NAME.equals(TABLE_NAME_DESCRIPTION)){
+		                map.put(AppConstants.ITEM1,cursor.getString(1));
+		             }else if(TABLE_NAME.equals(TABLE_NAME_DESCRIPTION)){
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));  
+		             } else if(TABLE_NAME.equals(TABLE_NAME_INSURANCE) || TABLE_NAME.equals(TABLE_NAME_POLICE)){
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));
+		            	 map.put(AppConstants.ITEM3,cursor.getString(3));
+		            	 map.put(AppConstants.ITEM4,cursor.getString(4));
+		             } else if(TABLE_NAME.equals(TABLE_NAME_THIRD_PARTY) || TABLE_NAME.equals(TABLE_NAME_CASUALTIES)){
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));
+		            	 map.put(AppConstants.ITEM3,cursor.getString(3));
+		            	 map.put(AppConstants.ITEM4,cursor.getString(4));
+		            	 map.put(AppConstants.ITEM5,cursor.getString(5));
+		            	 map.put(AppConstants.ITEM6,cursor.getInt(6));
+		             } else if(TABLE_NAME.equals(TABLE_NAME_VEHICLE)){
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));
+		            	 map.put(AppConstants.ITEM3,cursor.getString(3));
+		            	 map.put(AppConstants.ITEM4,cursor.getString(4));
+		            	 map.put(AppConstants.ITEM5,cursor.getString(5));
+		            	 map.put(AppConstants.ITEM6,cursor.getString(6));
+		             }else if(TABLE_NAME.equals(TABLE_NAME_WITNESSES)){
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));
+		            	 map.put(AppConstants.ITEM3,cursor.getString(3));
+		            	 map.put(AppConstants.ITEM4,cursor.getString(4));
+		            	 map.put(AppConstants.ITEM5,cursor.getString(5));
+		             }
+		                // Adding contact to list
+		                contantList.add(map);
+		            } while (cursor.moveToNext());
+		        }
+
+		        // return contact list
+		        return contantList;
+		    }
+		
 }

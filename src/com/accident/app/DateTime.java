@@ -1,6 +1,8 @@
 package com.accident.app;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import com.accident.app.dbhelper.DBhelper;
 
@@ -18,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class DateTime extends BaseFragment implements OnClickListener{
 	
@@ -25,7 +28,7 @@ public class DateTime extends BaseFragment implements OnClickListener{
 	private Button Save;
 	int mHour, mMinute,mYear, mMonth, mDay;
 	DBhelper dBhelper;
-	
+	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -98,7 +101,24 @@ public class DateTime extends BaseFragment implements OnClickListener{
 	}
 	
 	private void CallSaveButton(){
-		dBhelper.insertData(Date.getText().toString().trim(), Time.getText().toString().trim());
+		String putDate =Date.getText().toString().trim();
+		String putTime =  Time.getText().toString().trim();
+		if(!putDate.equals(null) && !putTime.equals(null)){
+		dBhelper.insertDateTime(putDate,putTime,isUpdate());
+		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
+		}else{
+			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private boolean isUpdate(){
+		list = dBhelper.getData(dBhelper.TABLE_NAME_DATE_TIME);
+		boolean value;
+		if(list.size()>0)
+			value = true;
+		else 
+			value =false;
+		return value;
 	}
 	
 }

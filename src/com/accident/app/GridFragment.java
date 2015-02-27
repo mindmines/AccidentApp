@@ -108,8 +108,9 @@ public class GridFragment extends BaseFragment {
 					mContext.pushFragments(AppConstants.TAB_DETAILS, new Vehical(), false, true);
 					break;
 				case 7:
-					i = new Intent(getActivity(),WittnessHolder.class);
-					startActivity(i);
+					mContext.pushFragments(AppConstants.TAB_DETAILS, new WitnessFragment(), false, true);
+					//i = new Intent(getActivity(),WittnessHolder.class);
+					//startActivity(i);
 					break;
 
 				default:
