@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="20dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/event_number"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/event_number"
+            android:inputType="text"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding" />
+
+        <EditText
+            android:id="@+id/case_number"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/case_number"
+            android:inputType="text"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding" />
+
+        <EditText
+            android:id="@+id/unit_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/unit_name"
+            android:inputType="text"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding" />
+
+        <EditText
+            android:id="@+id/station_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/station_name"
+            android:inputType="text"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cas_save"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/save" />
+
+</RelativeLayout>

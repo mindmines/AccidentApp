@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class CameraImage extends Fragment {
+public class CameraImage extends BaseFragment {
 
 	Button button;
 	ImageView imageView;

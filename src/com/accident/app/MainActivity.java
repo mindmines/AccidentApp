@@ -1,203 +1,230 @@
-/*
- * Copyright 2012 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.accident.app;
 
-import android.app.ActionBar;
+import java.util.HashMap;
+import java.util.Stack;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.TabHost;
 
 public class MainActivity extends FragmentActivity {
+    /* Your Tab host */
+    private TabHost mTabHost;
 
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the three primary sections of the app. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
-	AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    /* A HashMap of stacks, where we use tab identifier as keys..*/
+    private HashMap<String, Stack<Fragment>> mStacks;
 
-	/**
-	 * The {@link ViewPager} that will display the three primary sections of the
-	 * app, one at a time.
-	 */
-	ViewPager mViewPager;
-	
-	public static String[] Striplist = {"Details","Location" , "Pictures","Images"};
+    /*Save current tabs identifier in this..*/
+    private String mCurrentTab;
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections
-		// of the app.
-		mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(
-				getSupportFragmentManager());
+        /*  
+         *  Navigation stacks for each tab gets created.. 
+         *  tab identifier is used as key to get respective stack for each tab
+         */
+        
+        mStacks             =   new HashMap<String, Stack<Fragment>>();
+        mStacks.put(AppConstants.TAB_DETAILS, new Stack<Fragment>());
+        mStacks.put(AppConstants.TAB_LOCATION, new Stack<Fragment>());
+        mStacks.put(AppConstants.TAB_PICTURES, new Stack<Fragment>());
+        mStacks.put(AppConstants.TAB_IMAGES, new Stack<Fragment>());
 
-		// Set up the action bar.
-		final ActionBar actionBar = getActionBar();
+        mTabHost                =   (TabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setOnTabChangedListener(listener);
+        mTabHost.setup();
 
-		// Specify that the Home/Up button should not be enabled, since there is
-		// no hierarchical
-		// parent.
-		actionBar.setHomeButtonEnabled(false);
+        initializeTabs();
+    }
 
-		// Specify that we will be displaying tabs in the action bar.
-		// actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// Set up the ViewPager, attaching the adapter and setting up a listener
-		// for when the
-		// user swipes between sections.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mAppSectionsPagerAdapter);
+    private View createTabView(final int id,String text) {
+        View view = LayoutInflater.from(this).inflate(R.layout.tabs_icon, null);
+        ImageView imageView =   (ImageView) view.findViewById(R.id.tab_icon);
+        imageView.setImageDrawable(getResources().getDrawable(id));
+        return view;
+    }
 
-	}
+    public void initializeTabs(){
+        /* Setup your tab icons and content views.. Nothing special in this..*/
+        TabHost.TabSpec spec    =   mTabHost.newTabSpec(AppConstants.TAB_DETAILS);
+        mTabHost.setCurrentTab(-3);
+        spec.setContent(new TabHost.TabContentFactory() {
+            public View createTabContent(String tag) {
+                return findViewById(R.id.realtabcontent);
+            }
+        });
+        spec.setIndicator(createTabView(R.drawable.ic_launcher,""));
+        mTabHost.addTab(spec);
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the primary sections of the app.
-	 */
-	public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+        //Search
 
-		public AppSectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
-		}
+        spec                    =   mTabHost.newTabSpec(AppConstants.TAB_LOCATION);
+        spec.setContent(new TabHost.TabContentFactory() {
+            public View createTabContent(String tag) {
+                return findViewById(R.id.realtabcontent);
+            }
+        });
+        spec.setIndicator(createTabView(R.drawable.ic_launcher,""));
+        mTabHost.addTab(spec);
+        
+        
+        //Recents
+        spec                    =   mTabHost.newTabSpec(AppConstants.TAB_PICTURES);
+        spec.setContent(new TabHost.TabContentFactory() {
+            public View createTabContent(String tag) {
+                return findViewById(R.id.realtabcontent);
+            }
+        });
+        spec.setIndicator(createTabView(R.drawable.ic_launcher,""));
+        mTabHost.addTab(spec);
+        
+        
+        //Contacts
+        spec                    =   mTabHost.newTabSpec(AppConstants.TAB_IMAGES);
+        spec.setContent(new TabHost.TabContentFactory() {
+            public View createTabContent(String tag) {
+                return findViewById(R.id.realtabcontent);
+            }
+        });
+        spec.setIndicator(createTabView(R.drawable.ic_launcher,""));
+        mTabHost.addTab(spec);
+       
+       
+    }
+    
+    /*Comes here when user switch tab, or we do programmatically*/
+    TabHost.OnTabChangeListener listener    =   new TabHost.OnTabChangeListener() {
+      public void onTabChanged(String tabId) {
+    	
+    		//if(selectedTabTextView != null)
+				//selectedTabTextView.setTextColor(Color.BLACK);
+    		
+      //  View mView = mTabHost.getTabWidget().getChildTabViewAt(mIndexMap.get(tabId));
+		//selectedTabTextView = (ImageView)mView.findViewById(R.id.textView1);
+		//selectedTabTextView.setTextColor(Color.BLUE);
+		
+        /*Set current tab..*/
+        mCurrentTab                     =   tabId;
 
-		@Override
-		public Fragment getItem(int i) {
-			switch (i) {
-			case 0:
-				// The first section of the app is the most interesting -- it
-				// offers
-				// a launchpad into the other demonstrations in this example
-				// application.
-				
-				return new GridFragment();
-				//return new LaunchpadSectionFragment();
-				
-			case 1:
-				// The first section of the app is the most interesting -- it
-				// offers
-				// a launchpad into the other demonstrations in this example
-				// application.
-				
-				return new LocationFragment();
-				//return new LaunchpadSectionFragment();
-				
-			case 2:
-				return new CameraImage();
 
-			default:
-				// The other sections of the app are dummy placeholders.
-				Fragment fragment = new DummySectionFragment();
-				Bundle args = new Bundle();
-				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-				fragment.setArguments(args);
-				return fragment;
-			}
-		}
+        if(mStacks.get(tabId).size() == 0){
+          /*
+           *    First time this tab is selected. So add first fragment of that tab.
+           *    Dont need animation, so that argument is false.
+           *    We are adding a new fragment which is not present in stack. So add to stack is true.
+           */
+          if(tabId.equals(AppConstants.TAB_DETAILS)){
+            pushFragments(tabId, new GridFragment(), false,true);
+          }else if(tabId.equals(AppConstants.TAB_LOCATION)){
+            pushFragments(tabId, new LocationFragment(), false,true);
+          }
+          else if(tabId.equals(AppConstants.TAB_PICTURES)){
+              pushFragments(tabId, new CameraImage(), false,true);
+            }
+          else if(tabId.equals(AppConstants.TAB_IMAGES)){
+              pushFragments(tabId, new DummySectionFragment(), false,true);
+            }
+        }else {
+          /*
+           *    We are switching tabs, and target tab is already has atleast one fragment. 
+           *    No need of animation, no need of stack pushing. Just show the target fragment
+           */
+          pushFragments(tabId, mStacks.get(tabId).lastElement(), false,false);
+        }
+      }
+    };
 
-		@Override
-		public int getCount() {
-			return Striplist.length;
-		}
 
-		@Override
-		public CharSequence getPageTitle(int position) {
-			return Striplist[position];
-		}
-	}
+    /* Might be useful if we want to switch tab programmatically, from inside any of the fragment.*/
+    public void setCurrentTab(int val){
+          mTabHost.setCurrentTab(val);
+    }
 
-	/**
-	 * A fragment that launches other parts of the demo application.
-	 */
-	public static class LaunchpadSectionFragment extends Fragment {
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(
-					R.layout.fragment_section_launchpad, container, false);
+    /* 
+     *      To add fragment to a tab. 
+     *  tag             ->  Tab identifier
+     *  fragment        ->  Fragment to show, in tab identified by tag
+     *  shouldAnimate   ->  should animate transaction. false when we switch tabs, or adding first fragment to a tab
+     *                      true when when we are pushing more fragment into navigation stack. 
+     *  shouldAdd       ->  Should add to fragment navigation stack (mStacks.get(tag)). false when we are switching tabs (except for the first time)
+     *                      true in all other cases.
+     */
+    public void pushFragments(String tag, Fragment fragment,boolean shouldAnimate, boolean shouldAdd){
+      if(shouldAdd)
+          mStacks.get(tag).push(fragment);
+      FragmentManager   manager         =   getSupportFragmentManager();
+      FragmentTransaction ft            =   manager.beginTransaction();
+      if(shouldAnimate)
+          ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+      ft.replace(R.id.realtabcontent, fragment);
+      ft.commit();
+    }
 
-			// Demonstration of a collection-browsing activity.
-			rootView.findViewById(R.id.demo_collection_button)
-					.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							Intent intent = new Intent(getActivity(),
-									CollectionDemoActivity.class);
-							startActivity(intent);
-						}
-					});
 
-			// Demonstration of navigating to external activities.
-			rootView.findViewById(R.id.demo_external_activity)
-					.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							// Create an intent that asks the user to pick a
-							// photo, but using
-							// FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET, ensures that
-							// relaunching
-							// the application from the device home screen does
-							// not return
-							// to the external activity.
-							Intent externalActivityIntent = new Intent(
-									Intent.ACTION_PICK);
-							externalActivityIntent.setType("image/*");
-							externalActivityIntent
-									.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-							startActivity(externalActivityIntent);
-						}
-					});
+    public void popFragments(){
+      /*    
+       *    Select the second last fragment in current tab's stack.. 
+       *    which will be shown after the fragment transaction given below 
+       */
+      Fragment fragment             =   mStacks.get(mCurrentTab).elementAt(mStacks.get(mCurrentTab).size() - 2);
 
-			return rootView;
-		}
-	}
+      /*pop current fragment from stack.. */
+      mStacks.get(mCurrentTab).pop();
 
-	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
-	 */
-	public static class DummySectionFragment extends Fragment {
+      /* We have the target fragment in hand.. Just show it.. Show a standard navigation animation*/
+      FragmentManager   manager         =   getSupportFragmentManager();
+      FragmentTransaction ft            =   manager.beginTransaction();
+      ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+      ft.replace(R.id.realtabcontent, fragment);
+      ft.commit();
+    }   
 
-		public static final String ARG_SECTION_NUMBER = "section_number";
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_section_dummy,
-					container, false);
-			Bundle args = getArguments();
-			((TextView) rootView.findViewById(android.R.id.text1))
-					.setText(getString(R.string.dummy_section_text,
-							args.getInt(ARG_SECTION_NUMBER)));
-			return rootView;
-		}
-	}
+    @Override
+    public void onBackPressed() {
+       	if(((BaseFragment)mStacks.get(mCurrentTab).lastElement()).onBackPressed() == false){
+       		/*
+       		 * top fragment in current tab doesn't handles back press, we can do our thing, which is
+       		 * 
+       		 * if current tab has only one fragment in stack, ie first fragment is showing for this tab.
+       		 *        finish the activity
+       		 * else
+       		 *        pop to previous fragment in stack for the same tab
+       		 * 
+       		 */
+       		if(mStacks.get(mCurrentTab).size() == 1){
+       			super.onBackPressed();  // or call finish..
+       		}else{
+       			popFragments();
+       		}
+       	}else{
+       		//do nothing.. fragment already handled back button press.
+       	}
+    }
+
+
+    /*
+     *   Imagine if you wanted to get an image selected using ImagePicker intent to the fragment. Ofcourse I could have created a public function
+     *  in that fragment, and called it from the activity. But couldn't resist myself.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(mStacks.get(mCurrentTab).size() == 0){
+            return;
+        }
+
+        /*Now current fragment on screen gets onActivityResult callback..*/
+        mStacks.get(mCurrentTab).lastElement().onActivityResult(requestCode, resultCode, data);
+    }
 }

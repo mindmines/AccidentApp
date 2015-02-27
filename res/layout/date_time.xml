@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="20dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="@string/date"
+            android:inputType="date"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding" />
+
+        <EditText
+            android:id="@+id/time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="@string/time"
+            android:inputType="time"
+            android:paddingBottom="@dimen/edit_text_padding"
+            android:paddingTop="@dimen/edit_text_padding" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cas_save"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/save" />
+
+</RelativeLayout>

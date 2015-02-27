@@ -2,6 +2,8 @@ package com.accident.app;
 
 import java.util.ArrayList;
 
+import com.accident.app.util.GridItem;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,7 +22,7 @@ import android.widget.GridView;
 
 public class HomeActivity extends Activity {
 	GridView gridView;
-	ArrayList<Item> gridArray = new ArrayList<Item>();
+	ArrayList<GridItem> gridArray = new ArrayList<GridItem>();
 	CustomGridViewAdapter customGridAdapter;
 
 	@Override
@@ -46,12 +48,12 @@ public class HomeActivity extends Activity {
 		Bitmap feedbackIcon = BitmapFactory.decodeResource(this.getResources(),
 				R.drawable.plice);
 
-		gridArray.add(new Item(fluIcon, ""));
-		gridArray.add(new Item(reportIcon, ""));
-		gridArray.add(new Item(newsIcon, ""));
-		gridArray.add(new Item(vacIcon, ""));
-		gridArray.add(new Item(aboutIcon, ""));
-		gridArray.add(new Item(feedbackIcon, ""));
+		gridArray.add(new GridItem(fluIcon, ""));
+		gridArray.add(new GridItem(reportIcon, ""));
+		gridArray.add(new GridItem(newsIcon, ""));
+		gridArray.add(new GridItem(vacIcon, ""));
+		gridArray.add(new GridItem(aboutIcon, ""));
+		gridArray.add(new GridItem(feedbackIcon, ""));
 
 		gridView = (GridView) findViewById(R.id.gridView1);
 		customGridAdapter = new CustomGridViewAdapter(this, R.layout.row_grid,
