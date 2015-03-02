@@ -23,12 +23,17 @@ public class Insurance extends BaseFragment {
 	private Button Save;
 	DBhelper dBhelper;
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+	int currentIDs;
+	MainActivity mContext;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	
 		View rootView = inflater.inflate(R.layout.insurance,
 				container, false);
+		mContext = (MainActivity) this.getActivity();
+		AppConstants.isFront = false;
+		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		AgencyName =(EditText) rootView.findViewById(R.id.agency_name);
 		PolicyNumber =(EditText) rootView.findViewById(R.id.policy_number);
@@ -54,7 +59,8 @@ public class Insurance extends BaseFragment {
 		agentNumber=AgentNumber.getText().toString().trim();
 		
 		if(!agencyName.equals(null) && !policyNumber.equals(null) && !agentName.equals(null) && !agentNumber.equals(null)){
-		dBhelper.insertInsurance(agencyName, policyNumber, agentName, agentNumber, isUpdate());
+			currentIDs = mActivity.getIds();
+		dBhelper.insertInsurance(currentIDs,agencyName, policyNumber, agentName, agentNumber, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -63,11 +69,12 @@ public class Insurance extends BaseFragment {
 	
 	private boolean isUpdate(){
 		list = dBhelper.getData(DBhelper.TABLE_NAME_INSURANCE);
-		boolean value;
-		if(list.size()>0)
-			value = true;
-		else 
-			value =false;
-		return value;
+		for(int i=0;i<list.size();i++){
+			int s = (Integer) list.get(i).get(AppConstants.ITEM0);
+			if(currentIDs == s)
+				return true;
+		
+		}
+		return false;
 	}
 }

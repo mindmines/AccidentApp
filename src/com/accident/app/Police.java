@@ -23,12 +23,17 @@ public class Police extends BaseFragment {
 	private Button Save;
 	DBhelper dBhelper;
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+	int currentIDs;
+	MainActivity mContext;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	
 		View rootView = inflater.inflate(R.layout.police,
 				container, false);
+		mContext = (MainActivity) this.getActivity();
+		AppConstants.isFront = false;
+		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		
 		event_number =(EditText) rootView.findViewById(R.id.event_number);
@@ -57,7 +62,8 @@ public class Police extends BaseFragment {
 		stationName=station_name.getText().toString().trim();
 		
 		if(!EventNumber.equals(null) && !CaseNumber.equals(null) && !UnitName.equals(null) && !stationName.equals(null)){
-		dBhelper.insertPolice(EventNumber, CaseNumber, UnitName, stationName, isUpdate());
+			currentIDs = mActivity.getIds();
+		dBhelper.insertPolice(currentIDs,EventNumber, CaseNumber, UnitName, stationName, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -66,11 +72,12 @@ public class Police extends BaseFragment {
 	
 	private boolean isUpdate(){
 		list = dBhelper.getData(DBhelper.TABLE_NAME_POLICE);
-		boolean value;
-		if(list.size()>0)
-			value = true;
-		else 
-			value =false;
-		return value;
+		for(int i=0;i<list.size();i++){
+			int s = (Integer) list.get(i).get(AppConstants.ITEM0);
+			if(currentIDs == s)
+				return true;
+		
+		}
+		return false;
 	}
 }

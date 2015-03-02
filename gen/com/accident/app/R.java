@@ -16,85 +16,131 @@ public final class R {
     }
     public static final class attr {
     }
+    public static final class color {
+        /** Color  
+         */
+        public static final int blue=0x7f070000;
+        public static final int gray=0x7f070002;
+        public static final int green=0x7f070001;
+    }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
          */
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
+        public static final int botton_padding=0x7f050003;
         public static final int edit_text_padding=0x7f050002;
     }
     public static final class drawable {
-        public static final int casualties=0x7f020000;
-        public static final int description=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int logo=0x7f020003;
-        public static final int name_bg=0x7f020004;
-        public static final int plice=0x7f020005;
-        public static final int roundcorner=0x7f020006;
-        public static final int row_bg=0x7f020007;
-        public static final int tab_bg=0x7f020008;
-        public static final int tab_bg_selected=0x7f020009;
-        public static final int tab_bg_selector=0x7f02000a;
-        public static final int tab_bg_unselected=0x7f02000b;
-        public static final int witness=0x7f02000c;
+        public static final int about_us=0x7f020000;
+        public static final int background=0x7f020001;
+        public static final int casualties=0x7f020002;
+        public static final int damage=0x7f020003;
+        public static final int damage_sketch=0x7f020004;
+        public static final int dateandtime=0x7f020005;
+        public static final int description=0x7f020006;
+        public static final int details=0x7f020007;
+        public static final int edit=0x7f020008;
+        public static final int exit_application=0x7f020009;
+        public static final int history=0x7f02000a;
+        public static final int home=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int insurance=0x7f02000d;
+        public static final int language=0x7f02000e;
+        public static final int location=0x7f02000f;
+        public static final int location_map=0x7f020010;
+        public static final int logo=0x7f020011;
+        public static final int menu=0x7f020012;
+        public static final int my_details=0x7f020013;
+        public static final int name_bg=0x7f020014;
+        public static final int picture=0x7f020015;
+        public static final int picture_click=0x7f020016;
+        public static final int plice=0x7f020017;
+        public static final int police=0x7f020018;
+        public static final int roundcorner=0x7f020019;
+        public static final int row_bg=0x7f02001a;
+        public static final int saved=0x7f02001b;
+        public static final int send=0x7f02001c;
+        public static final int tab_bg=0x7f02001d;
+        public static final int tab_bg_selected=0x7f02001e;
+        public static final int tab_bg_selector=0x7f02001f;
+        public static final int tab_bg_unselected=0x7f020020;
+        public static final int tella_friend=0x7f020021;
+        public static final int third_party=0x7f020022;
+        public static final int towing=0x7f020023;
+        public static final int vehicle=0x7f020024;
+        public static final int witness=0x7f020025;
+        public static final int witnesses=0x7f020026;
     }
     public static final class id {
-        public static final int address=0x7f070035;
-        public static final int age=0x7f070037;
-        public static final int agency_name=0x7f070015;
-        public static final int agent_name=0x7f070017;
-        public static final int agent_number=0x7f070018;
-        public static final int btnCapturePicture=0x7f070004;
-        public static final int button=0x7f070003;
-        public static final int camera_img=0x7f07000e;
-        public static final int cas_address=0x7f070008;
-        public static final int cas_age=0x7f07000a;
-        public static final int cas_full_name=0x7f070006;
-        public static final int cas_id=0x7f070007;
-        public static final int cas_phone_no=0x7f070009;
-        public static final int cas_save=0x7f07000c;
-        public static final int case_number=0x7f07001b;
-        public static final int color=0x7f07002b;
-        public static final int date=0x7f07000f;
-        public static final int demo_collection_button=0x7f070012;
-        public static final int demo_external_activity=0x7f070013;
-        public static final int description=0x7f070011;
-        public static final int driver_address=0x7f070024;
-        public static final int driver_id=0x7f070023;
-        public static final int driver_license=0x7f070026;
-        public static final int driver_name=0x7f070022;
-        public static final int driver_phone_no=0x7f070025;
-        public static final int event_number=0x7f07001a;
-        public static final int gridView1=0x7f070014;
-        public static final int id=0x7f070034;
-        public static final int image_name=0x7f07000d;
-        public static final int input_address=0x7f070030;
-        public static final int input_age=0x7f070032;
-        public static final int input_id=0x7f07002e;
-        public static final int input_name=0x7f07002f;
-        public static final int input_phno=0x7f070031;
-        public static final int is_hospitalized=0x7f07000b;
-        public static final int is_owener=0x7f070027;
-        public static final int item_image=0x7f07001e;
-        public static final int item_text=0x7f07001f;
-        public static final int license_plate=0x7f07002d;
-        public static final int listCapturePicture=0x7f070005;
-        public static final int manufacturer=0x7f070029;
-        public static final int model=0x7f07002a;
-        public static final int name=0x7f070033;
-        public static final int pager=0x7f070000;
-        public static final int pager_title_strip=0x7f070001;
-        public static final int phone=0x7f070036;
-        public static final int policy_number=0x7f070016;
-        public static final int realtabcontent=0x7f070002;
-        public static final int station_name=0x7f07001d;
-        public static final int tab_icon=0x7f070021;
-        public static final int tabsLayout=0x7f070020;
-        public static final int textView1=0x7f070019;
-        public static final int time=0x7f070010;
-        public static final int unit_name=0x7f07001c;
-        public static final int vehical_type=0x7f070028;
-        public static final int year=0x7f07002c;
+        public static final int address=0x7f080041;
+        public static final int age=0x7f080043;
+        public static final int agency_name=0x7f080022;
+        public static final int agent_name=0x7f080024;
+        public static final int agent_number=0x7f080025;
+        public static final int btnCapturePicture=0x7f080007;
+        public static final int camera_img=0x7f080010;
+        public static final int cas_address=0x7f08000a;
+        public static final int cas_age=0x7f08000c;
+        public static final int cas_full_name=0x7f080008;
+        public static final int cas_id=0x7f080009;
+        public static final int cas_phone_no=0x7f08000b;
+        public static final int cas_save=0x7f08000e;
+        public static final int case_number=0x7f080027;
+        public static final int click_hear=0x7f080005;
+        public static final int close=0x7f08001f;
+        public static final int color=0x7f080037;
+        public static final int date=0x7f080011;
+        public static final int demo_collection_button=0x7f080014;
+        public static final int demo_external_activity=0x7f080015;
+        public static final int description=0x7f080013;
+        public static final int driver_address=0x7f080030;
+        public static final int driver_id=0x7f08002f;
+        public static final int driver_license=0x7f080032;
+        public static final int driver_name=0x7f08002e;
+        public static final int driver_phone_no=0x7f080031;
+        public static final int edit=0x7f08001c;
+        public static final int event_number=0x7f080026;
+        public static final int gridView1=0x7f080016;
+        public static final int heading=0x7f080020;
+        public static final int home=0x7f080018;
+        public static final int home_header=0x7f080017;
+        public static final int id=0x7f080040;
+        public static final int image_name=0x7f08000f;
+        public static final int input_address=0x7f08003c;
+        public static final int input_age=0x7f08003e;
+        public static final int input_id=0x7f08003a;
+        public static final int input_name=0x7f08003b;
+        public static final int input_phno=0x7f08003d;
+        public static final int is_hospitalized=0x7f08000d;
+        public static final int is_owener=0x7f080033;
+        public static final int item_image=0x7f08002a;
+        public static final int item_text=0x7f08002b;
+        public static final int license_plate=0x7f080039;
+        public static final int listCapturePicture=0x7f080006;
+        public static final int manufacturer=0x7f080035;
+        public static final int menu=0x7f080019;
+        public static final int model=0x7f080036;
+        public static final int name=0x7f08003f;
+        public static final int pager=0x7f080000;
+        public static final int pager_title_strip=0x7f080001;
+        public static final int phone=0x7f080042;
+        public static final int policy_number=0x7f080023;
+        public static final int realtabcontent=0x7f080002;
+        public static final int recy=0x7f080021;
+        public static final int save_right=0x7f08001d;
+        public static final int screens_header=0x7f08001e;
+        public static final int send=0x7f08001b;
+        public static final int station_name=0x7f080029;
+        public static final int tab_icon=0x7f08002d;
+        public static final int tabsLayout=0x7f08002c;
+        public static final int textView1=0x7f080003;
+        public static final int textView2=0x7f080004;
+        public static final int time=0x7f080012;
+        public static final int towing=0x7f08001a;
+        public static final int unit_name=0x7f080028;
+        public static final int vehical_type=0x7f080034;
+        public static final int year=0x7f080038;
     }
     public static final class layout {
         public static final int activity_collection_demo=0x7f030000;
@@ -109,79 +155,101 @@ public final class R {
         public static final int fragment_section_dummy=0x7f030009;
         public static final int fragment_section_launchpad=0x7f03000a;
         public static final int grid=0x7f03000b;
-        public static final int insurance=0x7f03000c;
-        public static final int location=0x7f03000d;
-        public static final int police=0x7f03000e;
-        public static final int row_grid=0x7f03000f;
-        public static final int tabs_icon=0x7f030010;
-        public static final int third_party=0x7f030011;
-        public static final int vehical=0x7f030012;
-        public static final int wittness_alert=0x7f030013;
-        public static final int wittness_row=0x7f030014;
+        public static final int header=0x7f03000c;
+        public static final int insurance=0x7f03000d;
+        public static final int location=0x7f03000e;
+        public static final int police=0x7f03000f;
+        public static final int row_grid=0x7f030010;
+        public static final int tabs_icon=0x7f030011;
+        public static final int third_party=0x7f030012;
+        public static final int vehical=0x7f030013;
+        public static final int wittness_alert=0x7f030014;
+        public static final int wittness_row=0x7f030015;
     }
     public static final class string {
         public static final int address=0x7f060008;
         public static final int age=0x7f06000b;
         /**  Insurance 
          */
-        public static final int agency_name=0x7f060013;
-        public static final int agency_name_dt=0x7f060017;
-        public static final int agent_name=0x7f060015;
-        public static final int agent_name_dt=0x7f060019;
-        public static final int agent_number=0x7f060016;
-        public static final int agent_number_dt=0x7f06001a;
+        public static final int agency_name=0x7f060016;
+        public static final int agency_name_dt=0x7f06001a;
+        public static final int agent_name=0x7f060018;
+        public static final int agent_name_dt=0x7f06001c;
+        public static final int agent_number=0x7f060019;
+        public static final int agent_number_dt=0x7f06001d;
         public static final int app_name=0x7f060000;
-        public static final int case_number=0x7f06002a;
-        public static final int case_number_dt=0x7f06002e;
-        public static final int color=0x7f060025;
+        public static final int case_number=0x7f060030;
+        public static final int case_number_dt=0x7f060035;
+        public static final int casulty=0x7f060010;
+        public static final int click_hear=0x7f06000f;
+        public static final int color=0x7f06002a;
+        public static final int damage_dis=0x7f06003f;
+        /**  Damage 
+         */
+        public static final int damage_text=0x7f06003e;
         /** Date Time  
          */
-        public static final int date=0x7f06000f;
+        public static final int date=0x7f060011;
+        public static final int datetime=0x7f060013;
         public static final int demo_collection=0x7f060003;
         public static final int demo_external_activity=0x7f060002;
-        public static final int des=0x7f060012;
+        public static final int des=0x7f060015;
         /** Description  
          */
-        public static final int description=0x7f060011;
+        public static final int description=0x7f060014;
         /** Third Party  
          */
-        public static final int driver_name=0x7f06001b;
-        public static final int driver_name_dt=0x7f06001d;
+        public static final int driver_name=0x7f06001f;
+        public static final int driver_name_dt=0x7f060021;
         public static final int dummy_section_text=0x7f060001;
         /** Police  
          */
-        public static final int event_number=0x7f060029;
-        public static final int event_number_dt=0x7f06002d;
+        public static final int event_number=0x7f06002f;
+        public static final int event_number_dt=0x7f060034;
         /**  Casulty 
          */
         public static final int full_name=0x7f060005;
         public static final int full_name_dt=0x7f060006;
         public static final int id=0x7f060007;
+        public static final int ids=0x7f060038;
         public static final int images=0x7f060004;
+        public static final int insurance=0x7f06001e;
         public static final int is_hos=0x7f06000d;
         public static final int is_hospitalized=0x7f06000c;
-        public static final int is_owner=0x7f060020;
-        public static final int is_vehical_owner=0x7f06001f;
-        public static final int license_number=0x7f06001c;
-        public static final int license_number_dt=0x7f06001e;
-        public static final int license_plate=0x7f060027;
-        public static final int license_plate_dt=0x7f060028;
-        public static final int manufacturer=0x7f060023;
-        public static final int model=0x7f060024;
+        public static final int is_owner=0x7f060024;
+        public static final int is_vehical_owner=0x7f060023;
+        public static final int license_number=0x7f060020;
+        public static final int license_number_dt=0x7f060022;
+        public static final int license_plate=0x7f06002c;
+        public static final int license_plate_dt=0x7f06002d;
+        public static final int load_map=0x7f06003b;
+        /**  Location Map 
+         */
+        public static final int location_map=0x7f06003a;
+        public static final int manufacturer=0x7f060028;
+        public static final int model=0x7f060029;
         public static final int phone_no=0x7f060009;
         public static final int phone_no_dt=0x7f06000a;
-        public static final int policy_number=0x7f060014;
-        public static final int policy_number_dt=0x7f060018;
+        public static final int picture_dis=0x7f06003d;
+        /**  Picture 
+         */
+        public static final int picture_text=0x7f06003c;
+        public static final int police=0x7f060033;
+        public static final int policy_number=0x7f060017;
+        public static final int policy_number_dt=0x7f06001b;
         public static final int save=0x7f06000e;
-        public static final int station_name=0x7f06002c;
-        public static final int station_name_dt=0x7f060030;
-        public static final int time=0x7f060010;
-        public static final int unit_name=0x7f06002b;
-        public static final int unit_name_dt=0x7f06002f;
+        public static final int station_name=0x7f060032;
+        public static final int station_name_dt=0x7f060037;
+        public static final int thirdparty=0x7f060025;
+        public static final int time=0x7f060012;
+        public static final int unit_name=0x7f060031;
+        public static final int unit_name_dt=0x7f060036;
+        public static final int vehical=0x7f06002e;
         /** Vehical  
          */
-        public static final int vehical_type=0x7f060021;
-        public static final int vehical_type_dt=0x7f060022;
-        public static final int year=0x7f060026;
+        public static final int vehical_type=0x7f060026;
+        public static final int vehical_type_dt=0x7f060027;
+        public static final int witness=0x7f060039;
+        public static final int year=0x7f06002b;
     }
 }

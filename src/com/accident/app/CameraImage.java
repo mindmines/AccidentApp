@@ -40,13 +40,13 @@ public class CameraImage extends BaseFragment {
 
 	public static final int MEDIA_TYPE_IMAGE = 1;
 
-	Button btnCapturePicture;
+	//Button btnCapturePicture;
 	private Uri fileUri; // file url to store image/video
 	ListView imageList;
 	static String filename;
 
 	CommentList cmtlist;
-
+	MainActivity mContext;
 	public static ArrayList<Comments> imgList = new ArrayList<Comments>();
 
 	@Override
@@ -55,17 +55,20 @@ public class CameraImage extends BaseFragment {
 
 		final View rootView = inflater.inflate(R.layout.camera, container,
 				false);
-		button = (Button) rootView.findViewById(R.id.button);
+		mContext = (MainActivity) this.getActivity();
+		AppConstants.isFront = true;
+		mContext.CallHeaderVisiblity();
+		button = (Button) rootView.findViewById(R.id.click_hear);
 
-		btnCapturePicture = (Button) rootView
-				.findViewById(R.id.btnCapturePicture);
+		/*btnCapturePicture = (Button) rootView
+				.findViewById(R.id.btnCapturePicture);*/
 		imageList = (ListView) rootView.findViewById(R.id.listCapturePicture);
 
 		cmtlist = new CommentList(getActivity(), imgList);
 		imageList.setAdapter(cmtlist);
 		if (imgList.size() > 0) {
 			button.setVisibility(View.GONE);
-			btnCapturePicture.setVisibility(View.VISIBLE);
+			//btnCapturePicture.setVisibility(View.VISIBLE);
 			imageList.setVisibility(View.VISIBLE);
 		}
 
@@ -73,15 +76,6 @@ public class CameraImage extends BaseFragment {
 			@Override
 			public void onClick(View view) {
 
-				captureImage();
-			}
-		});
-
-		btnCapturePicture.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// capture picture
 				captureImage();
 			}
 		});
@@ -150,11 +144,13 @@ public class CameraImage extends BaseFragment {
 				// launchUploadActivity(true);
 
 				button.setVisibility(View.GONE);
-				btnCapturePicture.setVisibility(View.VISIBLE);
+				//btnCapturePicture.setVisibility(View.VISIBLE);
 				imageList.setVisibility(View.VISIBLE);
 
 				imgList.add(new Comments(filename, fileUri.getPath()));
 				cmtlist.notifyDataSetChanged();
+				Toast.makeText(getActivity(), "Image Saved",
+						Toast.LENGTH_SHORT).show();
 
 			} else if (resultCode == Activity.RESULT_CANCELED) {
 

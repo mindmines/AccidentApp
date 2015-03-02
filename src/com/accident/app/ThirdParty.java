@@ -24,12 +24,17 @@ public class ThirdParty extends BaseFragment {
 	private Button Save;
 	DBhelper dBhelper;
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+	int currentIDs;
+	MainActivity mContext;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	
 		View rootView = inflater.inflate(R.layout.third_party,
 				container, false);
+		mContext = (MainActivity) this.getActivity();
+		AppConstants.isFront = false;
+		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		
 		driver_name =(EditText) rootView.findViewById(R.id.driver_name);
@@ -61,8 +66,8 @@ public class ThirdParty extends BaseFragment {
 		DriverLicense=driver_license.getText().toString().trim();
 		
 		if(!full_name.equals(null) && !id.equals(null) && !address.equals(null) && !phone_no.equals(null) && !DriverLicense.equals(null)){
-			
-		dBhelper.insertThirdParty(full_name, id, address, phone_no, DriverLicense, isOwener.isChecked(), isUpdate());
+			currentIDs = mActivity.getIds();
+		dBhelper.insertThirdParty(currentIDs,full_name, id, address, phone_no, DriverLicense, isOwener.isChecked(), isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -71,11 +76,12 @@ public class ThirdParty extends BaseFragment {
 	
 	private boolean isUpdate(){
 		list = dBhelper.getData(dBhelper.TABLE_NAME_THIRD_PARTY);
-		boolean value;
-		if(list.size()>0)
-			value = true;
-		else 
-			value =false;
-		return value;
+		for(int i=0;i<list.size();i++){
+			int s = (Integer) list.get(i).get(AppConstants.ITEM0);
+			if(currentIDs == s)
+				return true;
+		
+		}
+		return false;
 	}
 }

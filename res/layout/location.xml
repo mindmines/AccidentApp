@@ -1,15 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:padding="@dimen/activity_horizontal_margin"
     android:orientation="vertical" >
-
+    
+    
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Map coming soon...."
-        android:layout_gravity="center"
+        android:text="@string/location_map"
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:drawableTop="@drawable/location_map"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-</LinearLayout>
+    
+   <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/load_map"
+        android:textColor="@android:color/white"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+   
+   
+    <Button
+        android:id="@+id/click_hear"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/roundcorner"
+        android:paddingTop="@dimen/botton_padding"
+        android:paddingBottom="@dimen/botton_padding"
+        android:text="@string/click_hear" />
+    
+</RelativeLayout>

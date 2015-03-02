@@ -23,7 +23,7 @@
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:text="DEMO"
-        android:visibility="gone"
+        android:visibility="visible"
         android:textSize="14sp" >
     </TextView>
 

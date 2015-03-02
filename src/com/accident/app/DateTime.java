@@ -9,6 +9,7 @@ import com.accident.app.dbhelper.DBhelper;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,12 +30,17 @@ public class DateTime extends BaseFragment implements OnClickListener{
 	int mHour, mMinute,mYear, mMonth, mDay;
 	DBhelper dBhelper;
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+	int currentIDs;
+	MainActivity mContext;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	
 		View rootView = inflater.inflate(R.layout.date_time,
 				container, false);
+		mContext = (MainActivity) this.getActivity();
+		AppConstants.isFront = false;
+		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		
 		Date =(EditText) rootView.findViewById(R.id.date);
@@ -104,7 +110,8 @@ public class DateTime extends BaseFragment implements OnClickListener{
 		String putDate =Date.getText().toString().trim();
 		String putTime =  Time.getText().toString().trim();
 		if(!putDate.equals(null) && !putTime.equals(null)){
-		dBhelper.insertDateTime(putDate,putTime,isUpdate());
+			currentIDs = mActivity.getIds();
+		dBhelper.insertDateTime(currentIDs,putDate,putTime,isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -113,12 +120,14 @@ public class DateTime extends BaseFragment implements OnClickListener{
 	
 	private boolean isUpdate(){
 		list = dBhelper.getData(dBhelper.TABLE_NAME_DATE_TIME);
-		boolean value;
-		if(list.size()>0)
-			value = true;
-		else 
-			value =false;
-		return value;
+		
+		for(int i=0;i<list.size();i++){
+			int s = (Integer) list.get(i).get(AppConstants.ITEM0);
+			if(currentIDs == s)
+				return true;
+		
+		}
+		return false;
 	}
 	
 }

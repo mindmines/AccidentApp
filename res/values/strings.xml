@@ -35,10 +35,13 @@
     <string name="is_hospitalized">Was he/she taken to hospital?</string>
     <string name="is_hos">hospitalized</string>
     <string name="save">Save</string>
+    <string name="click_hear">Click Hear</string>
+    <string name="casulty">Casulty</string>
     
     <!--Date Time  -->
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="datetime">Date and Time</string>
     
     <!--Description  -->
     <string name="description">Description of Accident</string>
@@ -54,6 +57,7 @@
     <string name="policy_number_dt">PolicyNumber</string>
     <string name="agent_name_dt">AgentName</string>
     <string name="agent_number_dt">AgentNumber</string>
+    <string name="insurance">Insurance</string>
     
     <!--Third Party  -->
       <string name="driver_name">Driver Name</string>
@@ -62,6 +66,7 @@
     <string name="license_number_dt">LicenseNumber</string>
      <string name="is_vehical_owner">The driver is not the vehicle owner?</string>
      <string name="is_owner">isOwner</string>
+     <string name="thirdparty">Third Party</string>
     
      <!--Vehical  -->
     <string name="vehical_type">Vehical Type</string>
@@ -72,16 +77,40 @@
     <string name="year">Year</string>
     <string name="license_plate">License Plate</string>
     <string name="license_plate_dt">LicensePlate</string>
+    <string name="vehical">Vehical</string>
     
     <!--Police  -->
     <string name="event_number">Event Number</string>
     <string name="case_number">Case Number</string>
     <string name="unit_name">Unit Name</string>
     <string name="station_name">Station Name</string>
+    <string name="police">Police</string>
     
     <string name="event_number_dt">EventNumber</string>
     <string name="case_number_dt">CaseNumber</string>
     <string name="unit_name_dt">UnitName</string>
     <string name="station_name_dt">StationName</string>
+    
+    <string name="ids">ids</string>
+    
+    <string name="witness">Witness</string>
+    
+    
+    <!-- Location Map -->
+    
+     <string name="location_map">Location Map</string>
+     <string name="load_map">To Load a Map or your Location</string>
+     <!-- Picture -->
+     <string name="picture_text">Picture</string>
+     <string name="picture_dis">Take a Picture of the Accident</string>
+     
+     <!-- Damage -->
+     <string name="damage_text">Damage</string>
+     <string name="damage_dis">Draw a vehical damage sketch</string>
+    
+    <!--Color  -->
+     <color name="blue">#007aff</color>
+     <color name="green">#009900</color>
+     <color name="gray">#d6d6d6</color>
     
 </resources>

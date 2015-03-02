@@ -23,11 +23,16 @@ public class Description extends BaseFragment {
 	private Button Save;
 	DBhelper dBhelper;
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+	int currentIDs;
+	MainActivity mContext;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.description,
 				container, false);
+		mContext = (MainActivity) this.getActivity();
+		AppConstants.isFront = false;
+		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		Description =(EditText) rootView.findViewById(R.id.description);
 		Save = (Button)rootView.findViewById(R.id.cas_save);
@@ -46,7 +51,8 @@ public class Description extends BaseFragment {
 		
 		description =Description.getText().toString().trim();
 		if(!description.equals(null)){
-		dBhelper.insertDescription(description,isUpdate());
+			currentIDs = mActivity.getIds();
+		dBhelper.insertDescription(currentIDs,description,isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -55,11 +61,12 @@ public class Description extends BaseFragment {
 	
 	private boolean isUpdate(){
 		list = dBhelper.getData(DBhelper.TABLE_NAME_DESCRIPTION);
-		boolean value;
-		if(list.size()>0)
-			value = true;
-		else 
-			value =false;
-		return value;
+		for(int i=0;i<list.size();i++){
+			int s = (Integer) list.get(i).get(AppConstants.ITEM0);
+			if(currentIDs == s)
+				return true;
+		
+		}
+		return false;
 	}
 }

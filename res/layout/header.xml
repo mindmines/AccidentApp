@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue"
+    android:padding="10dp"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/home_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" >
+
+        <ImageButton
+            android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/images"
+            android:background="@null"
+            android:paddingLeft="5dp"
+            android:src="@drawable/home" />
+
+        <ImageButton
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/images"
+            android:background="@null"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:src="@drawable/menu" />
+
+        <ImageButton
+            android:id="@+id/towing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/menu"
+            android:contentDescription="@string/images"
+            android:background="@null"
+            android:paddingLeft="5dp"
+            android:src="@drawable/towing" />
+
+        <ImageButton
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/towing"
+            android:contentDescription="@string/images"
+            android:background="@null"
+            android:paddingLeft="5dp"
+            android:src="@drawable/send" />
+
+        <ImageButton
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/send"
+            android:contentDescription="@string/images"
+            android:background="@null"
+            android:paddingLeft="5dp"
+            android:src="@drawable/edit" />
+
+        <ImageButton
+            android:id="@+id/save_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/edit"
+            android:contentDescription="@string/images"
+            android:background="@null"
+            android:paddingLeft="5dp"
+            android:src="@drawable/saved" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/screens_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" >
+
+        <ImageButton
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@string/images"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:text="@string/images" />
+
+        <ImageButton
+            android:id="@+id/recy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/images"
+            android:src="@drawable/ic_launcher" />
+    </RelativeLayout>
+
+</LinearLayout>

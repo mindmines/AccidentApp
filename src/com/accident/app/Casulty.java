@@ -24,12 +24,17 @@ public class Casulty extends BaseFragment {
 	private Button Save;
 	DBhelper dBhelper;
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+	int currentIDs;
+	MainActivity mContext;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	
 		View rootView = inflater.inflate(R.layout.casulty,
 				container, false);
+		mContext = (MainActivity) this.getActivity();
+		AppConstants.isFront = false;
+		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		cas_full_name =(EditText) rootView.findViewById(R.id.cas_full_name);
 		cas_id =(EditText) rootView.findViewById(R.id.cas_id);
@@ -59,10 +64,10 @@ public class Casulty extends BaseFragment {
 		phone_no=cas_phone_no.getText().toString().trim();
 		age=cas_age.getText().toString().trim();
 		
-		Toast.makeText(getActivity(), ""+full_name+"  "+ id +"  "+address+"  "+ phone_no+"  "+ age+"  "+isUpdate(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getActivity(), ""+full_name+"  "+ id +"  "+address+"  "+ phone_no+"  "+ age+"  "+isUpdate(), Toast.LENGTH_SHORT).show();
 		if(!full_name.equals(null) && !id.equals(null) && !address.equals(null) && !phone_no.equals(null) && !age.equals(null)){
-			
-		dBhelper.insertCasulty(full_name, id, address, phone_no, age, isHospitalized.isChecked(), isUpdate());
+			currentIDs = mActivity.getIds();
+		dBhelper.insertCasulty(currentIDs,full_name, id, address, phone_no, age, isHospitalized.isChecked(), isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -71,12 +76,13 @@ public class Casulty extends BaseFragment {
 	
 	private boolean isUpdate(){
 		list = dBhelper.getData(dBhelper.TABLE_NAME_CASUALTIES);
-		boolean value;
-		if(list.size()>0)
-			value = true;
-		else 
-			value =false;
-		return value;
+		for(int i=0;i<list.size();i++){
+			int s = (Integer) list.get(i).get(AppConstants.ITEM0);
+			if(currentIDs == s)
+				return true;
+		
+		}
+		return false;
 	}
 	
 	

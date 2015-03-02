@@ -54,6 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/roundcorner"
+        android:paddingTop="@dimen/botton_padding"
+        android:paddingBottom="@dimen/botton_padding"
         android:text="@string/save" />
 
 </RelativeLayout>

@@ -7,6 +7,7 @@ public class AppConstants {
 	public static final String TAB_PICTURES = "Pictures";
 	public static final String TAB_IMAGES ="Images";
 	
+	public static final String ITEM0 = "item0";
 	public static final String ITEM1 = "item1";
 	public static final String ITEM2 = "item2";
 	public static final String ITEM3 = "item3";
@@ -17,6 +18,8 @@ public class AppConstants {
 	public static final String ITEM8 = "item8";
 	public static final String ITEM9 = "item9";
 	
+	
+	public static boolean isFront = false;
 	   //Your other constants, if you have them..
 
 }

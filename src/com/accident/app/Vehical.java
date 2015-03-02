@@ -23,12 +23,17 @@ public class Vehical extends BaseFragment {
 	private Button Save;
 	DBhelper dBhelper;
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+	int currentIDs;
+	MainActivity mContext;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 	
 		View rootView = inflater.inflate(R.layout.vehical,
 				container, false);
+		mContext = (MainActivity) this.getActivity();
+		AppConstants.isFront = false;
+		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		
 		vehical_type =(EditText) rootView.findViewById(R.id.vehical_type);
@@ -61,8 +66,8 @@ public class Vehical extends BaseFragment {
 		licensePlate = license_plate.getText().toString().trim();
 		
 		if(!vehicalType.equals(null) && !Manufacturer.equals(null) && !vModel.equals(null) && !vColor.equals(null) && !vYear.equals(null) && !licensePlate.equals(null)){
-			
-		dBhelper.insertVehical(vehicalType, Manufacturer, vModel, vColor, vYear, licensePlate, isUpdate());
+			currentIDs = mActivity.getIds();
+		dBhelper.insertVehical(currentIDs,vehicalType, Manufacturer, vModel, vColor, vYear, licensePlate, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
@@ -71,11 +76,12 @@ public class Vehical extends BaseFragment {
 	
 	private boolean isUpdate(){
 		list = dBhelper.getData(dBhelper.TABLE_NAME_VEHICLE);
-		boolean value;
-		if(list.size()>0)
-			value = true;
-		else 
-			value =false;
-		return value;
+		for(int i=0;i<list.size();i++){
+			int s = (Integer) list.get(i).get(AppConstants.ITEM0);
+			if(currentIDs == s)
+				return true;
+		
+		}
+		return false;
 	}
 }

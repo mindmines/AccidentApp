@@ -1,7 +1,12 @@
 package com.accident.app;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Stack;
+
+import com.accident.app.dbhelper.DBhelper;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +17,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
     /* Your Tab host */
@@ -23,11 +30,19 @@ public class MainActivity extends FragmentActivity {
 
     /*Save current tabs identifier in this..*/
     private String mCurrentTab;
-
+    DBhelper dBhelper;
+    ArrayList<HashMap<String,Object>> lst = new ArrayList<HashMap<String,Object>>();
+    public RelativeLayout homeLayour, ScreensLayout;
+    
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        dBhelper = new DBhelper(this);
+        
+        homeLayour = (RelativeLayout)findViewById(R.id.home_header);
+        ScreensLayout = (RelativeLayout)findViewById(R.id.screens_header);
+        
+        CallReportTable();
         /*  
          *  Navigation stacks for each tab gets created.. 
          *  tab identifier is used as key to get respective stack for each tab
@@ -46,7 +61,38 @@ public class MainActivity extends FragmentActivity {
         initializeTabs();
     }
 
+    private void CallReportTable(){
+    	String Date = GetCurrentDate();
+    	dBhelper.insertReport(Date, isUpdate(Date));
+    }
+    
+    public String GetCurrentDate(){
+    	Calendar c = Calendar.getInstance(); 
+    	return (""+c.get(Calendar.DAY_OF_MONTH)+"-"+(c.get(Calendar.MONTH)+1)+"-"+c.get(Calendar.YEAR));
+    	//return (""+1+"-"+3+"-"+2015);
+    }
+    
+    public int getIds(){
+    	lst.clear();
+    	lst = dBhelper.getData(dBhelper.TABLE_NAME_REPORT);
+    	String Date = GetCurrentDate();
+    	for(int i=0;i<lst.size();i++){
+    		String s = lst.get(i).get(AppConstants.ITEM1).toString();
+    		if(Date.equals(s))
+    			return (Integer) lst.get(i).get(AppConstants.ITEM0);
+    	}
+    	return 5;
+    }
 
+    private boolean isUpdate(String Date){
+		lst = dBhelper.getData(dBhelper.TABLE_NAME_REPORT);
+		for(int i=0;i<lst.size();i++){
+		String s = lst.get(i).get(AppConstants.ITEM1).toString();
+		if(Date.equals(s))
+			return true;
+		}
+		return false;
+	}
     private View createTabView(final int id,String text) {
         View view = LayoutInflater.from(this).inflate(R.layout.tabs_icon, null);
         ImageView imageView =   (ImageView) view.findViewById(R.id.tab_icon);
@@ -74,7 +120,7 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.ic_launcher,""));
+        spec.setIndicator(createTabView(R.drawable.location,""));
         mTabHost.addTab(spec);
         
         
@@ -85,7 +131,7 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.ic_launcher,""));
+        spec.setIndicator(createTabView(R.drawable.picture,""));
         mTabHost.addTab(spec);
         
         
@@ -96,7 +142,7 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.ic_launcher,""));
+        spec.setIndicator(createTabView(R.drawable.damage,""));
         mTabHost.addTab(spec);
        
        
@@ -226,5 +272,15 @@ public class MainActivity extends FragmentActivity {
 
         /*Now current fragment on screen gets onActivityResult callback..*/
         mStacks.get(mCurrentTab).lastElement().onActivityResult(requestCode, resultCode, data);
+    }
+    
+    public void CallHeaderVisiblity(){
+    	if(AppConstants.isFront){
+    		homeLayour.setVisibility(View.VISIBLE);
+    		ScreensLayout.setVisibility(View.GONE);
+    	}else{
+    		ScreensLayout.setVisibility(View.VISIBLE);
+    		homeLayour.setVisibility(View.GONE);
+    	}
     }
 }
