@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class DateTime extends BaseFragment implements OnClickListener{
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 	int currentIDs;
 	MainActivity mContext;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class DateTime extends BaseFragment implements OnClickListener{
 		AppConstants.isFront = false;
 		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
+		
+		mContext.HeadingText.setText(getResources().getString(R.string.datetime));	
 		
 		Date =(EditText) rootView.findViewById(R.id.date);
 		Time =(EditText) rootView.findViewById(R.id.time);

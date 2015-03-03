@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ThirdParty extends BaseFragment {
@@ -37,6 +38,7 @@ public class ThirdParty extends BaseFragment {
 		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		
+		mContext.HeadingText.setText(getResources().getString(R.string.thirdparty));	
 		driver_name =(EditText) rootView.findViewById(R.id.driver_name);
 		driver_id =(EditText) rootView.findViewById(R.id.driver_id);
 		driver_address =(EditText) rootView.findViewById(R.id.driver_address);

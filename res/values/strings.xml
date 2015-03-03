@@ -24,6 +24,8 @@
     
     <string name="images">Images</string>
     
+    <string name="get_location">Get Current Location</string>
+    
     <!-- Casulty -->
     <string name="full_name">Full Name</string>
     <string name="full_name_dt">FullName</string>
@@ -37,6 +39,7 @@
     <string name="save">Save</string>
     <string name="click_hear">Click Hear</string>
     <string name="casulty">Casulty</string>
+    <string name="cancel">Cancel</string>
     
     <!--Date Time  -->
     <string name="date">Date</string>
@@ -95,6 +98,8 @@
     
     <string name="witness">Witness</string>
     
+    <!--IMAGE PATH  -->
+    <string name="img_path">ImagePath</string>
     
     <!-- Location Map -->
     

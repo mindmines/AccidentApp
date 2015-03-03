@@ -33,6 +33,7 @@ public class Description extends BaseFragment {
 		mContext = (MainActivity) this.getActivity();
 		AppConstants.isFront = false;
 		mContext.CallHeaderVisiblity();
+		mContext.HeadingText.setText(getResources().getString(R.string.des));	
 		dBhelper = new DBhelper(getActivity());
 		Description =(EditText) rootView.findViewById(R.id.description);
 		Save = (Button)rootView.findViewById(R.id.cas_save);

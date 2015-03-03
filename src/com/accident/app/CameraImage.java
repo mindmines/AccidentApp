@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import com.accident.app.adapter.CommentList;
+import com.accident.app.dbhelper.DBhelper;
 import com.accident.app.util.Comments;
 import com.accident.app.util.Config;
 
@@ -31,7 +32,7 @@ public class CameraImage extends BaseFragment {
 
 	Button button;
 	ImageView imageView;
-
+	int currentIDs;
 	// LogCat tag
 	private static final String TAG = CameraImage.class.getSimpleName();
 
@@ -40,11 +41,11 @@ public class CameraImage extends BaseFragment {
 
 	public static final int MEDIA_TYPE_IMAGE = 1;
 
-	//Button btnCapturePicture;
+	Button btnCapturePicture;
 	private Uri fileUri; // file url to store image/video
 	ListView imageList;
 	static String filename;
-
+	DBhelper dBhelper;
 	CommentList cmtlist;
 	MainActivity mContext;
 	public static ArrayList<Comments> imgList = new ArrayList<Comments>();
@@ -58,21 +59,30 @@ public class CameraImage extends BaseFragment {
 		mContext = (MainActivity) this.getActivity();
 		AppConstants.isFront = true;
 		mContext.CallHeaderVisiblity();
+		dBhelper = new DBhelper(getActivity());
 		button = (Button) rootView.findViewById(R.id.click_hear);
 
-		/*btnCapturePicture = (Button) rootView
-				.findViewById(R.id.btnCapturePicture);*/
+		btnCapturePicture = (Button) rootView
+				.findViewById(R.id.btnCapturePicture);
 		imageList = (ListView) rootView.findViewById(R.id.listCapturePicture);
 
 		cmtlist = new CommentList(getActivity(), imgList);
 		imageList.setAdapter(cmtlist);
 		if (imgList.size() > 0) {
 			button.setVisibility(View.GONE);
-			//btnCapturePicture.setVisibility(View.VISIBLE);
+			btnCapturePicture.setVisibility(View.VISIBLE);
 			imageList.setVisibility(View.VISIBLE);
 		}
 
 		button.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+
+				captureImage();
+			}
+		});
+		
+		btnCapturePicture.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 
@@ -94,10 +104,11 @@ public class CameraImage extends BaseFragment {
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 
 		// start the image capture Intent
-		startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+		getActivity().startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
 	}
 
 	public Uri getOutputMediaFileUri(int type) {
+
 		return Uri.fromFile(getOutputMediaFile(type));
 	}
 
@@ -117,11 +128,11 @@ public class CameraImage extends BaseFragment {
 				return null;
 			}
 		}
-
 		// Create a media file name
 		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
 				Locale.getDefault()).format(new Date());
 		File mediaFile;
+		
 		if (type == MEDIA_TYPE_IMAGE) {
 			filename = mediaStorageDir.getPath() + File.separator + "IMG_"
 					+ timeStamp + ".jpg";
@@ -138,27 +149,29 @@ public class CameraImage extends BaseFragment {
 		// if the result is capturing Image
 		if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
 			if (resultCode == Activity.RESULT_OK) {
-
 				// successfully captured the image
 				// launching upload activity
 				// launchUploadActivity(true);
 
+				currentIDs = mActivity.getIds();
+				
+				dBhelper.insertImagePath(currentIDs,filename);
+				Log.e("Image", "Saved");
 				button.setVisibility(View.GONE);
-				//btnCapturePicture.setVisibility(View.VISIBLE);
+				btnCapturePicture.setVisibility(View.VISIBLE);
 				imageList.setVisibility(View.VISIBLE);
 
 				imgList.add(new Comments(filename, fileUri.getPath()));
 				cmtlist.notifyDataSetChanged();
-				Toast.makeText(getActivity(), "Image Saved",
-						Toast.LENGTH_SHORT).show();
 
 			} else if (resultCode == Activity.RESULT_CANCELED) {
-
+				Log.e("Image", "cancel");
 				// user cancelled Image capture
 				Toast.makeText(getActivity(), "User cancelled image capture",
 						Toast.LENGTH_SHORT).show();
 
 			} else {
+				Log.e("Image", "failed");
 				// failed to capture image
 				Toast.makeText(getActivity(), "Sorry! Failed to capture image",
 						Toast.LENGTH_SHORT).show();

@@ -1,27 +1,55 @@
 package com.accident.app;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Stack;
 
 import com.accident.app.dbhelper.DBhelper;
+import com.accident.app.util.Config;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.HeaderFooter;
+import com.lowagie.text.Image;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfWriter;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnClickListener{
     /* Your Tab host */
     private TabHost mTabHost;
 
@@ -31,6 +59,11 @@ public class MainActivity extends FragmentActivity {
     /*Save current tabs identifier in this..*/
     private String mCurrentTab;
     DBhelper dBhelper;
+    //header
+    public TextView HeadingText;
+    ImageView mHomeIcon,mMenu,mTowing,mSend,mEdit,mSave,mClose,mDelete;
+    
+    
     ArrayList<HashMap<String,Object>> lst = new ArrayList<HashMap<String,Object>>();
     public RelativeLayout homeLayour, ScreensLayout;
     
@@ -41,6 +74,26 @@ public class MainActivity extends FragmentActivity {
         
         homeLayour = (RelativeLayout)findViewById(R.id.home_header);
         ScreensLayout = (RelativeLayout)findViewById(R.id.screens_header);
+        
+        //Header
+        HeadingText = (TextView)findViewById(R.id.heading);
+        mHomeIcon = (ImageView)findViewById(R.id.home);
+        mMenu = (ImageView)findViewById(R.id.menu); 
+        mTowing = (ImageView)findViewById(R.id.towing);
+        mSend = (ImageView)findViewById(R.id.send);
+        mEdit = (ImageView)findViewById(R.id.edit);
+        mSave = (ImageView)findViewById(R.id.save_right);
+        mClose = (ImageView)findViewById(R.id.close);
+        mDelete = (ImageView)findViewById(R.id.delete);
+        
+        mHomeIcon.setOnClickListener(this);
+        mMenu.setOnClickListener(this); 
+        mTowing.setOnClickListener(this);
+        mSend.setOnClickListener(this);
+        mEdit.setOnClickListener(this);
+        mSave.setOnClickListener(this);
+        mClose.setOnClickListener(this);
+        mDelete.setOnClickListener(this);
         
         CallReportTable();
         /*  
@@ -109,7 +162,7 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.ic_launcher,""));
+        spec.setIndicator(createTabView(R.drawable.detail_selector,""));
         mTabHost.addTab(spec);
 
         //Search
@@ -120,7 +173,7 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.location,""));
+        spec.setIndicator(createTabView(R.drawable.location_selector,""));
         mTabHost.addTab(spec);
         
         
@@ -131,7 +184,7 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.picture,""));
+        spec.setIndicator(createTabView(R.drawable.picture_selector,""));
         mTabHost.addTab(spec);
         
         
@@ -142,7 +195,7 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.damage,""));
+        spec.setIndicator(createTabView(R.drawable.damage_selector,""));
         mTabHost.addTab(spec);
        
        
@@ -283,4 +336,191 @@ public class MainActivity extends FragmentActivity {
     		homeLayour.setVisibility(View.GONE);
     	}
     }
+
+	@Override
+	public void onClick(View v) {
+	switch (v.getId()) {
+	case R.id.home:
+		//CallHomeButton();
+		break;
+	
+	case R.id.menu:
+		CallMenuButton();
+		break;
+	case R.id.towing:
+		CallTowingButton();
+		break;
+	case R.id.send:
+		CallSendButton();
+		break;
+	case R.id.edit:
+		CallEditButton();
+		break;
+	case R.id.save_right:
+		CallSaveButton();
+		break;		
+	case R.id.close:
+		CallCloseButton();
+		break;	
+	case R.id.delete:
+		CallDeleteButton();
+		break;			
+		}
+	}
+
+	
+	private void CallHomeButton(){	
+	if(!mCurrentTab.equals(AppConstants.TAB_DETAILS))
+		pushFragments(AppConstants.TAB_DETAILS, new GridFragment(), false,true);
+	else
+		Toast.makeText(MainActivity.this, "Currently at Home", Toast.LENGTH_SHORT).show();
+	}
+	
+private void CallMenuButton(){
+	
+	 PopupMenu popup = new PopupMenu(MainActivity.this, mMenu);  
+     //Inflating the Popup using xml file  
+     popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());  
+    
+     //registering popup with OnMenuItemClickListener  
+     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {  
+      public boolean onMenuItemClick(MenuItem item) {  
+       Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();  
+       return true;  
+      }  
+     });  
+
+     popup.show();//showing popup menu  
+}
+
+private void CallTowingButton(){
+	
+	final Dialog dialog = new Dialog(MainActivity.this);
+	dialog.setContentView(R.layout.towing_window);
+	dialog.setTitle("Towing");
+
+	// set the custom dialog components - text, image and button
+	EditText dateTowing = (EditText) dialog.findViewById(R.id.date_towing);
+	Button GetLocation = (Button) dialog.findViewById(R.id.get_location);
+	Button Save = (Button) dialog.findViewById(R.id.save_towing);
+	Button Cancel = (Button) dialog.findViewById(R.id.cancel_towing);
+
+	GetLocation.setOnClickListener(new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			dialog.dismiss();
+		}
+	});
+	
+	Save.setOnClickListener(new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			dialog.dismiss();
+		}
+	});
+	
+	// if button is clicked, close the custom dialog
+	Cancel.setOnClickListener(new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			dialog.dismiss();
+		}
+	});
+
+	dialog.show();
+}
+	
+
+
+private void CallSendButton(){
+	
+}
+
+private void CallEditButton(){
+	ArrayList<HashMap<String,Object>> contantList = dBhelper.getData(dBhelper.TABLE_NAME_IMAGE_PATH);
+	Log.e("Working", "size is "+contantList.size());
+	for(int i=0;i<contantList.size();i++)
+	Log.e("Images", contantList.get(0).get(AppConstants.ITEM1).toString());
+}
+
+private void CallSaveButton(){
+	Document doc = new Document();
+	
+	 try {
+		 
+		/* String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+
+				 		Config.IMAGE_DIRECTORY_NAME;*/
+		 
+		 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/droidText";
+		 	File dir = new File(path);
+		        if(!dir.exists())
+		        	dir.mkdirs();
+
+		    Log.d("PDFCreator", "PDF Path: " + path);
+		    
+		   /* String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+					Locale.getDefault()).format(new Date());
+		        
+		    File file = new File(dir,"DOC_"+timeStamp+".pdf");*/
+		    
+		    File file = new File(dir,"sample.pdf");
+		    FileOutputStream fOut = new FileOutputStream(file);
+
+   	 	PdfWriter.getInstance(doc, fOut);
+            
+           //open the document
+           doc.open();
+           
+           
+           Paragraph p1 = new Paragraph("Hi! I am generating my first PDF");
+           Font paraFont= new Font(Font.COURIER);
+           p1.setAlignment(Paragraph.ALIGN_CENTER);
+           p1.setFont(paraFont);
+           
+            //add paragraph to document    
+            doc.add(p1);
+           
+            Paragraph p2 = new Paragraph("This is an example of a simple paragraph");
+            Font paraFont2= new Font(Font.COURIER,14.0f,Color.GREEN);
+            p2.setAlignment(Paragraph.ALIGN_CENTER);
+            p2.setFont(paraFont2);
+            
+            doc.add(p2);
+            
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bitmap = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.ic_launcher);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , stream);
+            Image myImg = Image.getInstance(stream.toByteArray());
+            myImg.setAlignment(Image.MIDDLE);
+           
+            //add image to document
+            doc.add(myImg);
+           
+            //set footer
+            Phrase footerText = new Phrase("This is an example of a footer");
+            HeaderFooter pdfFooter = new HeaderFooter(footerText, false);
+            doc.setFooter(pdfFooter);
+           
+
+           
+    } catch (DocumentException de) {
+            Log.e("PDFCreator", "DocumentException:" + de);
+    } catch (IOException e) {
+            Log.e("PDFCreator", "ioException:" + e);
+    } 
+	 finally
+    {
+            doc.close();
+    }
+}
+
+private void CallCloseButton(){
+	
+}
+
+private void CallDeleteButton(){
+	
+}
+	
+	
 }

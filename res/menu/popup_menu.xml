@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.genratepdf.MainActivity" >
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/images"
+        android:icon="@drawable/location"
+        android:showAsAction="ifRoom"
+        />
+
+      <item
+        android:id="@+id/action_settings2"
+        android:orderInCategory="100"
+        android:title="@string/address"
+        android:icon="@drawable/about_us"
+        android:showAsAction="always"
+        />
+    
+</menu>

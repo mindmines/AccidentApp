@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
@@ -50,33 +50,72 @@
         android:layout_height="fill_parent"
         android:dividerHeight="5dp" />
 
-</RelativeLayout>
+</RelativeLayout> -->
 
 <!-- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" > -->
 
-    <Button
-        android:id="@+id/button"
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Click" />
+        android:text="@string/picture_text"
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:drawableTop="@drawable/picture_click"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    
+   <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/picture_dis"
+        android:textColor="@android:color/white"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/click_hear"
+       android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/roundcorner"
+        android:paddingTop="@dimen/botton_padding"
+        android:paddingBottom="@dimen/botton_padding"
+        android:text="@string/click_hear" />
     
     <Button
         android:id="@+id/btnCapturePicture"
         android:visibility="gone"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Photo" />
+        android:layout_alignParentTop="true"
+        android:background="@drawable/roundcorner"
+        android:paddingTop="@dimen/botton_padding"
+        android:paddingBottom="@dimen/botton_padding"
+        android:text="@string/click_hear" />
 
     <ListView
         android:id="@+id/listCapturePicture"
         android:layout_width="fill_parent"
+        android:layout_below="@+id/btnCapturePicture"
         android:visibility="gone"
         android:layout_height="fill_parent"
         android:dividerHeight="5dp" />
 
-</LinearLayout> -->
+</RelativeLayout>

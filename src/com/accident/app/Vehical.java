@@ -36,6 +36,7 @@ public class Vehical extends BaseFragment {
 		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		
+		mContext.HeadingText.setText(getResources().getString(R.string.vehical));	
 		vehical_type =(EditText) rootView.findViewById(R.id.vehical_type);
 		manufacturer =(EditText) rootView.findViewById(R.id.manufacturer);
 		model =(EditText) rootView.findViewById(R.id.model);

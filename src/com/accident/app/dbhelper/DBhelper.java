@@ -26,6 +26,7 @@ public class DBhelper extends SQLiteOpenHelper{
     public static final String TABLE_NAME_DESCRIPTION = "Description";
     public static final String TABLE_NAME_CASUALTIES = "Casualties";
     public static final String TABLE_NAME_WITNESSES = "Witnesses";
+    public static final String TABLE_NAME_IMAGE_PATH = "ImagePath";
 
 	Context context;
 	Resources resorce;
@@ -101,6 +102,10 @@ public class DBhelper extends SQLiteOpenHelper{
                 resorce.getString(R.string.address)+" TEXT not null, "+
                 resorce.getString(R.string.phone_no_dt)+" TEXT not null, "+
                 resorce.getString(R.string.age)+" TEXT not null)";
+		
+		String CREATE_TABLE_IMAGE_PATH = "CREATE TABLE "+ TABLE_NAME_IMAGE_PATH +"( "+
+				"ids INTEGER , " +
+                resorce.getString(R.string.img_path)+" TEXT not null)";
      
 		db.execSQL(CREATE_TABLE_REPORT);
         db.execSQL(CREATE_TABLE_DATE_TIME);
@@ -111,6 +116,7 @@ public class DBhelper extends SQLiteOpenHelper{
         db.execSQL(CREATE_TABLE_DESCRIPTION);
         db.execSQL(CREATE_TABLE_CASUALTIES);
         db.execSQL(CREATE_TABLE_WITNESSES);
+        db.execSQL(CREATE_TABLE_IMAGE_PATH);
 	}
 
 	@Override
@@ -125,6 +131,7 @@ public class DBhelper extends SQLiteOpenHelper{
 		  db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_DESCRIPTION);
 		  db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_CASUALTIES);
 		  db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_WITNESSES);
+		  db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_IMAGE_PATH);
 	      onCreate(db);
 	}
 	
@@ -293,6 +300,18 @@ public class DBhelper extends SQLiteOpenHelper{
 			db1.close();
 		}
 		
+		 // ImagePath
+		public void insertImagePath(int ids,String path) {
+			SQLiteDatabase db1 = this.getWritableDatabase();
+			ContentValues contentValues = new ContentValues();
+
+			contentValues.put(resorce.getString(R.string.ids), ids);
+			contentValues.put(resorce.getString(R.string.img_path), path);
+
+				db1.insert(TABLE_NAME_IMAGE_PATH, null, contentValues);
+			db1.close();
+		}
+		
 		 public ArrayList<HashMap<String,Object>> getData(String TABLE_NAME) {
 		        ArrayList<HashMap<String,Object>> contantList = new ArrayList<HashMap<String,Object>>();
 		        // Select All Query
@@ -305,7 +324,7 @@ public class DBhelper extends SQLiteOpenHelper{
 		        if (cursor.moveToFirst()) {
 		            do {
 		                map = new HashMap<String,Object>();
-		             if(TABLE_NAME.equals(TABLE_NAME_DESCRIPTION) || TABLE_NAME.equals(TABLE_NAME_REPORT)){
+		             if(TABLE_NAME.equals(TABLE_NAME_DESCRIPTION) || TABLE_NAME.equals(TABLE_NAME_REPORT) || TABLE_NAME.equals(TABLE_NAME_IMAGE_PATH)){
 		            	 map.put(AppConstants.ITEM0,cursor.getInt(0));
 		                 map.put(AppConstants.ITEM1,cursor.getString(1));
 		             }else if(TABLE_NAME.equals(TABLE_NAME_DATE_TIME)){

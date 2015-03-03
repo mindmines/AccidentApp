@@ -34,6 +34,7 @@ public class Insurance extends BaseFragment {
 		mContext = (MainActivity) this.getActivity();
 		AppConstants.isFront = false;
 		mContext.CallHeaderVisiblity();
+		mContext.HeadingText.setText(getResources().getString(R.string.insurance));	
 		dBhelper = new DBhelper(getActivity());
 		AgencyName =(EditText) rootView.findViewById(R.id.agency_name);
 		PolicyNumber =(EditText) rootView.findViewById(R.id.policy_number);

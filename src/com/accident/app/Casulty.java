@@ -36,6 +36,7 @@ public class Casulty extends BaseFragment {
 		AppConstants.isFront = false;
 		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
+		mContext.HeadingText.setText(getResources().getString(R.string.casulty));	
 		cas_full_name =(EditText) rootView.findViewById(R.id.cas_full_name);
 		cas_id =(EditText) rootView.findViewById(R.id.cas_id);
 		cas_address =(EditText) rootView.findViewById(R.id.cas_address);

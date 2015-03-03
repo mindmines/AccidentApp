@@ -34,7 +34,7 @@ public class WitnessFragment  extends BaseFragment {
 		AppConstants.isFront = false;
 		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
-		
+		mContext.HeadingText.setText(getResources().getString(R.string.witness));	
 		wit_full_name =(EditText) rootView.findViewById(R.id.cas_full_name);
 		wit_id =(EditText) rootView.findViewById(R.id.cas_id);
 		wit_address =(EditText) rootView.findViewById(R.id.cas_address);

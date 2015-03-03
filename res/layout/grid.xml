@@ -2,18 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background"
     tools:context=".HomeActivity" >
 
      <GridView
         android:id="@+id/gridView1"
-        android:paddingTop="10dp"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:numColumns="2"
-        android:verticalSpacing="2dp"
-        android:horizontalSpacing="2dp"
-        android:background="@drawable/background"
+        android:verticalSpacing="25dp"
+        android:horizontalSpacing="5dp"
         android:stretchMode="columnWidth" >
     </GridView>
 

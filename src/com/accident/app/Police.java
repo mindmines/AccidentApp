@@ -35,7 +35,7 @@ public class Police extends BaseFragment {
 		AppConstants.isFront = false;
 		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
-		
+		mContext.HeadingText.setText(getResources().getString(R.string.police));	
 		event_number =(EditText) rootView.findViewById(R.id.event_number);
 		case_number =(EditText) rootView.findViewById(R.id.case_number);
 		unit_name =(EditText) rootView.findViewById(R.id.unit_name);
