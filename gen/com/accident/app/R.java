@@ -91,8 +91,7 @@ public final class R {
         public static final int witnesses=0x7f020037;
     }
     public static final class id {
-        public static final int action_settings=0x7f090048;
-        public static final int action_settings2=0x7f090049;
+        public static final int about_us=0x7f09004c;
         public static final int address=0x7f090045;
         public static final int age=0x7f090047;
         public static final int agency_name=0x7f090022;
@@ -124,9 +123,11 @@ public final class R {
         public static final int driver_phone_no=0x7f090031;
         public static final int edit=0x7f09001c;
         public static final int event_number=0x7f090026;
+        public static final int exit_application=0x7f09004d;
         public static final int get_location=0x7f090035;
         public static final int gridView1=0x7f090016;
         public static final int heading=0x7f090020;
+        public static final int history=0x7f090049;
         public static final int home=0x7f090018;
         public static final int home_header=0x7f090017;
         public static final int id=0x7f090044;
@@ -140,11 +141,13 @@ public final class R {
         public static final int is_owener=0x7f090033;
         public static final int item_image=0x7f09002a;
         public static final int item_text=0x7f09002b;
+        public static final int language=0x7f09004a;
         public static final int license_plate=0x7f09003d;
         public static final int listCapturePicture=0x7f090007;
         public static final int manufacturer=0x7f090039;
         public static final int menu=0x7f090019;
         public static final int model=0x7f09003a;
+        public static final int my_details=0x7f090048;
         public static final int name=0x7f090043;
         public static final int pager=0x7f090000;
         public static final int pager_title_strip=0x7f090001;
@@ -158,6 +161,7 @@ public final class R {
         public static final int station_name=0x7f090029;
         public static final int tab_icon=0x7f09002d;
         public static final int tabsLayout=0x7f09002c;
+        public static final int tell_a_friend=0x7f09004b;
         public static final int textView1=0x7f090003;
         public static final int textView2=0x7f090004;
         public static final int time=0x7f090012;
@@ -195,6 +199,7 @@ public final class R {
         public static final int popup_menu=0x7f080000;
     }
     public static final class string {
+        public static final int about_us=0x7f060047;
         public static final int address=0x7f060009;
         public static final int age=0x7f06000c;
         /**  Insurance 
@@ -210,7 +215,7 @@ public final class R {
         public static final int case_number=0x7f060032;
         public static final int case_number_dt=0x7f060037;
         public static final int casulty=0x7f060011;
-        public static final int click_hear=0x7f060010;
+        public static final int click_here=0x7f060010;
         public static final int color=0x7f06002c;
         public static final int damage_dis=0x7f060042;
         /**  Damage 
@@ -235,11 +240,13 @@ public final class R {
          */
         public static final int event_number=0x7f060031;
         public static final int event_number_dt=0x7f060036;
+        public static final int exit_application=0x7f060048;
         /**  Casulty 
          */
         public static final int full_name=0x7f060006;
         public static final int full_name_dt=0x7f060007;
         public static final int get_location=0x7f060005;
+        public static final int history=0x7f060044;
         public static final int id=0x7f060008;
         public static final int ids=0x7f06003a;
         public static final int images=0x7f060004;
@@ -250,7 +257,8 @@ public final class R {
         public static final int is_hos=0x7f06000e;
         public static final int is_hospitalized=0x7f06000d;
         public static final int is_owner=0x7f060026;
-        public static final int is_vehical_owner=0x7f060025;
+        public static final int is_vehicle_owner=0x7f060025;
+        public static final int language=0x7f060045;
         public static final int license_number=0x7f060022;
         public static final int license_number_dt=0x7f060024;
         public static final int license_plate=0x7f06002e;
@@ -261,6 +269,9 @@ public final class R {
         public static final int location_map=0x7f06003d;
         public static final int manufacturer=0x7f06002a;
         public static final int model=0x7f06002b;
+        /** menu Items  
+         */
+        public static final int my_details=0x7f060043;
         public static final int phone_no=0x7f06000a;
         public static final int phone_no_dt=0x7f06000b;
         public static final int picture_dis=0x7f060040;
@@ -273,15 +284,16 @@ public final class R {
         public static final int save=0x7f06000f;
         public static final int station_name=0x7f060034;
         public static final int station_name_dt=0x7f060039;
+        public static final int tell_a_friend=0x7f060046;
         public static final int thirdparty=0x7f060027;
         public static final int time=0x7f060014;
         public static final int unit_name=0x7f060033;
         public static final int unit_name_dt=0x7f060038;
-        public static final int vehical=0x7f060030;
+        public static final int vehicle=0x7f060030;
         /** Vehical  
          */
-        public static final int vehical_type=0x7f060028;
-        public static final int vehical_type_dt=0x7f060029;
+        public static final int vehicle_type=0x7f060028;
+        public static final int vehicle_type_dt=0x7f060029;
         public static final int witness=0x7f06003b;
         public static final int year=0x7f06002d;
     }

@@ -66,7 +66,7 @@ public class Casulty extends BaseFragment {
 		age=cas_age.getText().toString().trim();
 		
 		//Toast.makeText(getActivity(), ""+full_name+"  "+ id +"  "+address+"  "+ phone_no+"  "+ age+"  "+isUpdate(), Toast.LENGTH_SHORT).show();
-		if(!full_name.equals(null) && !id.equals(null) && !address.equals(null) && !phone_no.equals(null) && !age.equals(null)){
+		if(!full_name.equals("") && !id.equals("") && !address.equals("") && !phone_no.equals("") && !age.equals("")){
 			currentIDs = mActivity.getIds();
 		dBhelper.insertCasulty(currentIDs,full_name, id, address, phone_no, age, isHospitalized.isChecked(), isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();

@@ -41,6 +41,6 @@
         android:background="@drawable/roundcorner"
         android:paddingTop="@dimen/botton_padding"
         android:paddingBottom="@dimen/botton_padding"
-        android:text="@string/click_hear" />
+        android:text="@string/click_here" />
     
 </RelativeLayout>

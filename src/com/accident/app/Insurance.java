@@ -59,7 +59,7 @@ public class Insurance extends BaseFragment {
 		agentName=AgentName.getText().toString().trim();
 		agentNumber=AgentNumber.getText().toString().trim();
 		
-		if(!agencyName.equals(null) && !policyNumber.equals(null) && !agentName.equals(null) && !agentNumber.equals(null)){
+		if(!agencyName.equals("") && !policyNumber.equals("") && !agentName.equals("") && !agentNumber.equals("")){
 			currentIDs = mActivity.getIds();
 		dBhelper.insertInsurance(currentIDs,agencyName, policyNumber, agentName, agentNumber, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();

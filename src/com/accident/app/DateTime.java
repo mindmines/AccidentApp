@@ -43,6 +43,7 @@ public class DateTime extends BaseFragment implements OnClickListener{
 		mContext = (MainActivity) this.getActivity();
 		AppConstants.isFront = false;
 		mContext.CallHeaderVisiblity();
+		
 		dBhelper = new DBhelper(getActivity());
 		
 		mContext.HeadingText.setText(getResources().getString(R.string.datetime));	
@@ -113,7 +114,8 @@ public class DateTime extends BaseFragment implements OnClickListener{
 	private void CallSaveButton(){
 		String putDate =Date.getText().toString().trim();
 		String putTime =  Time.getText().toString().trim();
-		if(!putDate.equals(null) && !putTime.equals(null)){
+		//Toast.makeText(getActivity(), putDate+" "+putTime, Toast.LENGTH_SHORT).show();
+		if(!putDate.equals("") && !putTime.equals("") ){
 			currentIDs = mActivity.getIds();
 		dBhelper.insertDateTime(currentIDs,putDate,putTime,isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();

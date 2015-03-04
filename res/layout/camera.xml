@@ -97,7 +97,7 @@
         android:background="@drawable/roundcorner"
         android:paddingTop="@dimen/botton_padding"
         android:paddingBottom="@dimen/botton_padding"
-        android:text="@string/click_hear" />
+        android:text="@string/click_here" />
     
     <Button
         android:id="@+id/btnCapturePicture"
@@ -108,7 +108,7 @@
         android:background="@drawable/roundcorner"
         android:paddingTop="@dimen/botton_padding"
         android:paddingBottom="@dimen/botton_padding"
-        android:text="@string/click_hear" />
+        android:text="@string/click_here" />
 
     <ListView
         android:id="@+id/listCapturePicture"

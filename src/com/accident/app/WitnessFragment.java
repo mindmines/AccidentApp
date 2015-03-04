@@ -64,7 +64,7 @@ public class WitnessFragment  extends BaseFragment {
 		phone_no=wit_phone_no.getText().toString().trim();
 		age=wit_age.getText().toString().trim();
 		
-		if(!full_name.equals(null) && !id.equals(null) && !address.equals(null) && !phone_no.equals(null) && !age.equals(null)){
+		if(!full_name.equals("") && !id.equals("") && !address.equals("") && !phone_no.equals("") && !age.equals("")){
 			currentIDs = mActivity.getIds();
 		dBhelper.insertWitness(currentIDs,full_name, id, address, phone_no, age, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();

@@ -56,13 +56,13 @@ public class GridFragment extends BaseFragment {
 
 		gridArray.add(new GridItem(fluIcon, getResources().getString(R.string.datetime)));
 		gridArray.add(new GridItem(reportIcon, getResources().getString(R.string.thirdparty)));
-		gridArray.add(new GridItem(newsIcon, getResources().getString(R.string.vehical)));
+		gridArray.add(new GridItem(newsIcon, getResources().getString(R.string.vehicle)));
 		gridArray.add(new GridItem(vacIcon, getResources().getString(R.string.insurance)));
 		gridArray.add(new GridItem(aboutIcon, getResources().getString(R.string.police)));
 		gridArray.add(new GridItem(feedbackIcon, getResources().getString(R.string.des)));
-
 		gridArray.add(new GridItem(casualIcon, getResources().getString(R.string.casulty)));
 		gridArray.add(new GridItem(witnessIcon, getResources().getString(R.string.witness)));
+		
 
 		gridView = (GridView) rootView.findViewById(R.id.gridView1);
 		customGridAdapter = new CustomGridViewAdapter(getActivity(),

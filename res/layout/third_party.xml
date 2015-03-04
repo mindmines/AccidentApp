@@ -59,7 +59,7 @@
             android:id="@+id/is_owener"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/is_vehical_owner"
+            android:text="@string/is_vehicle_owner"
             android:visibility="visible"
             android:textColor="@android:color/black" />
 

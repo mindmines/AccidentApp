@@ -61,7 +61,7 @@ public class DBhelper extends SQLiteOpenHelper{
 		
 		String CREATE_TABLE_VEHICLE = "CREATE TABLE "+ TABLE_NAME_VEHICLE +"( "+
 				"ids INTEGER PRIMARY KEY, " +
-                resorce.getString(R.string.vehical_type_dt)+" TEXT not null, "+
+                resorce.getString(R.string.vehicle_type_dt)+" TEXT not null, "+
                 resorce.getString(R.string.manufacturer)+" TEXT not null, "+
                 resorce.getString(R.string.model)+" TEXT not null, "+
                 resorce.getString(R.string.color)+" TEXT not null, "+
@@ -190,7 +190,7 @@ public class DBhelper extends SQLiteOpenHelper{
 			ContentValues contentValues = new ContentValues();
 			
 			contentValues.put(resorce.getString(R.string.ids), ids);
-			contentValues.put(resorce.getString(R.string.vehical_type_dt), vehical_type);
+			contentValues.put(resorce.getString(R.string.vehicle_type_dt), vehical_type);
 			contentValues.put(resorce.getString(R.string.manufacturer), manufacturer);
 			contentValues.put(resorce.getString(R.string.model), model);
 			contentValues.put(resorce.getString(R.string.color), color);
@@ -250,9 +250,9 @@ public class DBhelper extends SQLiteOpenHelper{
 			contentValues.put(resorce.getString(R.string.ids), ids);
 			contentValues.put(resorce.getString(R.string.des), station_name);
 
-			if(isUpdate)
+			/*if(isUpdate)
 				db1.update(TABLE_NAME_DESCRIPTION, contentValues, "ids="+ids, null);
-			else 
+			else */
 				db1.insert(TABLE_NAME_DESCRIPTION, null, contentValues);
 			db1.close();
 		}
@@ -271,9 +271,9 @@ public class DBhelper extends SQLiteOpenHelper{
 					contentValues.put(resorce.getString(R.string.age),age);
 					contentValues.put(resorce.getString(R.string.is_hos),isHospitalized);
 
-					if(isUpdate)
+					/*if(isUpdate)
 							db1.update(TABLE_NAME_CASUALTIES, contentValues, "ids="+ids, null);
-					else
+					else*/
 						db1.insert(TABLE_NAME_CASUALTIES, null, contentValues);
 					
 					db1.close();
@@ -316,6 +316,65 @@ public class DBhelper extends SQLiteOpenHelper{
 		        ArrayList<HashMap<String,Object>> contantList = new ArrayList<HashMap<String,Object>>();
 		        // Select All Query
 		        String selectQuery = "SELECT  * FROM " + TABLE_NAME ;//+" WHERE "+"ids=1";
+
+		        SQLiteDatabase db = this.getWritableDatabase();
+		        Cursor cursor = db.rawQuery(selectQuery, null);
+		        HashMap<String,Object> map;
+		        // looping through all rows and adding to list
+		        if (cursor.moveToFirst()) {
+		            do {
+		                map = new HashMap<String,Object>();
+		             if(TABLE_NAME.equals(TABLE_NAME_DESCRIPTION) || TABLE_NAME.equals(TABLE_NAME_REPORT) || TABLE_NAME.equals(TABLE_NAME_IMAGE_PATH)){
+		            	 map.put(AppConstants.ITEM0,cursor.getInt(0));
+		                 map.put(AppConstants.ITEM1,cursor.getString(1));
+		             }else if(TABLE_NAME.equals(TABLE_NAME_DATE_TIME)){
+		            	 map.put(AppConstants.ITEM0,cursor.getInt(0));
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));  
+		             } else if(TABLE_NAME.equals(TABLE_NAME_INSURANCE) || TABLE_NAME.equals(TABLE_NAME_POLICE)){
+		            	 map.put(AppConstants.ITEM0,cursor.getInt(0));
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));
+		            	 map.put(AppConstants.ITEM3,cursor.getString(3));
+		            	 map.put(AppConstants.ITEM4,cursor.getString(4));
+		             } else if(TABLE_NAME.equals(TABLE_NAME_THIRD_PARTY) || TABLE_NAME.equals(TABLE_NAME_CASUALTIES)){
+		            	 map.put(AppConstants.ITEM0,cursor.getInt(0));
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));
+		            	 map.put(AppConstants.ITEM3,cursor.getString(3));
+		            	 map.put(AppConstants.ITEM4,cursor.getString(4));
+		            	 map.put(AppConstants.ITEM5,cursor.getString(5));
+		            	 map.put(AppConstants.ITEM6,cursor.getInt(6));
+		             } else if(TABLE_NAME.equals(TABLE_NAME_VEHICLE)){
+		            	 map.put(AppConstants.ITEM0,cursor.getInt(0));
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));
+		            	 map.put(AppConstants.ITEM3,cursor.getString(3));
+		            	 map.put(AppConstants.ITEM4,cursor.getString(4));
+		            	 map.put(AppConstants.ITEM5,cursor.getString(5));
+		            	 map.put(AppConstants.ITEM6,cursor.getString(6));
+		             }else if(TABLE_NAME.equals(TABLE_NAME_WITNESSES)){
+		            	 map.put(AppConstants.ITEM0,cursor.getInt(0));
+		            	 map.put(AppConstants.ITEM1,cursor.getString(1));
+		            	 map.put(AppConstants.ITEM2,cursor.getString(2));
+		            	 map.put(AppConstants.ITEM3,cursor.getString(3));
+		            	 map.put(AppConstants.ITEM4,cursor.getString(4));
+		            	 map.put(AppConstants.ITEM5,cursor.getString(5));
+		             }
+		                // Adding contact to list
+		                contantList.add(map);
+		            } while (cursor.moveToNext());
+		        }
+
+		        // return contact list
+		        return contantList;
+		    }
+		 
+		 
+		 public ArrayList<HashMap<String,Object>> getData(String TABLE_NAME, int id) {
+		        ArrayList<HashMap<String,Object>> contantList = new ArrayList<HashMap<String,Object>>();
+		        // Select All Query
+		        String selectQuery = "SELECT  * FROM " + TABLE_NAME +" WHERE "+"ids="+id;
 
 		        SQLiteDatabase db = this.getWritableDatabase();
 		        Cursor cursor = db.rawQuery(selectQuery, null);

@@ -36,7 +36,7 @@ public class Vehical extends BaseFragment {
 		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
 		
-		mContext.HeadingText.setText(getResources().getString(R.string.vehical));	
+		mContext.HeadingText.setText(getResources().getString(R.string.vehicle));	
 		vehical_type =(EditText) rootView.findViewById(R.id.vehical_type);
 		manufacturer =(EditText) rootView.findViewById(R.id.manufacturer);
 		model =(EditText) rootView.findViewById(R.id.model);
@@ -66,7 +66,7 @@ public class Vehical extends BaseFragment {
 		vYear=year.getText().toString().trim();
 		licensePlate = license_plate.getText().toString().trim();
 		
-		if(!vehicalType.equals(null) && !Manufacturer.equals(null) && !vModel.equals(null) && !vColor.equals(null) && !vYear.equals(null) && !licensePlate.equals(null)){
+		if(!vehicalType.equals("") && !Manufacturer.equals("") && !vModel.equals("") && !vColor.equals("") && !vYear.equals("") && !licensePlate.equals("")){
 			currentIDs = mActivity.getIds();
 		dBhelper.insertVehical(currentIDs,vehicalType, Manufacturer, vModel, vColor, vYear, licensePlate, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();

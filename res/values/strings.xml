@@ -37,8 +37,8 @@
     <string name="is_hospitalized">Was he/she taken to hospital?</string>
     <string name="is_hos">hospitalized</string>
     <string name="save">Save</string>
-    <string name="click_hear">Click Hear</string>
-    <string name="casulty">Casulty</string>
+    <string name="click_here">Click Here</string>
+    <string name="casulty">Casualties</string>
     <string name="cancel">Cancel</string>
     
     <!--Date Time  -->
@@ -67,20 +67,20 @@
     <string name="license_number">License Number</string>
     <string name="driver_name_dt">DriverName</string>
     <string name="license_number_dt">LicenseNumber</string>
-     <string name="is_vehical_owner">The driver is not the vehicle owner?</string>
+     <string name="is_vehicle_owner">The driver is not the vehicle owner?</string>
      <string name="is_owner">isOwner</string>
      <string name="thirdparty">Third Party</string>
     
      <!--Vehical  -->
-    <string name="vehical_type">Vehical Type</string>
-    <string name="vehical_type_dt">VehicalType</string>
+    <string name="vehicle_type">vehicle Type</string>
+    <string name="vehicle_type_dt">vehicleType</string>
     <string name="manufacturer">Manufacturer</string>
     <string name="model">Model</string>
     <string name="color">Color</string>
     <string name="year">Year</string>
     <string name="license_plate">License Plate</string>
     <string name="license_plate_dt">LicensePlate</string>
-    <string name="vehical">Vehical</string>
+    <string name="vehicle">vehicle</string>
     
     <!--Police  -->
     <string name="event_number">Event Number</string>
@@ -96,7 +96,7 @@
     
     <string name="ids">ids</string>
     
-    <string name="witness">Witness</string>
+    <string name="witness">Witnesses</string>
     
     <!--IMAGE PATH  -->
     <string name="img_path">ImagePath</string>
@@ -111,7 +111,15 @@
      
      <!-- Damage -->
      <string name="damage_text">Damage</string>
-     <string name="damage_dis">Draw a vehical damage sketch</string>
+     <string name="damage_dis">Draw a vehicle damage sketch</string>
+     
+     <!--menu Items  -->
+     <string name="my_details">My Details</string>
+     <string name="history">History</string>
+     <string name="language">Language</string>
+     <string name="tell_a_friend">Tell a Friend</string>
+     <string name="about_us">About Us</string>
+     <string name="exit_application">Exit Application</string>
     
     <!--Color  -->
      <color name="blue">#007aff</color>

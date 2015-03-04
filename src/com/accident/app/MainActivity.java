@@ -14,6 +14,7 @@ import java.util.Stack;
 
 import com.accident.app.dbhelper.DBhelper;
 import com.accident.app.util.Config;
+import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Font;
@@ -23,12 +24,14 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfWriter;
 
+import android.R.style;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Paint.Style;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -44,6 +47,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -62,7 +66,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     //header
     public TextView HeadingText;
     ImageView mHomeIcon,mMenu,mTowing,mSend,mEdit,mSave,mClose,mDelete;
-    
+    int currentID ;
     
     ArrayList<HashMap<String,Object>> lst = new ArrayList<HashMap<String,Object>>();
     public RelativeLayout homeLayour, ScreensLayout;
@@ -391,6 +395,37 @@ private void CallMenuButton(){
      });  
 
      popup.show();//showing popup menu  
+     
+     popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+		
+		@Override
+		public boolean onMenuItemClick(MenuItem item) {
+			
+			switch (item.getItemId()) {
+			case R.id.my_details:
+				Toast.makeText(MainActivity.this, "My Details", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.history:
+				Toast.makeText(MainActivity.this, "History", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.language:
+				Toast.makeText(MainActivity.this, "Language", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.tell_a_friend:
+				Toast.makeText(MainActivity.this, "Tell a friend", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.about_us:
+				Toast.makeText(MainActivity.this, "AboutUs", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.exit_application:
+				Toast.makeText(MainActivity.this, "Exit_Application", Toast.LENGTH_SHORT).show();
+				break;				
+				
+			}
+			
+			return false;
+		}
+	});
 }
 
 private void CallTowingButton(){
@@ -445,61 +480,248 @@ private void CallEditButton(){
 
 private void CallSaveButton(){
 	Document doc = new Document();
-	
+	currentID = getIds();
+	 lst.clear();
+	 Toast.makeText(MainActivity.this, "Pdf Creating", Toast.LENGTH_SHORT).show();
 	 try {
 		 
-		/* String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+
-				 		Config.IMAGE_DIRECTORY_NAME;*/
-		 
-		 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/droidText";
+		 String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AccidentalReport";
 		 	File dir = new File(path);
 		        if(!dir.exists())
 		        	dir.mkdirs();
 
 		    Log.d("PDFCreator", "PDF Path: " + path);
 		    
-		   /* String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+		    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
 					Locale.getDefault()).format(new Date());
 		        
-		    File file = new File(dir,"DOC_"+timeStamp+".pdf");*/
+		    File file = new File(dir,"DOC_"+timeStamp+".pdf");
+		    /*if(file.exists())
+		    	file.delete();*/
 		    
-		    File file = new File(dir,"sample.pdf");
 		    FileOutputStream fOut = new FileOutputStream(file);
 
    	 	PdfWriter.getInstance(doc, fOut);
-            
-           //open the document
+   	 	//doc.addAuthor("Me");
+   	 	//doc.addTitle("My iText Test");
+           
+           
+         //set header
+           Phrase headerText = new Phrase("This is an example of a Header");
+           HeaderFooter pdfHeader = new HeaderFooter(headerText, false);
+           doc.setHeader(pdfHeader);
+           
+         //open the document
            doc.open();
            
+           ByteArrayOutputStream stream = new ByteArrayOutputStream();
+           Bitmap bitmap = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.ic_launcher);
+           bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , stream);
+           Image myImg = Image.getInstance(stream.toByteArray());
+           myImg.setAlignment(Image.LEFT);
+          
+           //add image to document
+           doc.add(myImg);
            
-           Paragraph p1 = new Paragraph("Hi! I am generating my first PDF");
+          /* Phrase headerText= new Phrase("This is an example of a footer");
+           HeaderFooter pdfheader = new HeaderFooter(headerText, false);
+           doc.setHeader(pdfheader);*/
+           
+           Chunk chunk = new Chunk(".                    Accident Report");
+			Font font = new Font(Font.COURIER, 14.0f,Color.RED);
+			font.setStyle(Font.UNDERLINE);
+			font.setStyle(Font.BOLD);
+			font.setSize(30.0f);
+			//chunk.setBackground(harmony.java.awt.Color.RED);
+			
+			chunk.setFont(font);
+			
+			//chunk.setBackground(null, Color.CYAN, currentID, currentID, currentID);
+			doc.add(chunk);
+           
+          /* Paragraph p1 = new Paragraph("Accident Report");
+          // Font paraFont= new Font(Font.COURIER,16.0f,Color.BLACK);
            Font paraFont= new Font(Font.COURIER);
+           paraFont.setSize(30.0f);
+           paraFont.setColor(harmony.java.awt.Color.BLUE);
            p1.setAlignment(Paragraph.ALIGN_CENTER);
            p1.setFont(paraFont);
-           
             //add paragraph to document    
-            doc.add(p1);
-           
-            Paragraph p2 = new Paragraph("This is an example of a simple paragraph");
-            Font paraFont2= new Font(Font.COURIER,14.0f,Color.GREEN);
-            p2.setAlignment(Paragraph.ALIGN_CENTER);
+            doc.add(p1);*/
+            
+            lst.clear();
+            lst = dBhelper.getData(dBhelper.TABLE_NAME_DATE_TIME, currentID);
+            if(lst.size()>0){
+            Paragraph p2 = new Paragraph("Written on "+ lst.get(0).get(AppConstants.ITEM1)+", "+lst.get(0).get(AppConstants.ITEM2));
+            Font paraFont2= new Font(Font.COURIER,14.0f,Color.BLACK);
+            p2.setAlignment(Paragraph.ALIGN_LEFT);
             p2.setFont(paraFont2);
-            
             doc.add(p2);
+            }
             
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            Bitmap bitmap = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.ic_launcher);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100 , stream);
-            Image myImg = Image.getInstance(stream.toByteArray());
-            myImg.setAlignment(Image.MIDDLE);
-           
-            //add image to document
-            doc.add(myImg);
-           
+            Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
+            lst.clear();
+            lst = dBhelper.getData(dBhelper.TABLE_NAME_POLICE, currentID);
+            if(lst.size()>0){
+            Paragraph p6 = new Paragraph("Police details"+"\n"+
+            							"Event number : "+ lst.get(0).get(AppConstants.ITEM1)+"\n"+
+            							"Case number : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
+                    					"Unit name : "+lst.get(0).get(AppConstants.ITEM3)+"\n"+
+                            			"Station name : "+lst.get(0).get(AppConstants.ITEM4));
+            
+            p6.setAlignment(Paragraph.ALIGN_LEFT);
+            p6.setFont(paraFont3);
+            doc.add(p6);
+            }
+            
+            lst.clear();
+            lst = dBhelper.getData(dBhelper.TABLE_NAME_THIRD_PARTY, currentID);
+            if(lst.size()>0){
+            	String owner ;
+            	if(((Integer)(lst.get(0).get(AppConstants.ITEM6))) == 1){
+            		owner= "The driver is the vehicle owner";
+            	}else{
+            		owner=  "The driver is not the vehicle owner";
+            	}
+            Paragraph p3 = new Paragraph("Third party details "+"\n"+
+            							"Driver name : "+lst.get(0).get(AppConstants.ITEM1)+"\n"+
+            							"Id : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
+            							"Address : "+lst.get(0).get(AppConstants.ITEM3)+"\n"+
+            							"Phone number : "+lst.get(0).get(AppConstants.ITEM4)+"\n"+
+            							"License number : "+lst.get(0).get(AppConstants.ITEM5)+"\n"+
+            							owner 
+            							);
+            //Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
+            p3.setAlignment(Paragraph.ALIGN_LEFT);
+            p3.setFont(paraFont3);
+            doc.add(p3);
+            }
+            
+
+lst.clear();
+            lst = dBhelper.getData(dBhelper.TABLE_NAME_VEHICLE, currentID);
+            if(lst.size()>0){
+            Paragraph p4 = new Paragraph("Vehicle details "+"\n"+
+            								"Vehicle type : "+lst.get(0).get(AppConstants.ITEM1)+"\n"+
+            								"Manufacturer : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
+            								"Model : "+lst.get(0).get(AppConstants.ITEM3)+"\n"+
+                							"Color : "+lst.get(0).get(AppConstants.ITEM4)+"\n"+
+                							"Year : "+lst.get(0).get(AppConstants.ITEM5)+"\n"+
+                							"License plate : "+lst.get(0).get(AppConstants.ITEM6)
+                								);
+           // Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
+            p4.setAlignment(Paragraph.ALIGN_LEFT);
+            p4.setFont(paraFont3);
+            doc.add(p4);
+            }
+            
+
+lst.clear();
+            lst = dBhelper.getData(dBhelper.TABLE_NAME_INSURANCE, currentID);
+            if(lst.size()>0){
+            Paragraph p5 = new Paragraph("Insurace details "+"\n"+
+					"Agency name : "+lst.get(0).get(AppConstants.ITEM1)+"\n"+
+					"Policy number : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
+					"Agent name : "+lst.get(0).get(AppConstants.ITEM3)+"\n"+
+					"Agent number : "+lst.get(0).get(AppConstants.ITEM4)
+						);
+            //Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
+            p5.setAlignment(Paragraph.ALIGN_LEFT);
+            p5.setFont(paraFont3);
+            doc.add(p5);
+            }
+            
+
+
+lst.clear();
+            lst = dBhelper.getData(dBhelper.TABLE_NAME_DESCRIPTION, currentID);
+            if(lst.size()>0){
+            Paragraph p7 = new Paragraph("Accident description"+"\n"+ lst.get(0).get(AppConstants.ITEM1));
+           // Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
+            p7.setAlignment(Paragraph.ALIGN_LEFT);
+            p7.setFont(paraFont3);
+            doc.add(p7);
+            }
+            
+
+lst.clear();
+            lst = dBhelper.getData(dBhelper.TABLE_NAME_WITNESSES, currentID);
+            if(lst.size()>0){
+            	 Paragraph p8;
+           for(int i=0;i<lst.size();i++){
+        	   if(i == 0){
+        		   p8 = new Paragraph("Witnesses details"+"\n"+
+					"["+i+1+"]"+lst.get(0).get(AppConstants.ITEM1)+"\n"+
+					"Id : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
+					"Address : "+lst.get(0).get(AppConstants.ITEM3)+"\n"+
+					"Phone number : "+lst.get(0).get(AppConstants.ITEM4)+"\n"+
+					"License number : "+lst.get(0).get(AppConstants.ITEM5)
+					);
+        	   }else{
+        		   p8 = new Paragraph(
+        				   "["+i+1+"]"+lst.get(i).get(AppConstants.ITEM1)+"\n"+
+       					"Id : "+lst.get(i).get(AppConstants.ITEM2)+"\n"+
+       					"Address : "+lst.get(i).get(AppConstants.ITEM3)+"\n"+
+       					"Phone number : "+lst.get(i).get(AppConstants.ITEM4)+"\n"+
+       					"License number : "+lst.get(i).get(AppConstants.ITEM5)
+       					);
+        	   }
+            //Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
+            p8.setAlignment(Paragraph.ALIGN_LEFT);
+            p8.setFont(paraFont3);
+            doc.add(p8);
+           }
+            }
+            
+
+lst.clear();
+            lst = dBhelper.getData(dBhelper.TABLE_NAME_CASUALTIES, currentID);
+            if(lst.size()>0){
+            	Paragraph p9;
+          for(int i=0;i<lst.size();i++){
+        	  if(i == 0){
+            	String Hospitlized ;
+            	if(((Integer)(lst.get(0).get(AppConstants.ITEM6))) == 1){
+            		Hospitlized= "The casualty was taken to hospital";
+            	}else{
+            		Hospitlized=  "The Casualty was not taken to hospital";
+            	}
+             p9 = new Paragraph("Casualties details"+"\n"+
+            		 "["+i+1+"]"+lst.get(0).get(AppConstants.ITEM1)+"\n"+
+					"Id : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
+					"Address : "+lst.get(0).get(AppConstants.ITEM3)+"\n"+
+					"Phone number : "+lst.get(0).get(AppConstants.ITEM4)+"\n"+
+					"License number : "+lst.get(0).get(AppConstants.ITEM5)+"\n"+
+					Hospitlized 
+					);
+        	  }else{
+        		  String Hospitlized ;
+              	if(((Integer)(lst.get(0).get(AppConstants.ITEM6))) == 1){
+              		Hospitlized= "The casualty was taken to hospital";
+              	}else{
+              		Hospitlized=  "The Casualty was not taken to hospital";
+              	}
+               p9 = new Paragraph("Casualties details"+"\n"+
+              		 "["+i+1+"]"+lst.get(i).get(AppConstants.ITEM1)+"\n"+
+  					"Id : "+lst.get(i).get(AppConstants.ITEM2)+"\n"+
+  					"Address : "+lst.get(i).get(AppConstants.ITEM3)+"\n"+
+  					"Phone number : "+lst.get(i).get(AppConstants.ITEM4)+"\n"+
+  					"License number : "+lst.get(i).get(AppConstants.ITEM5)+"\n"+
+  					Hospitlized 
+  					);
+        	  }
+            //Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
+            p9.setAlignment(Paragraph.ALIGN_LEFT);
+            p9.setFont(paraFont3);
+            doc.add(p9);
+            }
+            }
+            
+
             //set footer
-            Phrase footerText = new Phrase("This is an example of a footer");
+           /* Phrase footerText = new Phrase("This is an example of a footer");
             HeaderFooter pdfFooter = new HeaderFooter(footerText, false);
-            doc.setFooter(pdfFooter);
+            doc.setFooter(pdfFooter);*/
            
 
            
@@ -512,6 +734,7 @@ private void CallSaveButton(){
     {
             doc.close();
     }
+	 Toast.makeText(MainActivity.this, "Pdf Created", Toast.LENGTH_SHORT).show();
 }
 
 private void CallCloseButton(){
@@ -522,5 +745,10 @@ private void CallDeleteButton(){
 	
 }
 	
+
+/*private ArrayList<HashMap<String,Object>> GetDataFormDatabase(){
+ return lst;}*/
+
+
 	
 }

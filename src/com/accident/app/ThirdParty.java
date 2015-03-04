@@ -67,7 +67,7 @@ public class ThirdParty extends BaseFragment {
 		phone_no=driver_phone_no.getText().toString().trim();
 		DriverLicense=driver_license.getText().toString().trim();
 		
-		if(!full_name.equals(null) && !id.equals(null) && !address.equals(null) && !phone_no.equals(null) && !DriverLicense.equals(null)){
+		if(!full_name.equals("") && !id.equals("") && !address.equals("") && !phone_no.equals("") && !DriverLicense.equals("")){
 			currentIDs = mActivity.getIds();
 		dBhelper.insertThirdParty(currentIDs,full_name, id, address, phone_no, DriverLicense, isOwener.isChecked(), isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();

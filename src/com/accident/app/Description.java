@@ -51,7 +51,7 @@ public class Description extends BaseFragment {
 		String description;
 		
 		description =Description.getText().toString().trim();
-		if(!description.equals(null)){
+		if(!description.equals("")){
 			currentIDs = mActivity.getIds();
 		dBhelper.insertDescription(currentIDs,description,isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();

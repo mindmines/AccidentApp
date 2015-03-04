@@ -1,22 +1,60 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Single menu item 
+         Set id, icon and Title for each menu item
+    -->
+     <item
+        android:id="@+id/my_details"
+        android:icon="@drawable/my_details"
+        android:showAsAction="always|withText"
+        android:title="@string/my_details"/>
+     
+     <item
+        android:id="@+id/history"
+        android:icon="@drawable/history"
+        android:orderInCategory="100"
+        android:showAsAction="withText"
+        android:title="@string/history"/>
+    <item
+        android:id="@+id/language"
+        android:icon="@drawable/language"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/language"/>
+    <item
+        android:id="@+id/tell_a_friend"
+        android:icon="@drawable/tella_friend"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/tell_a_friend"/>
+    <item
+        android:id="@+id/about_us"
+        android:icon="@drawable/about_us"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/about_us"/>
+    <item
+        android:id="@+id/exit_application"
+        android:icon="@drawable/exit_application"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText"
+        android:title="@string/exit_application"/>
+</menu>
+    
+
+<!-- <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.genratepdf.MainActivity" >
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/images"
-        android:icon="@drawable/location"
-        android:showAsAction="ifRoom"
-        />
-
-      <item
-        android:id="@+id/action_settings2"
-        android:orderInCategory="100"
-        android:title="@string/address"
-        android:icon="@drawable/about_us"
+        android:id="@+id/my_details"
+        android:icon="@drawable/my_details"
         android:showAsAction="always"
-        />
-    
-</menu>
+        android:title="@string/my_details"/>
+  
+
+</menu> 
+ -->
+ <!--   -->
+

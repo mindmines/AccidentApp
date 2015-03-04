@@ -61,7 +61,7 @@ public class Police extends BaseFragment {
 		UnitName=unit_name.getText().toString().trim();
 		stationName=station_name.getText().toString().trim();
 		
-		if(!EventNumber.equals(null) && !CaseNumber.equals(null) && !UnitName.equals(null) && !stationName.equals(null)){
+		if(!EventNumber.equals("") && !CaseNumber.equals("") && !UnitName.equals("") && !stationName.equals("")){
 			currentIDs = mActivity.getIds();
 		dBhelper.insertPolice(currentIDs,EventNumber, CaseNumber, UnitName, stationName, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
