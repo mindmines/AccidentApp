@@ -7,6 +7,8 @@ public class AppConstants {
 	public static final String TAB_PICTURES = "Pictures";
 	public static final String TAB_IMAGES ="Images";
 	
+	public static String fullpath;
+	
 	public static final String ITEM0 = "item0";
 	public static final String ITEM1 = "item1";
 	public static final String ITEM2 = "item2";

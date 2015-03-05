@@ -87,7 +87,7 @@ public class DBhelper extends SQLiteOpenHelper{
                 resorce.getString(R.string.des)+" TEXT not null)";
 		
 		String CREATE_TABLE_CASUALTIES = "CREATE TABLE "+ TABLE_NAME_CASUALTIES +"( "+
-				"ids INTEGER PRIMARY KEY, " +
+				"ids INTEGER , " +
                 resorce.getString(R.string.full_name_dt)+" TEXT not null, "+
                 resorce.getString(R.string.id)+" TEXT not null, "+
                 resorce.getString(R.string.address)+" TEXT not null, "+
@@ -96,7 +96,7 @@ public class DBhelper extends SQLiteOpenHelper{
 		 		resorce.getString(R.string.is_hos)+" INTEGER DEFAULT 0)";
 		
 		String CREATE_TABLE_WITNESSES= "CREATE TABLE "+ TABLE_NAME_WITNESSES +"( "+
-				"ids INTEGER PRIMARY KEY, " +
+				"ids INTEGER , " +
                 resorce.getString(R.string.full_name_dt)+" TEXT not null, "+
                 resorce.getString(R.string.id)+" TEXT not null, "+
                 resorce.getString(R.string.address)+" TEXT not null, "+
@@ -250,9 +250,9 @@ public class DBhelper extends SQLiteOpenHelper{
 			contentValues.put(resorce.getString(R.string.ids), ids);
 			contentValues.put(resorce.getString(R.string.des), station_name);
 
-			/*if(isUpdate)
+			if(isUpdate)
 				db1.update(TABLE_NAME_DESCRIPTION, contentValues, "ids="+ids, null);
-			else */
+			else 
 				db1.insert(TABLE_NAME_DESCRIPTION, null, contentValues);
 			db1.close();
 		}
@@ -292,9 +292,9 @@ public class DBhelper extends SQLiteOpenHelper{
 			contentValues.put(resorce.getString(R.string.phone_no_dt), PhoneNo);
 			contentValues.put(resorce.getString(R.string.age),age);
 
-			if(isUpdate)
+			/*if(isUpdate)
 					db1.update(TABLE_NAME_WITNESSES, contentValues, "ids="+ids, null);
-			else
+			else*/
 				db1.insert(TABLE_NAME_WITNESSES, null, contentValues);	
 			
 			db1.close();

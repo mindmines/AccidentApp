@@ -1,6 +1,7 @@
 package com.accident.app;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -20,4 +21,6 @@ public class BaseFragment extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data){
 		
 	}
+
+	
 }
