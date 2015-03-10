@@ -126,6 +126,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     private void CallReportTable(){
     	String Date = GetCurrentDate();
     	dBhelper.insertReport(Date, isUpdate(Date));
+    	
     }
     
     public String GetCurrentDate(){

@@ -1,10 +1,14 @@
 package com.accident.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A dummy fragment representing a section of the app, but that simply
@@ -26,6 +30,18 @@ public class DummySectionFragment extends BaseFragment {
 		/*((TextView) rootView.findViewById(android.R.id.text1))
 				.setText(getString(R.string.dummy_section_text,
 						args.getInt(ARG_SECTION_NUMBER)));*/
+		
+		
+		rootView.findViewById(R.id.click_hear).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//CallGetLocation();
+				//Toast.makeText(getActivity(), "Clicked", 1).show();
+				Intent i  = new Intent(getActivity(),DamageCarMarkActivity.class);
+				startActivity(i);
+			}
+		});
+		
 		return rootView;
 	}
 }

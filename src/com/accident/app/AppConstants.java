@@ -20,7 +20,6 @@ public class AppConstants {
 	public static final String ITEM8 = "item8";
 	public static final String ITEM9 = "item9";
 	
-	
 	public static boolean isFront = false;
 	   //Your other constants, if you have them..
 
