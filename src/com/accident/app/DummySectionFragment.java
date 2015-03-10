@@ -37,8 +37,10 @@ public class DummySectionFragment extends BaseFragment {
 			public void onClick(View v) {
 				//CallGetLocation();
 				//Toast.makeText(getActivity(), "Clicked", 1).show();
-				Intent i  = new Intent(getActivity(),DamageCarMarkActivity.class);
-				startActivity(i);
+//				Intent i  = new Intent(getActivity(),DamageCarMarkActivity.class);
+//				startActivity(i);
+				
+				mContext.pushFragments(AppConstants.TAB_IMAGES, new DamageCarMark(), false, true);
 			}
 		});
 		

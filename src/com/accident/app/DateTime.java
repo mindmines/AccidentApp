@@ -46,7 +46,7 @@ public class DateTime extends BaseFragment implements OnClickListener{
 		
 		dBhelper = new DBhelper(getActivity());
 		
-		mContext.HeadingText.setText(getResources().getString(R.string.datetime));	
+		mContext.HeadingText.setText(getResources().getString(R.string.datetime));
 		
 		Date =(EditText) rootView.findViewById(R.id.date);
 		Time =(EditText) rootView.findViewById(R.id.time);

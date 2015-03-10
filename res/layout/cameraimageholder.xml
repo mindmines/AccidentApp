@@ -27,15 +27,11 @@
             android:text="Save the picture" />
     </LinearLayout>
 
-
     <ImageView
-        android:layout_marginTop="30dp"
         android:id="@+id/iv_canvas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/b_ferrari_f152_000_0000"
-         >
-
-    </ImageView>
+        android:layout_marginTop="30dp"
+        android:src="@drawable/b_ferrari_f152_000_0000" />
 
 </LinearLayout>
