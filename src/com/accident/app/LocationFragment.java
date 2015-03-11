@@ -9,6 +9,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.accident.app.util.GPSService;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,6 +30,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -38,28 +42,14 @@ import android.widget.Toast;
 public class LocationFragment extends BaseFragment implements LocationListener{
 	MainActivity mContext;
 	
-	
 	GoogleMap mGoogleMap;
-	double latitude, longitude;
+	double latitude = 0, longitude= 0;
 	Location location;
 	JSONArray content = null;
-	//String latA, lngA;
 	LatLng latLng;
 	RelativeLayout LayoutMain,LayoutMap;
 	
-private static final String TAG_RESULT = "results";
-	
-	private static final String TAG_GEOMETRY = "geometry";
-	private static final String TAG_GEOMETRY_LOCATION = "location";
-	private static final String TAG_GEOMETRY_LOCATION_LAT = "lat";
-	private static final String TAG_GEOMETRY_LOCATION_LNG = "lng";
-	
-	private static final String RESTAURANT_TAG = "Restaurant";
-	
-	// Google Map
-    private GoogleMap googleMap;
-    
-    
+	private static View rootView;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -69,8 +59,20 @@ private static final String TAG_RESULT = "results";
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.location,
+		
+		 if (rootView != null) {
+		        ViewGroup parent = (ViewGroup) rootView.getParent();
+		        if (parent != null)
+		            parent.removeView(rootView);
+		    }
+		
+	try{
+		rootView = inflater.inflate(R.layout.location,
 				container, false);
+	}catch(InflateException e){
+		e.printStackTrace();
+	}
+		
 		mContext = (MainActivity) this.getActivity();
 		AppConstants.isFront = true;
 		mContext.CallHeaderVisiblity();
@@ -79,18 +81,32 @@ private static final String TAG_RESULT = "results";
 		rootView.findViewById(R.id.click_hear).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//CallGetLocation();
+				CallGetLocation();
 			}
 		});
 		
-		/*rootView.findViewById(R.id.click_hear_map).setOnClickListener(new OnClickListener() {
+		rootView.findViewById(R.id.click_hear_map).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				CallManScreenVisible();
 			}
-		});*/
+		});
 		
-		/*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+		int status = GooglePlayServicesUtil
+				.isGooglePlayServicesAvailable(getActivity());
+
+		// Showing status
+		if (status != ConnectionResult.SUCCESS) { // Google Play Services are
+													// not available
+
+			int requestCode = 10;
+			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status,
+					getActivity(), requestCode);
+			dialog.show();
+
+		}else{
+			
+		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 		SupportMapFragment fragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map_list);
 		
 		// Getting Google Map
@@ -100,10 +116,18 @@ private static final String TAG_RESULT = "results";
 		mGoogleMap.setMyLocationEnabled(true);
 
 		// Enable / Disable my location button
-		mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+		//mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
 		
-		location = new Location("Map");*/
+		// Enable / Disable zooming controls
+		mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
 		
+		// Enable / Disable zooming functionality
+		mGoogleMap.getUiSettings().setZoomGesturesEnabled(true);
+		
+					
+		location = new Location("Map");
+		
+		}
 		return rootView;
 	}
 
@@ -129,6 +153,10 @@ private static final String TAG_RESULT = "results";
 			// Setting the position for the marker
 			markerOptions.position(latLng);
 			mGoogleMap.addMarker(markerOptions);
+			
+			location.setLatitude(latitude);
+			location.setLongitude(longitude);
+			
 			onLocationChanged(location);
 			
 			LayoutMain.setVisibility(View.GONE);
@@ -146,17 +174,12 @@ private static final String TAG_RESULT = "results";
 		latitude = location1.getLatitude();
 		longitude = location1.getLongitude();
 		LatLng latLng1 = new LatLng(latitude, longitude);
-		CameraPosition cameraPosition = new CameraPosition.Builder()
-				.target(latLng1) // Sets the center of the map to Mountain View
-				.zoom(15) // Sets the zoom
-				.bearing(90) // Sets the orientation of the camera to east
-				.tilt(30) // Sets the tilt of the camera to 30 degrees
-				.build(); // Creates a CameraPosition from the builder
 		
-		mGoogleMap.animateCamera(CameraUpdateFactory
-				.newCameraPosition(cameraPosition));
-
 		mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 15));
+
+		// Zoom in, animating the camera.
+		mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null); 
+
 		
 	}
 

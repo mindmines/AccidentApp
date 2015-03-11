@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Single menu item 
-         Set id, icon and Title for each menu item
-    -->
-     <item
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:EffectiveNavigation ="http://schemas.android.com/apk/res-auto"  
+     >
+     
+    <!-- EffectiveNavigation:showAsAction="always" -->
+
+      <item
         android:id="@+id/my_details"
         android:icon="@drawable/my_details"
-        android:showAsAction="always|withText"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText" 
         android:title="@string/my_details"/>
      
      <item
         android:id="@+id/history"
         android:icon="@drawable/history"
+        android:title="@string/history"
         android:orderInCategory="100"
-        android:showAsAction="withText"
-        android:title="@string/history"/>
+        android:showAsAction="always|withText" 
+        />
+     
     <item
         android:id="@+id/language"
         android:icon="@drawable/language"

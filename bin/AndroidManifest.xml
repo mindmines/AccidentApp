@@ -24,7 +24,8 @@
      <permission
         android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
-    
+     <uses-permission android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE" />
+     
      <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
@@ -41,11 +42,20 @@
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+        
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAnIMQK-21a8Y2k-n9AuMk-3_9ibNlEhOo" />
+        
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar" 
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,10 +71,6 @@
         <activity android:name=".WittnessHolder" >
         </activity>
         <activity android:name=".DamageCarMark"></activity>
-        
-        <meta-data
-     android:name="com.google.android.maps.v2.API_KEY"
-     android:value="AIzaSyAnIMQK-21a8Y2k-n9AuMk-3_9ibNlEhOo" />
         
     </application>
 

@@ -17,6 +17,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.widget.Toast;
 
 public class GPSService extends Service implements LocationListener {
 
@@ -77,6 +78,9 @@ public class GPSService extends Service implements LocationListener {
 						return mLocation;
 					}
 				}
+			}else {
+				//
+				askUserToOpenGPS();
 			}
 
 			// If we are reaching this part, it means GPS was not able to fetch
@@ -99,14 +103,16 @@ public class GPSService extends Service implements LocationListener {
 						return mLocation;
 					}
 				}
+			}else{
+				Toast.makeText(mContext, "Please check your network connection", Toast.LENGTH_LONG).show();
 			}
 			// If reaching here means, we were not able to get location neither
 			// from GPS not Network,
-			if (!isGPSEnabled) {
+		/*	if (!isGPSEnabled) {
 				// so asking user to open GPS
 				askUserToOpenGPS();
 			}
-
+*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

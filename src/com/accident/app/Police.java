@@ -65,6 +65,7 @@ public class Police extends BaseFragment {
 			currentIDs = mActivity.getIds();
 		dBhelper.insertPolice(currentIDs,EventNumber, CaseNumber, UnitName, stationName, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
+		mContext.handleBackPressed();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 		}

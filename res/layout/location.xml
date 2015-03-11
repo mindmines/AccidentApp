@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/background"
-    android:padding="@dimen/activity_horizontal_margin"
     android:orientation="vertical" >
     
   <RelativeLayout 
     android:id="@+id/location_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:padding="@dimen/activity_horizontal_margin"
     android:visibility="visible"
      >  
     <TextView
@@ -23,7 +23,6 @@
         android:textColor="@android:color/white"
         android:drawableTop="@drawable/location_map"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
     
    <TextView
         android:id="@+id/textView2"
@@ -36,7 +35,6 @@
         android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-   
    
     <Button
         android:id="@+id/click_hear"
@@ -67,14 +65,16 @@
         android:paddingBottom="@dimen/botton_padding"
         android:text="@string/click_here" />
        
-  <!--  <fragment 
+  <!--   android:name="com.google.android.gms.maps.SupportMapFragment"   -->
+       
+   <fragment
         android:id="@+id/map_list"
-       	android:name="com.google.android.gms.maps.MapFragment" 
+        android:layout_above="@+id/click_hear_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        /> -->
+        class="com.google.android.gms.maps.SupportMapFragment"
+        />
     
     </RelativeLayout>
-
     
 </RelativeLayout>

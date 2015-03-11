@@ -71,6 +71,7 @@ public class ThirdParty extends BaseFragment {
 			currentIDs = mActivity.getIds();
 		dBhelper.insertThirdParty(currentIDs,full_name, id, address, phone_no, DriverLicense, isOwener.isChecked(), isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
+		mContext.handleBackPressed();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 		}

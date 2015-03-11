@@ -70,6 +70,7 @@ public class Vehical extends BaseFragment {
 			currentIDs = mActivity.getIds();
 		dBhelper.insertVehical(currentIDs,vehicalType, Manufacturer, vModel, vColor, vYear, licensePlate, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
+		mContext.handleBackPressed();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 		}

@@ -55,6 +55,7 @@ public class Description extends BaseFragment {
 			currentIDs = mActivity.getIds();
 		dBhelper.insertDescription(currentIDs,description,isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
+		mContext.handleBackPressed();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 		}

@@ -125,7 +125,8 @@
     
     <!--Color  -->
      <color name="blue">#007aff</color>
-     <color name="green">#009900</color>
+     <color name="click_here_col">#E62222</color>
+     <!-- <color name="green">#009900</color> -->
      <color name="gray">#d6d6d6</color>
     
 </resources>

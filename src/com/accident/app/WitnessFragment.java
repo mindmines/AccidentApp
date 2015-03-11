@@ -68,6 +68,13 @@ public class WitnessFragment  extends BaseFragment {
 			currentIDs = mActivity.getIds();
 		dBhelper.insertWitness(currentIDs,full_name, id, address, phone_no, age, isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
+		
+		wit_full_name.setText("");
+		wit_id.setText("");
+		wit_address.setText("");
+		wit_phone_no.setText("");
+		wit_age.setText("");
+		
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 		}

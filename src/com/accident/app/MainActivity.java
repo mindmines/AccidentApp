@@ -302,7 +302,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 
     @Override
     public void onBackPressed() {
-       	if(((BaseFragment)mStacks.get(mCurrentTab).lastElement()).onBackPressed() == false){
+       handleBackPressed();
+    }
+    
+    public void handleBackPressed(){
+    	if(((BaseFragment)mStacks.get(mCurrentTab).lastElement()).onBackPressed() == false){
        		/*
        		 * top fragment in current tab doesn't handles back press, we can do our thing, which is
        		 * 
@@ -351,7 +355,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 	public void onClick(View v) {
 	switch (v.getId()) {
 	case R.id.home:
-		//CallHomeButton();
+		CallHomeButton();
 		break;
 	
 	case R.id.menu:
@@ -380,9 +384,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 
 	
 	private void CallHomeButton(){	
-	if(!mCurrentTab.equals(AppConstants.TAB_DETAILS))
-		pushFragments(AppConstants.TAB_DETAILS, new GridFragment(), false,true);
-	else
+	if(!mCurrentTab.equals(AppConstants.TAB_DETAILS)){
+		mTabHost.setCurrentTab(0);
+	}else
 		Toast.makeText(MainActivity.this, "Currently at Home", Toast.LENGTH_SHORT).show();
 	}
 	

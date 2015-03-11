@@ -119,6 +119,7 @@ public class DateTime extends BaseFragment implements OnClickListener{
 			currentIDs = mActivity.getIds();
 		dBhelper.insertDateTime(currentIDs,putDate,putTime,isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
+		mContext.handleBackPressed();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 		}
