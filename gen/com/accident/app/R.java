@@ -574,14 +574,14 @@ containing a value of this type.
         public static final int witnesses=0x7f020083;
     }
     public static final class id {
-        public static final int about_us=0x7f08006e;
-        public static final int address=0x7f080067;
+        public static final int about_us=0x7f080070;
+        public static final int address=0x7f080069;
         public static final int adjust_height=0x7f080002;
         public static final int adjust_width=0x7f080001;
-        public static final int age=0x7f080069;
-        public static final int agency_name=0x7f08003f;
-        public static final int agent_name=0x7f080041;
-        public static final int agent_number=0x7f080042;
+        public static final int age=0x7f08006b;
+        public static final int agency_name=0x7f080041;
+        public static final int agent_name=0x7f080043;
+        public static final int agent_number=0x7f080044;
         public static final int book_now=0x7f080012;
         public static final int btnCapturePicture=0x7f08001d;
         public static final int btn_resume=0x7f08001f;
@@ -596,96 +596,98 @@ containing a value of this type.
         public static final int cas_id=0x7f080023;
         public static final int cas_phone_no=0x7f080025;
         public static final int cas_save=0x7f080028;
-        public static final int case_number=0x7f080049;
+        public static final int case_number=0x7f08004b;
         public static final int classic=0x7f080014;
         public static final int click_hear=0x7f08001c;
-        public static final int click_hear_map=0x7f080030;
-        public static final int close=0x7f08003c;
-        public static final int color=0x7f08005d;
-        public static final int current_location_add=0x7f080046;
-        public static final int date=0x7f08002b;
-        public static final int delete=0x7f08003e;
-        public static final int delete_location=0x7f080044;
-        public static final int demo_collection_button=0x7f080031;
-        public static final int demo_external_activity=0x7f080032;
-        public static final int description=0x7f08002d;
+        public static final int click_hear_map=0x7f080032;
+        public static final int close=0x7f08003e;
+        public static final int color=0x7f08005f;
+        public static final int current_location_add=0x7f080048;
+        public static final int date=0x7f08002d;
+        public static final int delete=0x7f080040;
+        public static final int delete_location=0x7f080046;
+        public static final int demo_collection_button=0x7f080033;
+        public static final int demo_external_activity=0x7f080034;
+        public static final int description=0x7f08002f;
         public static final int donate_with_google=0x7f080013;
-        public static final int driver_address=0x7f080052;
-        public static final int driver_id=0x7f080051;
-        public static final int driver_license=0x7f080054;
-        public static final int driver_name=0x7f080050;
-        public static final int driver_phone_no=0x7f080053;
-        public static final int edit=0x7f080039;
-        public static final int event_number=0x7f080048;
-        public static final int exit_application=0x7f08006f;
-        public static final int get_location=0x7f080057;
+        public static final int driver_address=0x7f080054;
+        public static final int driver_id=0x7f080053;
+        public static final int driver_license=0x7f080056;
+        public static final int driver_name=0x7f080052;
+        public static final int driver_phone_no=0x7f080055;
+        public static final int edit=0x7f08003b;
+        public static final int event_number=0x7f08004a;
+        public static final int exit_application=0x7f080071;
+        public static final int gallery01=0x7f08002b;
+        public static final int get_location=0x7f080059;
         public static final int grayscale=0x7f080015;
-        public static final int gridView1=0x7f080033;
-        public static final int heading=0x7f08003d;
-        public static final int history=0x7f08006b;
+        public static final int gridView1=0x7f080035;
+        public static final int heading=0x7f08003f;
+        public static final int history=0x7f08006d;
         public static final int holo_dark=0x7f080007;
         public static final int holo_light=0x7f080008;
-        public static final int home=0x7f080035;
-        public static final int home_header=0x7f080034;
+        public static final int home=0x7f080037;
+        public static final int home_header=0x7f080036;
         public static final int hybrid=0x7f080006;
-        public static final int id=0x7f080066;
+        public static final int id=0x7f080068;
         public static final int image_name=0x7f080029;
-        public static final int input_address=0x7f080062;
-        public static final int input_age=0x7f080064;
-        public static final int input_id=0x7f080060;
-        public static final int input_name=0x7f080061;
-        public static final int input_phno=0x7f080063;
+        public static final int input_address=0x7f080064;
+        public static final int input_age=0x7f080066;
+        public static final int input_id=0x7f080062;
+        public static final int input_name=0x7f080063;
+        public static final int input_phno=0x7f080065;
         public static final int is_hospitalized=0x7f080027;
-        public static final int is_owener=0x7f080055;
-        public static final int item_image=0x7f08004c;
-        public static final int item_text=0x7f08004d;
+        public static final int is_owener=0x7f080057;
+        public static final int item_image=0x7f08004e;
+        public static final int item_text=0x7f08004f;
         public static final int iv_canvas=0x7f080021;
-        public static final int language=0x7f08006c;
-        public static final int license_plate=0x7f08005f;
+        public static final int iv_canvas1=0x7f08002c;
+        public static final int language=0x7f08006e;
+        public static final int license_plate=0x7f080061;
         public static final int listCapturePicture=0x7f08001e;
-        public static final int location_layout=0x7f08002e;
-        public static final int location_layout_map=0x7f08002f;
-        public static final int manufacturer=0x7f08005b;
-        public static final int map_list=0x7f080047;
+        public static final int location_layout=0x7f080030;
+        public static final int location_layout_map=0x7f080031;
+        public static final int manufacturer=0x7f08005d;
+        public static final int map_list=0x7f080049;
         public static final int match_parent=0x7f08000e;
-        public static final int menu=0x7f080036;
-        public static final int model=0x7f08005c;
+        public static final int menu=0x7f080038;
+        public static final int model=0x7f08005e;
         public static final int monochrome=0x7f080016;
-        public static final int my_details=0x7f08006a;
-        public static final int name=0x7f080065;
-        public static final int no_towing=0x7f080059;
+        public static final int my_details=0x7f08006c;
+        public static final int name=0x7f080067;
+        public static final int no_towing=0x7f08005b;
         public static final int none=0x7f080000;
         public static final int normal=0x7f080003;
-        public static final int options_layout=0x7f080043;
+        public static final int options_layout=0x7f080045;
         public static final int pager=0x7f080017;
         public static final int pager_title_strip=0x7f080018;
-        public static final int phone=0x7f080068;
-        public static final int phone_towing=0x7f080056;
-        public static final int policy_number=0x7f080040;
+        public static final int phone=0x7f08006a;
+        public static final int phone_towing=0x7f080058;
+        public static final int policy_number=0x7f080042;
         public static final int production=0x7f080009;
         public static final int realtabcontent=0x7f080019;
-        public static final int refresh_location=0x7f080045;
+        public static final int refresh_location=0x7f080047;
         public static final int sandbox=0x7f08000a;
         public static final int satellite=0x7f080004;
-        public static final int save_right=0x7f08003a;
-        public static final int screens_header=0x7f08003b;
+        public static final int save_right=0x7f08003c;
+        public static final int screens_header=0x7f08003d;
         public static final int selectionDetails=0x7f08000d;
-        public static final int send=0x7f080038;
-        public static final int station_name=0x7f08004b;
+        public static final int send=0x7f08003a;
+        public static final int station_name=0x7f08004d;
         public static final int strict_sandbox=0x7f08000b;
-        public static final int tab_icon=0x7f08004f;
-        public static final int tabsLayout=0x7f08004e;
-        public static final int tell_a_friend=0x7f08006d;
+        public static final int tab_icon=0x7f080051;
+        public static final int tabsLayout=0x7f080050;
+        public static final int tell_a_friend=0x7f08006f;
         public static final int terrain=0x7f080005;
         public static final int textView1=0x7f08001a;
         public static final int textView2=0x7f08001b;
-        public static final int time=0x7f08002c;
-        public static final int towing=0x7f080037;
-        public static final int unit_name=0x7f08004a;
-        public static final int vehical_type=0x7f08005a;
+        public static final int time=0x7f08002e;
+        public static final int towing=0x7f080039;
+        public static final int unit_name=0x7f08004c;
+        public static final int vehical_type=0x7f08005c;
         public static final int wrap_content=0x7f08000f;
-        public static final int year=0x7f08005e;
-        public static final int yes_towing=0x7f080058;
+        public static final int year=0x7f080060;
+        public static final int yes_towing=0x7f08005a;
     }
     public static final class integer {
         public static final int google_play_services_version=0x7f0a0000;
@@ -1026,6 +1028,25 @@ containing a value of this type.
           @attr name com.accident.app:adUnitId
         */
         public static final int AdsAttrs_adUnitId = 2;
+        /** Attributes that can be used with a Gallery1.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #Gallery1_android_galleryItemBackground android:galleryItemBackground}</code></td><td></td></tr>
+           </table>
+           @see #Gallery1_android_galleryItemBackground
+         */
+        public static final int[] Gallery1 = {
+            0x0101004c
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#galleryItemBackground}
+          attribute's value can be found in the {@link #Gallery1} array.
+          @attr name android:galleryItemBackground
+        */
+        public static final int Gallery1_android_galleryItemBackground = 0;
         /**  Attributes for LoadingImageView 
            <p>Includes the following attributes:</p>
            <table>

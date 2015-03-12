@@ -1,20 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     android:paddingBottom="5dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    android:background="#FFFFFF"
     android:paddingTop="5dp"
+    android:weightSum="1"
     tools:context=".MainActivity" >
 
     <LinearLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/btn_resume"
@@ -29,15 +30,41 @@
             android:text="Save the picture" />
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5" >
 
-    <ImageView
-        android:layout_marginTop="30dp"
-        android:id="@+id/iv_canvas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/b_ferrari_f152_000_0000"
-         >
+        <ImageView
+            android:id="@+id/iv_canvas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:src="@drawable/b_ferrari_f152_000_0000" >
+        </ImageView>
 
-    </ImageView>
+        <Gallery
+            android:id="@+id/gallery01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+        </Gallery>
+        
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.5" >
+
+        <ImageView
+            android:id="@+id/iv_canvas1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/b_ferrari_f152_000_0000" >
+        </ImageView>
+    </RelativeLayout>
 
 </LinearLayout>

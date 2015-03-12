@@ -7,10 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-import com.accident.app.util.Config;
-
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -24,12 +23,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.accident.app.util.Config;
 
 public class DamageCarMark extends BaseFragment implements OnClickListener {
 	private Button btn_save, btn_resume;
@@ -46,6 +49,7 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 	private static final String TAG = DamageCarMark.class.getSimpleName();
 
 	private HashMap<Integer, Bitmap> fileMap = new HashMap<Integer, Bitmap>();
+	ImageAdapter imgAdapter;
 
 	int[] ferrari_image = { R.drawable.b_ferrari_f152_000_0000,
 			R.drawable.b_ferrari_f152_000_0001,
@@ -99,6 +103,10 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 		iv_canvas = (ImageView) rootView.findViewById(R.id.iv_canvas);
 		btn_save = (Button) rootView.findViewById(R.id.btn_save);
 		btn_resume = (Button) rootView.findViewById(R.id.btn_resume);
+		
+		Gallery ga = (Gallery)rootView.findViewById(R.id.gallery01);
+		imgAdapter = new ImageAdapter(getActivity());
+		ga.setAdapter(imgAdapter);
 
 		btn_save.setOnClickListener(this);
 		btn_resume.setOnClickListener(this);
@@ -169,6 +177,7 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 					if (isDraw) {
 						//saveBitmap();
 						fileMap.put(i, baseBitmap);
+						imgAdapter.notifyDataSetChanged();
 						isDraw = false;
 					}
 
@@ -313,4 +322,48 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 			break;
 		}
 	}
+	
+	
+	public class ImageAdapter extends BaseAdapter {
+
+        private Context ctx;
+        int imageBackground;
+       
+        public ImageAdapter(Context c) {
+            ctx = c;
+            TypedArray ta = getActivity().obtainStyledAttributes(R.styleable.Gallery1);
+            imageBackground = ta.getResourceId(R.styleable.Gallery1_android_galleryItemBackground, 1);
+            ta.recycle();
+        }
+
+        @Override
+        public int getCount() {
+           
+            return fileMap.size();
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+           
+            return arg0;
+        }
+
+        @Override
+        public long getItemId(int arg0) {
+           
+            return arg0;
+        }
+
+        @Override
+        public View getView(int arg0, View arg1, ViewGroup arg2) {
+            ImageView iv = new ImageView(ctx);
+            //iv.setImageResource(fileMap[arg0]);
+            iv.setImageBitmap(fileMap.get(arg0));
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            iv.setLayoutParams(new Gallery.LayoutParams(70,70));
+            iv.setBackgroundResource(imageBackground);
+            return iv;
+        }
+
+    }
 }
