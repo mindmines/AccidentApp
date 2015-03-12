@@ -22,5 +22,7 @@ public class AppConstants {
 	
 	public static boolean isFront = false;
 	   //Your other constants, if you have them..
+	
+	public static String address = "";
 
 }

@@ -54,6 +54,37 @@
     android:layout_height="match_parent"
     android:visibility="gone"
      >  
+     
+   <LinearLayout 
+       android:id="@+id/options_layout"
+       android:layout_alignParentTop="true"
+       android:layout_height="wrap_content"
+       android:layout_width="fill_parent"
+       android:orientation="horizontal"
+       >
+	<ImageButton 
+	    android:id="@+id/delete_location"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:src="@drawable/close_b_ic"
+	    android:contentDescription="@string/images"
+	    />       
+	  
+	<ImageButton 
+	    android:id="@+id/refresh_location"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:src="@drawable/refresh_b_ic"
+	    android:contentDescription="@string/images"
+	    />    
+     <TextView 
+         android:id="@+id/current_location_add"
+         android:layout_height="wrap_content"
+         android:layout_width="wrap_content"
+         android:textSize="26sp"
+         android:textColor="@color/click_here_col"
+         />  
+   </LinearLayout>
   
        <Button
         android:id="@+id/click_hear_map"
@@ -72,6 +103,7 @@
         android:layout_above="@+id/click_hear_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         class="com.google.android.gms.maps.SupportMapFragment"
         />
     

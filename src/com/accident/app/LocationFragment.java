@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -35,8 +36,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LocationFragment extends BaseFragment implements LocationListener{
@@ -48,6 +52,9 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 	JSONArray content = null;
 	LatLng latLng;
 	RelativeLayout LayoutMain,LayoutMap;
+	
+	ImageButton DeleteLocation,RefreshLocation;
+	TextView CurrentLocationAdd;
 	
 	private static View rootView;
     @Override
@@ -66,13 +73,25 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 		            parent.removeView(rootView);
 		    }
 		
+		 TranslateAnimation animation = new TranslateAnimation(0.0f, 400.0f,
+		            0.0f, 0.0f);          //  new TranslateAnimation(xFrom,xTo, yFrom,yTo)
+		    animation.setDuration(5000);  // animation duration 
+		    animation.setRepeatCount(500);  // animation repeat count
+		    //animation.setRepeatMode(2);   // repeat animation (left to right, right to left )
+		    //animation.setFillAfter(true);   
+		    
 	try{
 		rootView = inflater.inflate(R.layout.location,
 				container, false);
+		DeleteLocation = (ImageButton)rootView.findViewById(R.id.delete_location);
+		RefreshLocation = (ImageButton)rootView.findViewById(R.id.refresh_location);
+		CurrentLocationAdd = (TextView)rootView.findViewById(R.id.current_location_add);
+		CurrentLocationAdd.setAnimation(animation);
 	}catch(InflateException e){
 		e.printStackTrace();
 	}
-		
+	
+	
 		mContext = (MainActivity) this.getActivity();
 		AppConstants.isFront = true;
 		mContext.CallHeaderVisiblity();
@@ -135,7 +154,7 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 		MarkerOptions markerOptions = new MarkerOptions();
 		GPSService mGPSService = new GPSService(getActivity());
 		mGPSService.getLocation();
-
+		
 		if (mGPSService.isLocationAvailable == false) {
 
 			// Here you can ask the user to try again, using return; for that
@@ -149,9 +168,15 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 			latitude = mGPSService.getLatitude();
 			longitude = mGPSService.getLongitude();
 			
+			AppConstants.address = mGPSService.getLocationAddress();
+			CurrentLocationAdd.setText(AppConstants.address);
+			
 			LatLng latLng = new LatLng(latitude,longitude);
 			// Setting the position for the marker
 			markerOptions.position(latLng);
+			BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.car_crash);
+
+			markerOptions.icon(icon);
 			mGoogleMap.addMarker(markerOptions);
 			
 			location.setLatitude(latitude);

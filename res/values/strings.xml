@@ -26,7 +26,7 @@
     
     <string name="google_api_key">AIzaSyAnIMQK-21a8Y2k-n9AuMk-3_9ibNlEhOo</string>
     
-    <string name="get_location">Get Current Location</string>
+    <string name="get_location">Location</string>
     
     <!-- Casulty -->
     <string name="full_name">Full Name</string>
@@ -122,11 +122,17 @@
      <string name="tell_a_friend">Tell a Friend</string>
      <string name="about_us">About Us</string>
      <string name="exit_application">Exit Application</string>
+     
+     <string name="send_report">Send the reort</string>
     
     <!--Color  -->
      <color name="blue">#007aff</color>
      <color name="click_here_col">#E62222</color>
      <!-- <color name="green">#009900</color> -->
      <color name="gray">#d6d6d6</color>
-    
+     
+     <!-- Tweing popup -->
+     <string name="towing_heading">Do you require free Towing sydney wide ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

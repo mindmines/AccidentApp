@@ -48,6 +48,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -442,22 +443,19 @@ private void CallTowingButton(){
 	
 	final Dialog dialog = new Dialog(MainActivity.this);
 	dialog.setContentView(R.layout.towing_window);
-	dialog.setTitle("Towing");
-
-	// set the custom dialog components - text, image and button
-	EditText dateTowing = (EditText) dialog.findViewById(R.id.date_towing);
-	Button GetLocation = (Button) dialog.findViewById(R.id.get_location);
-	Button Save = (Button) dialog.findViewById(R.id.save_towing);
-	Button Cancel = (Button) dialog.findViewById(R.id.cancel_towing);
-
-	GetLocation.setOnClickListener(new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			dialog.dismiss();
-		}
-	});
+	//dialog.setTitle("Towing");
+	dialog.getWindow().setLayout(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	
-	Save.setOnClickListener(new OnClickListener() {
+	// set the custom dialog components - text, image and button
+	EditText PhoneTwoing = (EditText) dialog.findViewById(R.id.phone_towing);
+	EditText GetLocation = (EditText) dialog.findViewById(R.id.get_location);
+	Button yes = (Button) dialog.findViewById(R.id.yes_towing);
+	Button no = (Button) dialog.findViewById(R.id.no_towing);
+
+if(!AppConstants.address.equals(""))
+	GetLocation.setText(AppConstants.address);
+
+	yes.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			dialog.dismiss();
@@ -465,7 +463,7 @@ private void CallTowingButton(){
 	});
 	
 	// if button is clicked, close the custom dialog
-	Cancel.setOnClickListener(new OnClickListener() {
+	no.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
 			dialog.dismiss();
@@ -478,6 +476,51 @@ private void CallTowingButton(){
 
 
 private void CallSendButton(){
+	
+	 PopupMenu popup = new PopupMenu(MainActivity.this, mMenu);  
+     //Inflating the Popup using xml file  
+     popup.getMenuInflater().inflate(R.menu.send_menu, popup.getMenu());  
+    
+     //registering popup with OnMenuItemClickListener  
+     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {  
+      public boolean onMenuItemClick(MenuItem item) {  
+       Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();  
+       return true;  
+      }  
+     });  
+
+     popup.show();//showing popup menu  
+     
+     popup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+		
+		@Override
+		public boolean onMenuItemClick(MenuItem item) {
+			
+			switch (item.getItemId()) {
+			case R.id.my_details:
+				Toast.makeText(MainActivity.this, "My Details", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.history:
+				Toast.makeText(MainActivity.this, "History", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.language:
+				Toast.makeText(MainActivity.this, "Language", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.tell_a_friend:
+				Toast.makeText(MainActivity.this, "Tell a friend", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.about_us:
+				Toast.makeText(MainActivity.this, "AboutUs", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.exit_application:
+				Toast.makeText(MainActivity.this, "Exit_Application", Toast.LENGTH_SHORT).show();
+				break;				
+				
+			}
+			
+			return false;
+		}
+	});
 	
 }
 
