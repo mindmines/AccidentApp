@@ -3,6 +3,7 @@ package com.accident.app;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -32,23 +33,32 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.accident.app.util.CarDamageUtiility;
 import com.accident.app.util.Config;
 
 public class DamageCarMark extends BaseFragment implements OnClickListener {
 	private Button btn_save, btn_resume;
 	private ImageView iv_canvas;
-	private Bitmap baseBitmap;
+	public Bitmap baseBitmap;
+	public Bitmap tempbitmap;
 	private Canvas canvas;
 	private Paint paint;
 	public Bitmap bt;
 	boolean ismove = false;
 	boolean isDraw = false;
+	
+	CarDamageUtiility carDamgeObj;
+	
 	private static final int SWIPE_MIN_DISTANCE = 50;
-	int i = 0;
+	
+	static int i = 0;
 	private float x = 0;
+	int startindex = 0;
 	private static final String TAG = DamageCarMark.class.getSimpleName();
 
-	private HashMap<Integer, Bitmap> fileMap = new HashMap<Integer, Bitmap>();
+	private HashMap<Integer, CarDamageUtiility> fileMap = new HashMap<Integer, CarDamageUtiility>();
+	
+	ArrayList<CarDamageUtiility> carList = new ArrayList<CarDamageUtiility>();
 	ImageAdapter imgAdapter;
 
 	int[] ferrari_image = { R.drawable.b_ferrari_f152_000_0000,
@@ -103,8 +113,8 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 		iv_canvas = (ImageView) rootView.findViewById(R.id.iv_canvas);
 		btn_save = (Button) rootView.findViewById(R.id.btn_save);
 		btn_resume = (Button) rootView.findViewById(R.id.btn_resume);
-		
-		Gallery ga = (Gallery)rootView.findViewById(R.id.gallery01);
+
+		Gallery ga = (Gallery) rootView.findViewById(R.id.gallery01);
 		imgAdapter = new ImageAdapter(getActivity());
 		ga.setAdapter(imgAdapter);
 
@@ -128,11 +138,12 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 			case MotionEvent.ACTION_DOWN:
 				// The first drawing initializes the memory image, specify the
 				// background is white
+				startindex = i;
 				if (baseBitmap == null) {
 
 					baseBitmap = BitmapFactory.decodeResource(getResources(),
-							ferrari_image[i]).copy(Bitmap.Config.ARGB_8888,
-							true);
+							ferrari_image[startindex]).copy(
+							Bitmap.Config.ARGB_8888, true);
 
 					canvas = new Canvas(baseBitmap);
 
@@ -172,13 +183,19 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 
 					// The pictures to the ImageView
 					iv_canvas.setImageBitmap(baseBitmap);
+
 				} else if (startX - stopX > 50 || stopX - startX > 50) {
 
-					if (isDraw) {
-						//saveBitmap();
-						fileMap.put(i, baseBitmap);
+					if (isDraw && baseBitmap != null) {
+						// saveBitmap();
+						// baseBitmap = null;
+						carDamgeObj = new CarDamageUtiility(startindex, baseBitmap);
+						carList.add(carDamgeObj);
+						//fileMap.put(startindex, carDamgeObj);
 						imgAdapter.notifyDataSetChanged();
 						isDraw = false;
+
+						//Log.i("Hashmap Testing", fileMap.toString());
 					}
 
 					baseBitmap = null;
@@ -190,17 +207,18 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 			return true;
 		}
 	};
+	
 
 	private void RotationUp() {
 
-		//Toast.makeText(getActivity(), fileMap.toString(), 1).show();
+		// Toast.makeText(getActivity(), fileMap.toString(), 1).show();
 		if (i < 35) {
 			i++;
 			// iv_canvas.setImageLevel(i);
 			// iv_canvas.setBackgroundResource(ferrari_image[i]);
-			
+
 			if (fileMap.containsKey(i)) {
-				iv_canvas.setImageBitmap(fileMap.get(i));
+				iv_canvas.setImageBitmap(fileMap.get(i).getBitmap());
 			} else {
 				iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
 						getResources(), ferrari_image[i]));
@@ -208,7 +226,7 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 		} else {
 			i = 0;
 			if (fileMap.containsKey(i)) {
-				iv_canvas.setImageBitmap(fileMap.get(i));
+				iv_canvas.setImageBitmap(fileMap.get(i).getBitmap());
 			} else {
 				iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
 						getResources(), ferrari_image[i]));
@@ -217,12 +235,12 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 	}
 
 	private void RotationDown() {
-		//Toast.makeText(getActivity(), fileMap.toString(), 1).show();
+		// Toast.makeText(getActivity(), fileMap.toString(), 1).show();
 
 		if (i > 0) {
 			i--;
 			if (fileMap.containsKey(i)) {
-				iv_canvas.setImageBitmap(fileMap.get(i));
+				iv_canvas.setImageBitmap(fileMap.get(i).getBitmap());
 			} else {
 				iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
 						getResources(), ferrari_image[i]));
@@ -230,7 +248,7 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 		} else {
 			i = 35;
 			if (fileMap.containsKey(i)) {
-				iv_canvas.setImageBitmap(fileMap.get(i));
+				iv_canvas.setImageBitmap(fileMap.get(i).getBitmap());
 			} else {
 				iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
 						getResources(), ferrari_image[i]));
@@ -242,54 +260,59 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 	 * 114 * Save the image to the SD card. 115
 	 */
 	protected void saveBitmap() {
-		try {
-			// Save the image to the SD card.
+		for (int k = 0; k < carList.size(); k++) {
 
-			File mediaStorageDir = new File(
-					Environment
-							.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-					Config.IMAGE_TEMP_DIRECTORY_NAME);
+			try {
+				// Save the image to the SD card.
 
-			// Create the storage directory if it does not exist
-			if (!mediaStorageDir.exists()) {
-				if (!mediaStorageDir.mkdirs()) {
-					Log.d(TAG, "Oops! Failed create "
-							+ Config.IMAGE_DIRECTORY_NAME + " directory");
-					return;
+				File mediaStorageDir = new File(
+						Environment
+								.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+						Config.IMAGE_TEMP_DIRECTORY_NAME);
+
+				// Create the storage directory if it does not exist
+				if (!mediaStorageDir.exists()) {
+					if (!mediaStorageDir.mkdirs()) {
+						Log.d(TAG, "Oops! Failed create "
+								+ Config.IMAGE_DIRECTORY_NAME + " directory");
+						return;
+					}
 				}
+				// Create a media file name
+				String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+						Locale.getDefault()).format(new Date());
+
+				String filename = mediaStorageDir.getPath() + File.separator
+						+ "IMG_" + k + "_" + timeStamp + ".jpg";
+
+				File file = new File(filename);
+				FileOutputStream stream = new FileOutputStream(file);
+				carList.get(k).getBitmap().compress(CompressFormat.PNG, 100, stream);
+				Toast.makeText(getActivity(), "Save the picture of success", 0)
+						.show();
+				
+				carList.get(k).setPath(filename);
+
+				// Android equipment Gallery application will only at boot time
+				// scanning system folder
+				// The simulation of a media loading broadcast, for the
+				// preservation
+				// of images can be viewed in Gallery
+				Intent intent = new Intent();
+				intent.setAction(Intent.ACTION_MEDIA_MOUNTED);
+				intent.setData(Uri.fromFile(Environment
+						.getExternalStorageDirectory()));
+				getActivity().sendBroadcast(intent);
+
+			} catch (Exception e) {
+				Toast.makeText(getActivity(), "Save failed", 0).show();
+				e.printStackTrace();
 			}
-			// Create a media file name
-			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
-					Locale.getDefault()).format(new Date());
-
-			String filename = mediaStorageDir.getPath() + File.separator
-					+ "IMG_" + timeStamp + ".jpg";
-
-			File file = new File(filename);
-			FileOutputStream stream = new FileOutputStream(file);
-			baseBitmap.compress(CompressFormat.PNG, 100, stream);
-			Toast.makeText(getActivity(), "Save the picture of success", 0)
-					.show();
-			
-			// Android equipment Gallery application will only at boot time
-			// scanning system folder
-			// The simulation of a media loading broadcast, for the preservation
-			// of images can be viewed in Gallery
-			Intent intent = new Intent();
-			intent.setAction(Intent.ACTION_MEDIA_MOUNTED);
-			intent.setData(Uri.fromFile(Environment
-					.getExternalStorageDirectory()));
-			getActivity().sendBroadcast(intent);
-
-			
-		} catch (Exception e) {
-			Toast.makeText(getActivity(), "Save failed", 0).show();
-			e.printStackTrace();
 		}
 	}
 
 	/**
-	 ** Clear the drawing board 
+	 ** Clear the drawing board
 	 */
 	protected void resumeCanvas() {
 		// Manually clear the drawing board, to create a drawing board
@@ -306,8 +329,6 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 		}
 	}
 
-	
-	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -322,48 +343,51 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 			break;
 		}
 	}
-	
-	
+
 	public class ImageAdapter extends BaseAdapter {
 
-        private Context ctx;
-        int imageBackground;
-       
-        public ImageAdapter(Context c) {
-            ctx = c;
-            TypedArray ta = getActivity().obtainStyledAttributes(R.styleable.Gallery1);
-            imageBackground = ta.getResourceId(R.styleable.Gallery1_android_galleryItemBackground, 1);
-            ta.recycle();
-        }
+		private Context ctx;
+		int imageBackground;
 
-        @Override
-        public int getCount() {
-           
-            return fileMap.size();
-        }
+		public ImageAdapter(Context c) {
+			ctx = c;
+			TypedArray ta = getActivity().obtainStyledAttributes(
+					R.styleable.Gallery1);
+			imageBackground = ta.getResourceId(
+					R.styleable.Gallery1_android_galleryItemBackground, 1);
+			ta.recycle();
+		}
 
-        @Override
-        public Object getItem(int arg0) {
-           
-            return arg0;
-        }
+		@Override
+		public int getCount() {
 
-        @Override
-        public long getItemId(int arg0) {
-           
-            return arg0;
-        }
+			return carList.size();
+		}
 
-        @Override
-        public View getView(int arg0, View arg1, ViewGroup arg2) {
-            ImageView iv = new ImageView(ctx);
-            //iv.setImageResource(fileMap[arg0]);
-            iv.setImageBitmap(fileMap.get(arg0));
-            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            iv.setLayoutParams(new Gallery.LayoutParams(70,70));
-            iv.setBackgroundResource(imageBackground);
-            return iv;
-        }
+		@Override
+		public Object getItem(int arg0) {
 
-    }
+			return carList.get(arg0);
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+
+			return arg0;
+		}
+
+		@Override
+		public View getView(int arg0, View arg1, ViewGroup arg2) {
+			ImageView iv = new ImageView(ctx);
+			// iv.setImageResource(fileMap[arg0]);
+
+			iv.setImageBitmap(carList.get(arg0).getBitmap());
+			iv.setScaleType(ImageView.ScaleType.FIT_XY);
+			iv.setLayoutParams(new Gallery.LayoutParams(100, 100));
+			iv.setBackgroundResource(imageBackground);
+			return iv;
+
+		}
+
+	}
 }

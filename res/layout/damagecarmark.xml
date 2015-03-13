@@ -15,19 +15,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone" >
+         >
 
         <Button
             android:id="@+id/btn_resume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Re drawing" />
+            android:text="Re drawing"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btn_save"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Save the picture" />
+            android:text="Save the pictures" />
     </LinearLayout>
 
     <RelativeLayout
