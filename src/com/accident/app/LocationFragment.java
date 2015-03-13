@@ -1,6 +1,9 @@
 package com.accident.app;
 
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,15 +17,18 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.loopj.android.image.SmartImageView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -46,7 +52,6 @@ import android.widget.Toast;
 public class LocationFragment extends BaseFragment implements LocationListener{
 	MainActivity mContext;
 	
-	GoogleMap mGoogleMap;
 	double latitude = 0, longitude= 0;
 	Location location;
 	JSONArray content = null;
@@ -55,11 +60,11 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 	
 	ImageButton DeleteLocation,RefreshLocation;
 	TextView CurrentLocationAdd;
+	public SmartImageView MapImage;
 	
 	private static View rootView;
     @Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 	}
     
@@ -83,75 +88,48 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 	try{
 		rootView = inflater.inflate(R.layout.location,
 				container, false);
-		DeleteLocation = (ImageButton)rootView.findViewById(R.id.delete_location);
-		RefreshLocation = (ImageButton)rootView.findViewById(R.id.refresh_location);
-		CurrentLocationAdd = (TextView)rootView.findViewById(R.id.current_location_add);
-		CurrentLocationAdd.setAnimation(animation);
+	
 	}catch(InflateException e){
 		e.printStackTrace();
 	}
 	
+	CurrentLocationAdd = (TextView)rootView.findViewById(R.id.current_location_add);
+	CurrentLocationAdd.setAnimation(animation);
 	
+	MapImage = (SmartImageView)rootView.findViewById(R.id.map_image);
 		mContext = (MainActivity) this.getActivity();
 		AppConstants.isFront = true;
 		mContext.CallHeaderVisiblity();
 		LayoutMain = (RelativeLayout)rootView.findViewById(R.id.location_layout);
 		LayoutMap = (RelativeLayout)rootView.findViewById(R.id.location_layout_map);
+		
+		
+		rootView.findViewById(R.id.refresh_location).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MapImage.setImageResource(R.drawable.bg_glass2);
+				CallGetLocation();
+			}
+		});
 		rootView.findViewById(R.id.click_hear).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				CallGetLocation();
 			}
 		});
-		
-		rootView.findViewById(R.id.click_hear_map).setOnClickListener(new OnClickListener() {
+		rootView.findViewById(R.id.delete_location_map).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				CallManScreenVisible();
 			}
 		});
-		
-		int status = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(getActivity());
-
-		// Showing status
-		if (status != ConnectionResult.SUCCESS) { // Google Play Services are
-													// not available
-
-			int requestCode = 10;
-			Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status,
-					getActivity(), requestCode);
-			dialog.show();
-
-		}else{
-			
-		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-		SupportMapFragment fragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map_list);
-		
-		// Getting Google Map
-		mGoogleMap = fragment.getMap();
-
-		// Enabling MyLocation in Google Map
-		mGoogleMap.setMyLocationEnabled(true);
-
-		// Enable / Disable my location button
-		//mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
-		
-		// Enable / Disable zooming controls
-		mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
-		
-		// Enable / Disable zooming functionality
-		mGoogleMap.getUiSettings().setZoomGesturesEnabled(true);
-		
-					
 		location = new Location("Map");
 		
-		}
 		return rootView;
 	}
 
 	private void CallGetLocation(){
-		MarkerOptions markerOptions = new MarkerOptions();
+		//MarkerOptions markerOptions = new MarkerOptions();
 		GPSService mGPSService = new GPSService(getActivity());
 		mGPSService.getLocation();
 		
@@ -170,14 +148,32 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 			
 			AppConstants.address = mGPSService.getLocationAddress();
 			CurrentLocationAdd.setText(AppConstants.address);
-			
-			LatLng latLng = new LatLng(latitude,longitude);
-			// Setting the position for the marker
-			markerOptions.position(latLng);
-			BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.car_crash);
+			AppConstants.mapImageUrl = ""+"https://maps.googleapis.com/maps/api/staticmap?center="+latitude+","+longitude+"" +
+					"&zoom=17&size=300x400" +
+					"&maptype=terrain&markers=icon:http://brosis.comli.com/carcrash.png%7Clabel:S%7C"+latitude+","+longitude;
 
-			markerOptions.icon(icon);
-			mGoogleMap.addMarker(markerOptions);
+			Log.e("MapUrl",AppConstants.mapImageUrl);
+					
+			MapImage.setImageUrl(AppConstants.mapImageUrl);
+			
+			new Thread() {
+				  public void run() {
+					  URL url = null;
+					try {
+						url = new URL(AppConstants.mapImageUrl);
+					} catch (MalformedURLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					  try {
+						  
+						AppConstants.bitmap0 = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				  }
+				}.start();
 			
 			location.setLatitude(latitude);
 			location.setLongitude(longitude);
@@ -195,34 +191,22 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 	@Override
 	public void onLocationChanged(Location location1) {
 		// TODO Auto-generated method stub
-		
 		latitude = location1.getLatitude();
 		longitude = location1.getLongitude();
-		LatLng latLng1 = new LatLng(latitude, longitude);
-		
-		mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 15));
-
-		// Zoom in, animating the camera.
-		mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null); 
-
-		
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
 		
 	}
 	

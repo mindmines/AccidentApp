@@ -1,5 +1,7 @@
 package com.accident.app;
 
+import android.graphics.Bitmap;
+
 public class AppConstants {
 	
 	public static final String TAB_DETAILS = "Details";
@@ -24,5 +26,9 @@ public class AppConstants {
 	   //Your other constants, if you have them..
 	
 	public static String address = "";
+	public static String mapImageUrl = "";
+	
+	public static Bitmap bitmap0;
+	
 
 }

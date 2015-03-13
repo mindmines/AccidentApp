@@ -123,7 +123,7 @@
      <string name="about_us">About Us</string>
      <string name="exit_application">Exit Application</string>
      
-     <string name="send_report">Send the reort</string>
+     <string name="send_report">Send the Report</string>
     
     <!--Color  -->
      <color name="blue">#007aff</color>

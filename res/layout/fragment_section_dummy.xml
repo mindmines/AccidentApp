@@ -59,7 +59,7 @@
      >  
   
        <Button
-        android:id="@+id/click_hear_map"
+        android:id="@+id/delete_location_map"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

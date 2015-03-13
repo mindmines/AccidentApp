@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -372,6 +373,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 		CallEditButton();
 		break;
 	case R.id.save_right:
+		Toast.makeText(MainActivity.this, "Pdf Creating", Toast.LENGTH_SHORT).show();
 		CallSaveButton();
 		break;		
 	case R.id.close:
@@ -553,13 +555,13 @@ try {
       
       }else {
     	  Toast.makeText(MainActivity.this, 
-    			  "First Create Pdf or see old pad in Accidental Report Folder", 
+    			  "First Create Pdf or see old pdf in AccidentalReport Folder in memory", 
                   Toast.LENGTH_LONG).show();
 	}
 } catch (Exception e) {
 	// TODO: handle exception
 	 Toast.makeText(MainActivity.this, 
-			  "First Create Pdf or see old pad in Accidental Report Folder", 
+			 "First Create Pdf or see old pdf in AccidentalReport Folder in memory", 
              Toast.LENGTH_LONG).show();
 }
       
@@ -567,10 +569,10 @@ try {
 }
 
 private void CallSaveButton(){
+	
 	Document doc = new Document();
 	currentID = getIds();
 	 lst.clear();
-	 Toast.makeText(MainActivity.this, "Pdf Creating", Toast.LENGTH_SHORT).show();
 	 try {
 		 
 		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AccidentalReport";
@@ -604,7 +606,7 @@ private void CallSaveButton(){
            doc.open();
            
            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-           Bitmap bitmap = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.ic_launcher);
+           Bitmap bitmap = BitmapFactory.decodeResource(getBaseContext().getResources(), R.drawable.logo);
            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
            Image myImg = Image.getInstance(stream.toByteArray());
            myImg.setAlignment(Image.LEFT);
@@ -621,7 +623,7 @@ private void CallSaveButton(){
            LineSeparator UNDERLINE2 =
                    new LineSeparator(1, 100, null, Element.ALIGN_CENTER, -2);
            
-           Chunk chunk = new Chunk("     Accident Report");
+           Chunk chunk = new Chunk("             Accident Report");
 			Font font = new Font(Font.COURIER, 14.0f,Color.RED);
 			font.setStyle(Font.UNDERLINE);
 			font.setStyle(Font.BOLD);
@@ -642,18 +644,20 @@ private void CallSaveButton(){
             doc.add(p2);
             }
             
-            Paragraph p61 = new Paragraph("Police details");
+          
             Font paraFont2= new Font(Font.COURIER,14.0f,Color.BLACK);
-            p61.setAlignment(Paragraph.ALIGN_LEFT);
-            p61.setFont(paraFont2);
-            p61.add(UNDERLINE2);
-           // p61.add(new Chunk(tab1));
-            doc.add(p61);
-            
             Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
             lst.clear();
             lst = dBhelper.getData(dBhelper.TABLE_NAME_POLICE, currentID);
             if(lst.size()>0){
+            	  Paragraph p61 = new Paragraph("Police details");
+                  
+                  p61.setAlignment(Paragraph.ALIGN_LEFT);
+                  p61.setFont(paraFont2);
+                  p61.add(UNDERLINE2);
+                 // p61.add(new Chunk(tab1));
+                  doc.add(p61);
+            	
             Paragraph p6 = new Paragraph(//"Police details"+"\n"+
             							"Event number : "+ lst.get(0).get(AppConstants.ITEM1)+"\n"+
             							"Case number : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
@@ -664,16 +668,17 @@ private void CallSaveButton(){
             doc.add(p6);
             }
             
-            Paragraph p63 = new Paragraph("Third party details");
-            p63.setAlignment(Paragraph.ALIGN_LEFT);
-            p63.setFont(paraFont2);
-            p63.add(UNDERLINE2);
-            //p63.add(CONNECT);
-            doc.add(p63);
+           
             
             lst.clear();
             lst = dBhelper.getData(dBhelper.TABLE_NAME_THIRD_PARTY, currentID);
             if(lst.size()>0){
+            	 Paragraph p63 = new Paragraph("Third party details");
+                 p63.setAlignment(Paragraph.ALIGN_LEFT);
+                 p63.setFont(paraFont2);
+                 p63.add(UNDERLINE2);
+                 //p63.add(CONNECT);
+                 doc.add(p63);
             	String owner ;
             	if(((Integer)(lst.get(0).get(AppConstants.ITEM6))) == 1){
             		owner= "The driver is the vehicle owner";
@@ -694,15 +699,16 @@ private void CallSaveButton(){
             doc.add(p3);
             }
             
-            Paragraph p64 = new Paragraph("Vehicle details");
-            p64.setAlignment(Paragraph.ALIGN_LEFT);
-            p64.setFont(paraFont2);
-            p64.add(UNDERLINE2);
-            doc.add(p64);
 
 lst.clear();
             lst = dBhelper.getData(dBhelper.TABLE_NAME_VEHICLE, currentID);
             if(lst.size()>0){
+            	  Paragraph p64 = new Paragraph("Vehicle details");
+                  p64.setAlignment(Paragraph.ALIGN_LEFT);
+                  p64.setFont(paraFont2);
+                  p64.add(UNDERLINE2);
+                  doc.add(p64);
+                  
             Paragraph p4 = new Paragraph(
             								"Vehicle type : "+lst.get(0).get(AppConstants.ITEM1)+"\n"+
             								"Manufacturer : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
@@ -717,15 +723,17 @@ lst.clear();
             doc.add(p4);
             }
             
-            Paragraph p65 = new Paragraph("Insurace details");
-            p65.setAlignment(Paragraph.ALIGN_LEFT);
-            p65.setFont(paraFont2);
-            p65.add(UNDERLINE2);
-            doc.add(p65);
+            
             
 lst.clear();
             lst = dBhelper.getData(dBhelper.TABLE_NAME_INSURANCE, currentID);
             if(lst.size()>0){
+            	Paragraph p65 = new Paragraph("Insurace details");
+                p65.setAlignment(Paragraph.ALIGN_LEFT);
+                p65.setFont(paraFont2);
+                p65.add(UNDERLINE2);
+                doc.add(p65);
+                
             Paragraph p5 = new Paragraph(
 					"Agency name : "+lst.get(0).get(AppConstants.ITEM1)+"\n"+
 					"Policy number : "+lst.get(0).get(AppConstants.ITEM2)+"\n"+
@@ -738,15 +746,17 @@ lst.clear();
             doc.add(p5);
             }
 
-            Paragraph p67 = new Paragraph("Accident description");
-            p67.setAlignment(Paragraph.ALIGN_LEFT);
-            p67.setFont(paraFont2);
-            p67.add(UNDERLINE2);
-            doc.add(p67);
+          
             
 lst.clear();
             lst = dBhelper.getData(dBhelper.TABLE_NAME_DESCRIPTION, currentID);
             if(lst.size()>0){
+            	  Paragraph p67 = new Paragraph("Accident description");
+                  p67.setAlignment(Paragraph.ALIGN_LEFT);
+                  p67.setFont(paraFont2);
+                  p67.add(UNDERLINE2);
+                  doc.add(p67);
+                  
             Paragraph p7 = new Paragraph(""+lst.get(0).get(AppConstants.ITEM1));
            // Font paraFont3= new Font(Font.COURIER,14.0f,Color.BLACK);
             p7.setAlignment(Paragraph.ALIGN_LEFT);
@@ -754,15 +764,16 @@ lst.clear();
             doc.add(p7);
             }
             
-            Paragraph p68 = new Paragraph("Witnesses details");
-            p68.setAlignment(Paragraph.ALIGN_LEFT);
-            p68.setFont(paraFont2);
-            p68.add(UNDERLINE2);
-            doc.add(p68);
+          
             
 lst.clear();
             lst = dBhelper.getData(dBhelper.TABLE_NAME_WITNESSES, currentID);
             if(lst.size()>0){
+            	  Paragraph p68 = new Paragraph("Witnesses details");
+                  p68.setAlignment(Paragraph.ALIGN_LEFT);
+                  p68.setFont(paraFont2);
+                  p68.add(UNDERLINE2);
+                  doc.add(p68);
             	 Paragraph p8;
            for(int i=0;i<lst.size();i++){
         		   p8 = new Paragraph(
@@ -779,15 +790,16 @@ lst.clear();
            }
             }
 
-            Paragraph p69 = new Paragraph("Casualties details");
-            p69.setAlignment(Paragraph.ALIGN_LEFT);
-            p69.setFont(paraFont2);
-            p69.add(UNDERLINE2);
-            doc.add(p69);
             
 lst.clear();
             lst = dBhelper.getData(dBhelper.TABLE_NAME_CASUALTIES, currentID);
             if(lst.size()>0){
+            	 Paragraph p69 = new Paragraph("Casualties details");
+                 p69.setAlignment(Paragraph.ALIGN_LEFT);
+                 p69.setFont(paraFont2);
+                 p69.add(UNDERLINE2);
+                 doc.add(p69);
+                 
           for(int i=0;i<lst.size();i++){
         	  Paragraph p9;
         	  String Hospitlized ;
@@ -810,6 +822,30 @@ lst.clear();
             p9.setFont(paraFont3);
             doc.add(p9);
             }
+            }
+          
+          if (AppConstants.bitmap0 != null) {
+				Log.e("Mpa", "Creating start");
+				doc.newPage();
+				Paragraph p10 = new Paragraph("Accident location: "
+						+ AppConstants.address);
+				Font paraFont10 = new Font(Font.COURIER, 18.0f, Color.BLACK);
+				p10.setAlignment(Paragraph.ALIGN_LEFT);
+				p10.setFont(paraFont10);
+				p10.add(UNDERLINE);
+				doc.add(p10);
+				
+				ByteArrayOutputStream stream0 = new ByteArrayOutputStream();
+				AppConstants.bitmap0.compress(Bitmap.CompressFormat.JPEG,
+						100, stream0);
+				Image myImg0 = Image.getInstance(stream0.toByteArray());
+				myImg0.setAlignment(Image.LEFT);
+				// add image to document
+				doc.add(myImg0);
+				Log.e("Mpa", "Creating end");
+			}else{
+				Log.e("Mpa", "Not Creating");
+			}
           
      lst.clear();
           //ArrayList<HashMap<String,Object>> contantList 
@@ -817,15 +853,13 @@ lst.clear();
       	//Log.e("Working", "size is "+contantList.size());
           if(lst.size()>0){
       	for(int i=0;i<lst.size();i++){
+      		doc.newPage();
       	  BitmapFactory.Options opt = new BitmapFactory.Options();
           opt.inSampleSize = 6;
       		ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
             Bitmap bitmap2 = BitmapFactory.decodeFile(lst.get(i).get(AppConstants.ITEM1).toString(), opt);
             		//decodeResource (getBaseContext().getResources(), lst.get(i).get(AppConstants.ITEM1).toString());
             bitmap2.compress(Bitmap.CompressFormat.JPEG, 100, stream2);
-            
-          
-            
             Image myImg2 = Image.getInstance(stream2.toByteArray());
             myImg2.setAlignment(Image.LEFT);
            
@@ -833,8 +867,8 @@ lst.clear();
             doc.add(myImg2);
       		}
           }
-          
-            }
+         
+            
 
             //set footer
            /* Phrase footerText = new Phrase("This is an example of a footer");
@@ -862,7 +896,9 @@ private void CallCloseButton(){
 private void CallDeleteButton(){
 	
 }
-	
+
+
+
 
 /*private ArrayList<HashMap<String,Object>> GetDataFormDatabase(){
  return lst;}*/

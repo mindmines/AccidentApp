@@ -55,19 +55,45 @@
     android:visibility="gone"
      >  
      
-   <LinearLayout 
+    <!--    <Button
+        android:id="@+id/delete_location_map"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/roundcorner"
+        android:paddingTop="@dimen/botton_padding"
+        android:paddingBottom="@dimen/botton_padding"
+        android:text="@string/click_here" /> -->
+       
+   <com.loopj.android.image.SmartImageView
+       android:id="@+id/map_image"
+       android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       android:scaleType="fitXY"
+       android:contentDescription="@string/images" />
+   
+     <FrameLayout 
        android:id="@+id/options_layout"
        android:layout_alignParentTop="true"
-       android:layout_height="wrap_content"
+       android:layout_height="50dp"
        android:layout_width="fill_parent"
+       android:background="@drawable/bg_glass"
+       >
+   <LinearLayout 
+       android:layout_height="match_parent"
+       android:layout_width="match_parent"
        android:orientation="horizontal"
+       android:background="@null"
        >
 	<ImageButton 
-	    android:id="@+id/delete_location"
+	    android:id="@+id/delete_location_map"
 	    android:layout_height="wrap_content"
 	    android:layout_width="wrap_content"
 	    android:src="@drawable/close_b_ic"
 	    android:contentDescription="@string/images"
+	    android:background="@null"
+	    android:layout_gravity="center_vertical"
+	    android:padding="10dp"
 	    />       
 	  
 	<ImageButton 
@@ -76,37 +102,18 @@
 	    android:layout_width="wrap_content"
 	    android:src="@drawable/refresh_b_ic"
 	    android:contentDescription="@string/images"
+	    android:background="@null"
+	    android:layout_gravity="center_vertical"
+	    android:padding="10dp"
 	    />    
      <TextView 
          android:id="@+id/current_location_add"
          android:layout_height="wrap_content"
          android:layout_width="wrap_content"
-         android:textSize="26sp"
+         android:textSize="20sp"
          android:textColor="@color/click_here_col"
          />  
-   </LinearLayout>
-  
-       <Button
-        android:id="@+id/click_hear_map"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/roundcorner"
-        android:paddingTop="@dimen/botton_padding"
-        android:paddingBottom="@dimen/botton_padding"
-        android:text="@string/click_here" />
-       
-  <!--   android:name="com.google.android.gms.maps.SupportMapFragment"   -->
-       
-   <fragment
-        android:id="@+id/map_list"
-        android:layout_above="@+id/click_hear_map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        class="com.google.android.gms.maps.SupportMapFragment"
-        />
-    
-    </RelativeLayout>
+   </LinearLayout></FrameLayout>
+</RelativeLayout>
     
 </RelativeLayout>
