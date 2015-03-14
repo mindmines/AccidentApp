@@ -14,8 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-         >
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/btn_resume"
@@ -49,8 +48,19 @@
             android:id="@+id/gallery01"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/iv_canvass"
+            android:visibility="gone"
+            android:layout_marginTop="20dp" >
         </Gallery>
+
+        <com.accident.app.HorizontalListView
+            android:id="@+id/horizantallistview"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentBottom="true"
+            android:background="#DDD"
+             />
         
     </RelativeLayout>
 
