@@ -40,25 +40,26 @@ import com.accident.app.util.Config;
 
 public class DamageCarMark extends BaseFragment implements OnClickListener {
 	private Button btn_save, btn_resume;
-	private ImageView iv_canvas;
-	public Bitmap baseBitmap;
-	private Canvas canvas;
-	private Paint paint;
+	
+	private ImageView my_car_iv_canvas;
+	public Bitmap my_car_baseBitmap;
+	private Canvas my_car_canvas;
+	private Paint my_car_paint;
+	boolean my_car_isDraw = false;
+	static int my_car_i = 0;
+	private float my_car_x = 0;
+	private HashMap<Integer, CarDamageUtiility> my_car_fileMap = new HashMap<Integer, CarDamageUtiility>();
+	ArrayList<CarDamageUtiility> my_car_carList = new ArrayList<CarDamageUtiility>();
+	
 	public Bitmap bt;
-	boolean isDraw = false;
 
 	CarDamageUtiility carDamgeObj;
-
 	private static final int SWIPE_MIN_DISTANCE = 50;
-
-	static int i = 0;
-	private float x = 0;
 	int startindex = 0;
+	
 	private static final String TAG = DamageCarMark.class.getSimpleName();
 
-	private HashMap<Integer, CarDamageUtiility> fileMap = new HashMap<Integer, CarDamageUtiility>();
-
-	ArrayList<CarDamageUtiility> carList = new ArrayList<CarDamageUtiility>();
+	
 
 	int[] ferrari_image = { R.drawable.b_ferrari_f152_000_0000,
 			R.drawable.b_ferrari_f152_000_0001,
@@ -105,17 +106,17 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 				false);
 
 		// The initialization of a brush, brush width is 5, color is red
-		paint = new Paint();
+		my_car_paint = new Paint();
 		//paint.setStrokeWidth(5);
 		//paint.setColor(Color.RED);
 
-		iv_canvas = (ImageView) rootView.findViewById(R.id.iv_canvas);
+		my_car_iv_canvas = (ImageView) rootView.findViewById(R.id.iv_canvas);
 		btn_save = (Button) rootView.findViewById(R.id.btn_save);
 		btn_resume = (Button) rootView.findViewById(R.id.btn_resume);
 
 		btn_save.setOnClickListener(this);
 		btn_resume.setOnClickListener(this);
-		iv_canvas.setOnTouchListener(touch);
+		my_car_iv_canvas.setOnTouchListener(touch);
 
 		HorizontalListView listview = (HorizontalListView) rootView
 				.findViewById(R.id.horizantallistview);
@@ -127,9 +128,9 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				iv_canvas.setImageBitmap(carList.get(arg2).getBitmap());
-				baseBitmap = carList.get(arg2).getBitmap();
-				i = carList.get(arg2).getIndex();
+				my_car_iv_canvas.setImageBitmap(my_car_carList.get(arg2).getBitmap());
+				my_car_baseBitmap = my_car_carList.get(arg2).getBitmap();
+				my_car_i = my_car_carList.get(arg2).getIndex();
 			}
 		});
 
@@ -150,18 +151,18 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 			case MotionEvent.ACTION_DOWN:
 				// The first drawing initializes the memory image, specify the
 				// background is white
-				startindex = i;
-				if (baseBitmap == null) {
+				startindex = my_car_i;
+				if (my_car_baseBitmap == null) {
 
-					if (fileMap.containsKey(i)) {
-						baseBitmap = fileMap.get(i).getBitmap();
+					if (my_car_fileMap.containsKey(my_car_i)) {
+						my_car_baseBitmap = my_car_fileMap.get(my_car_i).getBitmap();
 					} else {
-						baseBitmap = BitmapFactory.decodeResource(
+						my_car_baseBitmap = BitmapFactory.decodeResource(
 								getResources(), ferrari_image[startindex])
 								.copy(Bitmap.Config.ARGB_8888, true);
 					}
 
-					canvas = new Canvas(baseBitmap);
+					my_car_canvas = new Canvas(my_car_baseBitmap);
 
 					// canvas.drawColor(Color.WHITE);
 				}
@@ -172,12 +173,12 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 			// The user's finger on the screen of mobile action
 			case MotionEvent.ACTION_MOVE:
 
-				x = event.getX();
+				my_car_x = event.getX();
 				// y = event.getY();
 
-				if (startX - x > SWIPE_MIN_DISTANCE) {
+				if (startX - my_car_x > SWIPE_MIN_DISTANCE) {
 					RotationDown();
-				} else if (x - startX > SWIPE_MIN_DISTANCE) {
+				} else if (my_car_x - startX > SWIPE_MIN_DISTANCE) {
 
 					RotationUp();
 					// Toast.makeText(RotateTest.this, "Right Swipe",
@@ -194,38 +195,38 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 					// lines
 					// canvas.drawLine(startX, startY, stopX, stopY, paint);
 
-					canvas.drawBitmap(bt, startX, startY, paint);
-					isDraw = true;
+					my_car_canvas.drawBitmap(bt, startX, startY, my_car_paint);
+					my_car_isDraw = true;
 
 					// The pictures to the ImageView
-					iv_canvas.setImageBitmap(baseBitmap);
+					my_car_iv_canvas.setImageBitmap(my_car_baseBitmap);
 
 				} else if (startX - stopX > 50 || stopX - startX > 50) {
 
-					if (isDraw && baseBitmap != null) {
+					if (my_car_isDraw && my_car_baseBitmap != null) {
 						// saveBitmap();
 						// baseBitmap = null;
-						if (fileMap.containsKey(startindex)) {
+						if (my_car_fileMap.containsKey(startindex)) {
 
-							carDamgeObj = fileMap.get(startindex);
-							carDamgeObj.setBitmap(baseBitmap);
+							carDamgeObj = my_car_fileMap.get(startindex);
+							carDamgeObj.setBitmap(my_car_baseBitmap);
 							// carList.add(carDamgeObj);
 
 						} else {
 
 							carDamgeObj = new CarDamageUtiility(startindex,
-									baseBitmap);
-							carList.add(carDamgeObj);
+									my_car_baseBitmap);
+							my_car_carList.add(carDamgeObj);
 						}
 
-						fileMap.put(startindex, carDamgeObj);
+						my_car_fileMap.put(startindex, carDamgeObj);
 						mAdapter.notifyDataSetChanged();
-						isDraw = false;
+						my_car_isDraw = false;
 
 						// Log.i("Hashmap Testing", fileMap.toString());
 					}
 
-					baseBitmap = null;
+					my_car_baseBitmap = null;
 				}
 				break;
 			default:
@@ -238,24 +239,24 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 	private void RotationUp() {
 
 		// Toast.makeText(getActivity(), fileMap.toString(), 1).show();
-		if (i < 35) {
-			i++;
+		if (my_car_i < 35) {
+			my_car_i++;
 			// iv_canvas.setImageLevel(i);
 			// iv_canvas.setBackgroundResource(ferrari_image[i]);
 
-			if (fileMap.containsKey(i)) {
-				iv_canvas.setImageBitmap(fileMap.get(i).getBitmap());
+			if (my_car_fileMap.containsKey(my_car_i)) {
+				my_car_iv_canvas.setImageBitmap(my_car_fileMap.get(my_car_i).getBitmap());
 			} else {
-				iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
-						getResources(), ferrari_image[i]));
+				my_car_iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
+						getResources(), ferrari_image[my_car_i]));
 			}
 		} else {
-			i = 0;
-			if (fileMap.containsKey(i)) {
-				iv_canvas.setImageBitmap(fileMap.get(i).getBitmap());
+			my_car_i = 0;
+			if (my_car_fileMap.containsKey(my_car_i)) {
+				my_car_iv_canvas.setImageBitmap(my_car_fileMap.get(my_car_i).getBitmap());
 			} else {
-				iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
-						getResources(), ferrari_image[i]));
+				my_car_iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
+						getResources(), ferrari_image[my_car_i]));
 			}
 		}
 	}
@@ -263,21 +264,21 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 	private void RotationDown() {
 		// Toast.makeText(getActivity(), fileMap.toString(), 1).show();
 
-		if (i > 0) {
-			i--;
-			if (fileMap.containsKey(i)) {
-				iv_canvas.setImageBitmap(fileMap.get(i).getBitmap());
+		if (my_car_i > 0) {
+			my_car_i--;
+			if (my_car_fileMap.containsKey(my_car_i)) {
+				my_car_iv_canvas.setImageBitmap(my_car_fileMap.get(my_car_i).getBitmap());
 			} else {
-				iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
-						getResources(), ferrari_image[i]));
+				my_car_iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
+						getResources(), ferrari_image[my_car_i]));
 			}
 		} else {
-			i = 35;
-			if (fileMap.containsKey(i)) {
-				iv_canvas.setImageBitmap(fileMap.get(i).getBitmap());
+			my_car_i = 35;
+			if (my_car_fileMap.containsKey(my_car_i)) {
+				my_car_iv_canvas.setImageBitmap(my_car_fileMap.get(my_car_i).getBitmap());
 			} else {
-				iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
-						getResources(), ferrari_image[i]));
+				my_car_iv_canvas.setImageBitmap(BitmapFactory.decodeResource(
+						getResources(), ferrari_image[my_car_i]));
 			}
 		}
 	}
@@ -286,7 +287,7 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 	 * 114 * Save the image to the SD card. 115
 	 */
 	protected void saveBitmap() {
-		for (int k = 0; k < carList.size(); k++) {
+		for (int k = 0; k < my_car_carList.size(); k++) {
 
 			try {
 				// Save the image to the SD card.
@@ -313,12 +314,12 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 
 				File file = new File(filename);
 				FileOutputStream stream = new FileOutputStream(file);
-				carList.get(k).getBitmap()
+				my_car_carList.get(k).getBitmap()
 						.compress(CompressFormat.PNG, 100, stream);
 				Toast.makeText(getActivity(), "Save the picture of success", 0)
 						.show();
 
-				carList.get(k).setPath(filename);
+				my_car_carList.get(k).setPath(filename);
 
 				// Android equipment Gallery application will only at boot time
 				// scanning system folder
@@ -343,13 +344,13 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 	 */
 	protected void resumeCanvas() {
 		// Manually clear the drawing board, to create a drawing board
-		if (baseBitmap != null) {
+		if (my_car_baseBitmap != null) {
 
-			baseBitmap = BitmapFactory.decodeResource(getResources(),
-					ferrari_image[i]).copy(Bitmap.Config.ARGB_8888, true);
-			canvas = new Canvas(baseBitmap);
+			my_car_baseBitmap = BitmapFactory.decodeResource(getResources(),
+					ferrari_image[my_car_i]).copy(Bitmap.Config.ARGB_8888, true);
+			my_car_canvas = new Canvas(my_car_baseBitmap);
 			// canvas.drawColor(Color.WHITE);
-			iv_canvas.setImageBitmap(baseBitmap);
+			my_car_iv_canvas.setImageBitmap(my_car_baseBitmap);
 			Toast.makeText(getActivity(),
 					"Clear the drawing board, can be re started drawing", 0)
 					.show();
@@ -375,12 +376,12 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 
 		@Override
 		public int getCount() {
-			return carList.size();
+			return my_car_carList.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return carList.get(position);
+			return my_car_carList.get(position);
 		}
 
 		@Override
@@ -393,7 +394,7 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 			View retval = LayoutInflater.from(parent.getContext()).inflate(
 					R.layout.horizantallistrow, null);
 			ImageView iv = (ImageView) retval.findViewById(R.id.rowimage);
-			iv.setImageBitmap(carList.get(position).getBitmap());
+			iv.setImageBitmap(my_car_carList.get(position).getBitmap());
 
 			return retval;
 		}
