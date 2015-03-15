@@ -50,6 +50,20 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 	private float my_car_x = 0;
 	private HashMap<Integer, CarDamageUtiility> my_car_fileMap = new HashMap<Integer, CarDamageUtiility>();
 	ArrayList<CarDamageUtiility> my_car_carList = new ArrayList<CarDamageUtiility>();
+	HorizontalListView my_car_listview;
+	
+	private ImageView thirdparty_car_iv_canvas;
+	public Bitmap thirdparty_car_baseBitmap;
+	private Canvas thirdparty_car_canvas;
+	private Paint thirdparty_car_paint;
+	boolean thirdparty_car_isDraw = false;
+	static int thirdparty_car_i = 0;
+	private float thirdparty_car_x = 0;
+	private HashMap<Integer, CarDamageUtiility> thirdparty_car_fileMap = new HashMap<Integer, CarDamageUtiility>();
+	ArrayList<CarDamageUtiility> thirdparty_car_carList = new ArrayList<CarDamageUtiility>();
+	HorizontalListView thirdparty_car_listview;
+	
+	
 	
 	public Bitmap bt;
 
@@ -107,22 +121,28 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 
 		// The initialization of a brush, brush width is 5, color is red
 		my_car_paint = new Paint();
+		thirdparty_car_paint = new Paint();
 		//paint.setStrokeWidth(5);
 		//paint.setColor(Color.RED);
 
 		my_car_iv_canvas = (ImageView) rootView.findViewById(R.id.iv_canvas);
+		thirdparty_car_iv_canvas = (ImageView) rootView.findViewById(R.id.iv_canvas1);
+		
 		btn_save = (Button) rootView.findViewById(R.id.btn_save);
 		btn_resume = (Button) rootView.findViewById(R.id.btn_resume);
 
 		btn_save.setOnClickListener(this);
 		btn_resume.setOnClickListener(this);
-		my_car_iv_canvas.setOnTouchListener(touch);
+		
+		my_car_iv_canvas.setOnTouchListener(my_car_touch);
+		thirdparty_car_iv_canvas.setOnTouchListener(my_car_touch);
 
-		HorizontalListView listview = (HorizontalListView) rootView
+		// vivek work start from here
+		my_car_listview = (HorizontalListView) rootView
 				.findViewById(R.id.horizantallistview);
-		listview.setAdapter(mAdapter);
+		my_car_listview.setAdapter(my_car_mAdapter);
 
-		listview.setOnItemClickListener(new OnItemClickListener() {
+		my_car_listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -139,7 +159,7 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 		return rootView;
 	}
 
-	private View.OnTouchListener touch = new OnTouchListener() {
+	private View.OnTouchListener my_car_touch = new OnTouchListener() {
 		// Coordinate definition finger touch
 		float startX;
 		float startY;
@@ -220,7 +240,7 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 						}
 
 						my_car_fileMap.put(startindex, carDamgeObj);
-						mAdapter.notifyDataSetChanged();
+						my_car_mAdapter.notifyDataSetChanged();
 						my_car_isDraw = false;
 
 						// Log.i("Hashmap Testing", fileMap.toString());
@@ -372,7 +392,37 @@ public class DamageCarMark extends BaseFragment implements OnClickListener {
 		}
 	}
 
-	private BaseAdapter mAdapter = new BaseAdapter() {
+	private BaseAdapter my_car_mAdapter = new BaseAdapter() {
+
+		@Override
+		public int getCount() {
+			return my_car_carList.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return my_car_carList.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View retval = LayoutInflater.from(parent.getContext()).inflate(
+					R.layout.horizantallistrow, null);
+			ImageView iv = (ImageView) retval.findViewById(R.id.rowimage);
+			iv.setImageBitmap(my_car_carList.get(position).getBitmap());
+
+			return retval;
+		}
+
+	};
+	
+	
+	private BaseAdapter thirdparty_car_mAdapter = new BaseAdapter() {
 
 		@Override
 		public int getCount() {
