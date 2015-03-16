@@ -1,8 +1,12 @@
 package com.accident.app;
 
-import android.graphics.Bitmap;
+import java.util.ArrayList;
 
-public class AppConstants {
+import android.app.Application;
+import android.graphics.Bitmap;
+import android.support.v4.app.Fragment;
+
+public class AppConstants extends Application {
 	
 	public static final String TAB_DETAILS = "Details";
 	public static final String TAB_LOCATION = "Location"; 
@@ -30,5 +34,11 @@ public class AppConstants {
 	
 	public static Bitmap bitmap0;
 	
+	@Override
+	public void onCreate() {
+		// TODO Auto-generated method stub
+		super.onCreate();
+		
+	}
 
 }

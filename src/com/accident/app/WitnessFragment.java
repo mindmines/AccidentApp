@@ -13,9 +13,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class WitnessFragment  extends BaseFragment {
+public class WitnessFragment  extends BaseFragment implements OnClickListener {
 	
 	private EditText wit_full_name, wit_id,wit_address, wit_phone_no, wit_age;
 	private CheckBox isHospitalized;
@@ -24,6 +26,9 @@ public class WitnessFragment  extends BaseFragment {
 	ArrayList<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
 	int currentIDs;
 	MainActivity mContext;
+	//Heading
+		TextView HeadingText;
+		ImageView mClose,mDelete;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -31,26 +36,25 @@ public class WitnessFragment  extends BaseFragment {
 		View rootView = inflater.inflate(R.layout.casulty,
 				container, false);
 		mContext = (MainActivity) this.getActivity();
-		AppConstants.isFront = false;
-		mContext.CallHeaderVisiblity();
 		dBhelper = new DBhelper(getActivity());
-		mContext.HeadingText.setText(getResources().getString(R.string.witness));	
 		wit_full_name =(EditText) rootView.findViewById(R.id.cas_full_name);
 		wit_id =(EditText) rootView.findViewById(R.id.cas_id);
 		wit_address =(EditText) rootView.findViewById(R.id.cas_address);
 		wit_phone_no =(EditText) rootView.findViewById(R.id.cas_phone_no);
 		wit_age =(EditText) rootView.findViewById(R.id.cas_age);
 		
+		//Heading
+		 mClose = (ImageView)rootView.findViewById(R.id.close);
+	     mDelete = (ImageView)rootView.findViewById(R.id.delete);
+	     HeadingText = (TextView)rootView.findViewById(R.id.heading);
+	     HeadingText.setText(getResources().getString(R.string.witness));
+		
 		isHospitalized =(CheckBox)rootView.findViewById(R.id.is_hospitalized);
 		isHospitalized.setVisibility(View.GONE);
 		Save = (Button)rootView.findViewById(R.id.cas_save);
-		Save.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				CallSaveButton();
-				
-			}
-		});
+		Save.setOnClickListener(this);
+		mClose.setOnClickListener(this);
+		mDelete.setOnClickListener(this);
 		
 		return rootView;
 	}
@@ -89,5 +93,23 @@ public class WitnessFragment  extends BaseFragment {
 		
 		}
 		return false;
+	}
+	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+		switch (v.getId()) {
+		case R.id.cas_save:
+			CallSaveButton();
+			break;
+		case R.id.close:
+			mContext.handleBackPressed();
+			break;
+		case R.id.delete:
+		//dBhelper.Delete(dBhelper.TABLE_NAME_DATE_TIME,mContext.getIds());
+			Toast.makeText(getActivity(), "not working yet", Toast.LENGTH_SHORT).show();
+			break;
+		}
 	}
 }

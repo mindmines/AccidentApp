@@ -3,7 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:padding="20dp" >
+     >
+    
+     <include android:id="@+id/header2"
+        layout="@layout/header_fragments"/>
+
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header2"
+        android:padding="20dp"
+        >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -29,5 +39,5 @@
         android:paddingTop="@dimen/botton_padding"
         android:paddingBottom="@dimen/botton_padding"
         android:text="@string/save" />
-
+</RelativeLayout>
 </RelativeLayout>

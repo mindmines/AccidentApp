@@ -4,38 +4,13 @@ package com.accident.app;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.Locale;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import com.accident.app.util.GPSService;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.loopj.android.image.SmartImageView;
-
-import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -43,11 +18,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.accident.app.util.GPSService;
+import com.google.android.gms.maps.model.LatLng;
+import com.loopj.android.image.SmartImageView;
 
 public class LocationFragment extends BaseFragment implements LocationListener{
 	MainActivity mContext;
@@ -147,9 +125,12 @@ public class LocationFragment extends BaseFragment implements LocationListener{
 			longitude = mGPSService.getLongitude();
 			
 			AppConstants.address = mGPSService.getLocationAddress();
+			if(AppConstants.address.contains("IO Exception")){
+				CurrentLocationAdd.setText("");
+			}else
 			CurrentLocationAdd.setText(AppConstants.address);
 			AppConstants.mapImageUrl = ""+"https://maps.googleapis.com/maps/api/staticmap?center="+latitude+","+longitude+"" +
-					"&zoom=17&size=300x400" +
+					"&zoom=17&size=300x400&scale=2" +
 					"&maptype=terrain&markers=icon:http://brosis.comli.com/carcrash.png%7Clabel:S%7C"+latitude+","+longitude;
 
 			Log.e("MapUrl",AppConstants.mapImageUrl);

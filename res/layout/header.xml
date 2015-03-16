@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_header"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="@color/blue"
@@ -7,13 +8,7 @@
     android:paddingRight="10dp"
     android:paddingTop="10dp"
     android:paddingBottom="10dp"
-    android:orientation="horizontal" >
-
-    <RelativeLayout
-        android:id="@+id/home_header"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible" >
+    android:visibility="visible" >
 
         <ImageButton
             android:id="@+id/home"
@@ -84,45 +79,3 @@
             android:src="@drawable/saved" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/screens_header"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" >
-
-        <ImageButton
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:contentDescription="@string/images"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:paddingLeft="@dimen/header_padding"
-            android:paddingRight="@dimen/header_padding"
-            android:src="@drawable/close_w_ic" />
-
-        <TextView
-            android:id="@+id/heading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
-            android:text="@string/images" />
-
-        <ImageButton
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:contentDescription="@string/images"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:paddingLeft="@dimen/header_padding"
-            android:paddingRight="@dimen/header_padding"
-            android:src="@drawable/delete_w_ic" />
-    </RelativeLayout>
-
-</LinearLayout>

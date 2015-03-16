@@ -32,12 +32,15 @@ import android.R.style;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -71,12 +74,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     private String mCurrentTab;
     DBhelper dBhelper;
     //header
-    public TextView HeadingText;
-    ImageView mHomeIcon,mMenu,mTowing,mSend,mEdit,mSave,mClose,mDelete;
+    ImageView mHomeIcon,mMenu,mTowing,mSend,mEdit,mSave;
     int currentID ;
     
     ArrayList<HashMap<String,Object>> lst = new ArrayList<HashMap<String,Object>>();
-    public RelativeLayout homeLayour, ScreensLayout;
+    public RelativeLayout homeLayour;
     
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,18 +86,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         dBhelper = new DBhelper(this);
         
         homeLayour = (RelativeLayout)findViewById(R.id.home_header);
-        ScreensLayout = (RelativeLayout)findViewById(R.id.screens_header);
         
         //Header
-        HeadingText = (TextView)findViewById(R.id.heading);
+       
         mHomeIcon = (ImageView)findViewById(R.id.home);
         mMenu = (ImageView)findViewById(R.id.menu); 
         mTowing = (ImageView)findViewById(R.id.towing);
         mSend = (ImageView)findViewById(R.id.send);
         mEdit = (ImageView)findViewById(R.id.edit);
         mSave = (ImageView)findViewById(R.id.save_right);
-        mClose = (ImageView)findViewById(R.id.close);
-        mDelete = (ImageView)findViewById(R.id.delete);
         
         mHomeIcon.setOnClickListener(this);
         mMenu.setOnClickListener(this); 
@@ -103,8 +102,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
         mSend.setOnClickListener(this);
         mEdit.setOnClickListener(this);
         mSave.setOnClickListener(this);
-        mClose.setOnClickListener(this);
-        mDelete.setOnClickListener(this);
         
         CallReportTable();
         /*  
@@ -146,7 +143,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     		if(Date.equals(s))
     			return (Integer) lst.get(i).get(AppConstants.ITEM0);
     	}
-    	return 5;
+    	return -1;
     }
 
     private boolean isUpdate(String Date){
@@ -346,9 +343,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
     public void CallHeaderVisiblity(){
     	if(AppConstants.isFront){
     		homeLayour.setVisibility(View.VISIBLE);
-    		ScreensLayout.setVisibility(View.GONE);
     	}else{
-    		ScreensLayout.setVisibility(View.VISIBLE);
     		homeLayour.setVisibility(View.GONE);
     	}
     }
@@ -376,12 +371,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 		Toast.makeText(MainActivity.this, "Pdf Creating", Toast.LENGTH_SHORT).show();
 		CallSaveButton();
 		break;		
-	case R.id.close:
-		CallCloseButton();
-		break;	
-	case R.id.delete:
-		CallDeleteButton();
-		break;			
 		}
 	}
 
@@ -867,8 +856,6 @@ lst.clear();
             doc.add(myImg2);
       		}
           }
-         
-            
 
             //set footer
            /* Phrase footerText = new Phrase("This is an example of a footer");
@@ -886,17 +873,6 @@ lst.clear();
     }
 	 Toast.makeText(MainActivity.this, "Pdf Created", Toast.LENGTH_SHORT).show();
 }
-
-private void CallCloseButton(){
-	
-	
-	
-}
-
-private void CallDeleteButton(){
-	
-}
-
 
 
 

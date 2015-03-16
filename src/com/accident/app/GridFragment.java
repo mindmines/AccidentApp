@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,8 +76,10 @@ public class GridFragment extends BaseFragment {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				
-				switch (arg2) {
+				//AppConstants.pos = arg2;
+				Log.e("Arg2 Postiong", ""+arg2);
+				mContext.pushFragments(AppConstants.TAB_DETAILS, new PagerFragemt(arg2), false, true);
+				/*switch (arg2) {
 				
 				case 0:
 					mContext.pushFragments(AppConstants.TAB_DETAILS, new DateTime(), false, true);
@@ -113,9 +116,7 @@ public class GridFragment extends BaseFragment {
 					//i = new Intent(getActivity(),WittnessHolder.class);
 					//startActivity(i);
 					break;
-
-				
-				}
+				}*/
 
 			}
 		});

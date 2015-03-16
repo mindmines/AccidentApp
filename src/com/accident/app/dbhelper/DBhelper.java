@@ -371,6 +371,8 @@ public class DBhelper extends SQLiteOpenHelper{
 		    }
 		 
 		 
+		 
+		 
 		 public ArrayList<HashMap<String,Object>> getData(String TABLE_NAME, int id) {
 		        ArrayList<HashMap<String,Object>> contantList = new ArrayList<HashMap<String,Object>>();
 		        // Select All Query
@@ -428,5 +430,20 @@ public class DBhelper extends SQLiteOpenHelper{
 		        // return contact list
 		        return contantList;
 		    }
+		 
+		 
+		/* public void deleteAll()
+		 {
+		     SQLiteDatabase db = this.getWritableDatabase();
+		     db.delete(TABLE_NAME,null,null);
+		     db.close();
+		 }*/
+		 
+		 public void Delete(String tableName, int id)
+		 {
+		     SQLiteDatabase db=this.getWritableDatabase();
+		     db.execSQL("DELETE FROM "+tableName+" WHERE ids"+"='"+id+"'");
+		     db.close();
+		 }
 		
 }

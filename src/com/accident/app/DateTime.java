@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -34,6 +35,10 @@ public class DateTime extends BaseFragment implements OnClickListener{
 	int currentIDs;
 	MainActivity mContext;
 	
+	//Heading
+	TextView HeadingText;
+	ImageView mClose,mDelete;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -41,21 +46,23 @@ public class DateTime extends BaseFragment implements OnClickListener{
 		View rootView = inflater.inflate(R.layout.date_time,
 				container, false);
 		mContext = (MainActivity) this.getActivity();
-		AppConstants.isFront = false;
-		mContext.CallHeaderVisiblity();
-		
 		dBhelper = new DBhelper(getActivity());
-		
-		mContext.HeadingText.setText(getResources().getString(R.string.datetime));
 		
 		Date =(EditText) rootView.findViewById(R.id.date);
 		Time =(EditText) rootView.findViewById(R.id.time);
 		Save = (Button)rootView.findViewById(R.id.cas_save);
 		
+		//Heading
+		 mClose = (ImageView)rootView.findViewById(R.id.close);
+	     mDelete = (ImageView)rootView.findViewById(R.id.delete);
+	     HeadingText = (TextView)rootView.findViewById(R.id.heading);
+	     HeadingText.setText(getResources().getString(R.string.datetime));
+	     
 		Date.setOnClickListener(this);
 		Time.setOnClickListener(this);
 		Save.setOnClickListener(this);
-		
+		mClose.setOnClickListener(this);
+		mDelete.setOnClickListener(this);
 		return rootView;
 	}
 
@@ -71,6 +78,15 @@ public class DateTime extends BaseFragment implements OnClickListener{
 			break;
 		case R.id.cas_save:
 			CallSaveButton();
+			break;
+		case R.id.close:
+			mContext.handleBackPressed();
+			break;
+		case R.id.delete:
+		dBhelper.Delete(dBhelper.TABLE_NAME_DATE_TIME,mContext.getIds());
+		Toast.makeText(getActivity(), "Data Deleted", Toast.LENGTH_SHORT).show();
+		Date.setText("");
+		Time.setText("");
 			break;
 		}
 	}
@@ -119,7 +135,6 @@ public class DateTime extends BaseFragment implements OnClickListener{
 			currentIDs = mActivity.getIds();
 		dBhelper.insertDateTime(currentIDs,putDate,putTime,isUpdate());
 		Toast.makeText(getActivity(), "Data Saved", Toast.LENGTH_SHORT).show();
-		mContext.handleBackPressed();
 		}else{
 			Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 		}
